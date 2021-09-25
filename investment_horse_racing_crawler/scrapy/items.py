@@ -93,3 +93,45 @@ class OddsWinPlaceItem(Item):
     odds_win = Field()
     odds_place_min = Field()
     odds_place_max = Field()
+
+
+class OddsBracketQuinellaItem(Item):
+    race_id = Field()
+    bracket_number_1 = Field()
+    bracket_number_2 = Field()
+    odds = Field()
+
+
+class OddsExactaItem(Item):
+    race_id = Field()
+    horse_number_1 = Field()
+    horse_number_2 = Field()
+    odds = Field()
+
+
+class OddsQuinellaItem(Item):
+    race_id = Field()
+    horse_number_1 = Field()
+    horse_number_2 = Field()
+    odds = Field()
+
+
+class OddsQuinellaPlaceItem(Item):
+    race_id = Field()
+    horse_number_1 = Field()
+    horse_number_2 = Field()
+    odds_min = Field()
+    odds_max = Field()
+
+
+class OddsTrifectaItem(Item):
+    race_id = Field()
+    horse_number_1_2_3 = Field()
+    odds = Field()
+
+
+class OddsTrioItem(Item):
+    race_id = Field()
+    horse_number_1_2 = Field()
+    horse_number_3 = Field()
+    odds = Field()

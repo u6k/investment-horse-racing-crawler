@@ -1,14 +1,13 @@
-# -*- coding: utf-8 -*-
-
-import os
 import logging
+import os
 
 
 BOT_NAME = 'investment_horse_racing_crawler'
-USER_AGENT = "horse_racing_crawler/1.0 (+https://github.com/u6k/investment-horse-racing-crawler)"
+USER_AGENT = os.environ.get("USER_AGENT", "horse_racing_crawler/1.0 (+https://github.com/u6k/investment-horse-racing-crawler)")
 
 SPIDER_MODULES = ['investment_horse_racing_crawler.scrapy.spiders']
 NEWSPIDER_MODULE = 'investment_horse_racing_crawler.scrapy.spiders'
+CRAWL_HTTP_PROXY = os.environ.get("CRAWL_HTTP_PROXY")
 
 
 ROBOTSTXT_OBEY = True
@@ -18,7 +17,8 @@ CONCURRENT_REQUESTS_PER_DOMAIN = 1
 CONCURRENT_REQUESTS_PER_IP = 0
 
 DOWNLOAD_DELAY = 3
-DOWNLOAD_TIMEOUT = 10
+DOWNLOAD_TIMEOUT = 60
+RETRY_TIMES = 10
 
 ITEM_PIPELINES = {
     "investment_horse_racing_crawler.scrapy.pipelines.PostgreSQLPipeline": 300,
@@ -36,6 +36,11 @@ SPIDER_CONTRACTS = {
     "investment_horse_racing_crawler.scrapy.contracts.TrainerContract": 10,
     "investment_horse_racing_crawler.scrapy.contracts.JockeyContract": 10,
     "investment_horse_racing_crawler.scrapy.contracts.OddsWinPlaceContract": 10,
+    "investment_horse_racing_crawler.scrapy.contracts.OddsExactaContract": 10,
+    "investment_horse_racing_crawler.scrapy.contracts.OddsQuinellaContract": 10,
+    "investment_horse_racing_crawler.scrapy.contracts.OddsQuinellaPlaceContract": 10,
+    "investment_horse_racing_crawler.scrapy.contracts.OddsTrifectaContract": 10,
+    "investment_horse_racing_crawler.scrapy.contracts.OddsTrioContract": 10,
 }
 
 logging.getLogger("boto3").setLevel(logging.INFO)
