@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 ### Changed
 - [#9111: CIをGitHub Actionsに、コンテナレジストリをGitHub Container Registryに移行する](https://redmine.u6k.me/issues/9111)
+- [#9104: クローラー仕様をlocal-horse-racingに合わせる](https://redmine.u6k.me/issues/9104)
 
 ## [3.4.2] - 2020-05-22
 - Travis CIで`docker push`が失敗した
