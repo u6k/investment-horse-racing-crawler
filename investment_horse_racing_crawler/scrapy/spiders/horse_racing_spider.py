@@ -336,36 +336,36 @@ class HorseRacingSpider(scrapy.Spider):
         logger.info(f"#_follow_delegate: start: path={path}")
 
         if path.startswith("/schedule/list/"):
-            logger.debug(f"#_follow_delegate: follow schedule list page")
+            logger.debug("#_follow_delegate: follow schedule list page")
             return response.follow(path, callback=self.parse_schedule_list)
 
         elif path.startswith("/race/list/"):
-            logger.debug(f"#_follow_delegate: follow race list page")
+            logger.debug("#_follow_delegate: follow race list page")
             return response.follow(path, callback=self.parse_race_list)
 
         elif path.startswith("/race/denma/"):
-            logger.debug(f"#_follow_delegate: follow race denma page")
+            logger.debug("#_follow_delegate: follow race denma page")
             return response.follow(path, callback=self.parse_race_denma)
 
         elif path.startswith("/race/result/"):
-            logger.debug(f"#_follow_delegate: follow race result page")
+            logger.debug("#_follow_delegate: follow race result page")
             return response.follow(path, callback=self.parse_race_result)
 
         elif path.startswith("/odds/tfw/"):
-            logger.debug(f"#_follow_delegate: follow odds page")
+            logger.debug("#_follow_delegate: follow odds page")
             return response.follow(path, callback=self.parse_odds)
 
         elif path.startswith("/directory/horse/"):
-            logger.debug(f"#_follow_delegate: follow horse page")
+            logger.debug("#_follow_delegate: follow horse page")
             return response.follow(path, callback=self.parse_horse)
 
         elif path.startswith("/directory/trainer/"):
-            logger.debug(f"#_follow_delegate: follow trainer page")
+            logger.debug("#_follow_delegate: follow trainer page")
             return response.follow(path, callback=self.parse_trainer)
 
         elif path.startswith("/directory/jocky/"):
-            logger.debug(f"#_follow_delegate: follow jockey page")
+            logger.debug("#_follow_delegate: follow jockey page")
             return response.follow(path, callback=self.parse_jockey)
 
         else:
-            logger.warning(f"#_follow_delegate: unknown path pattern")
+            logger.warning("#_follow_delegate: unknown path pattern")
