@@ -131,7 +131,7 @@ class TestPostgreSQLPipeline:
         records = self.sess.query(RacePayoffData).all()
         eq_(len(records), 1)
 
-    def test_process_race_result_item(self):
+    def test_process_race_result_item_1(self):
         # Setup
         item = RaceResultItem()
         item['arrival_time'] = ['\n1.12.5']
@@ -172,6 +172,57 @@ class TestPostgreSQLPipeline:
         eq_(record.race_id, '1906050201')
         eq_(record.result, '\n1  ')
         eq_(record.trainer_id, '/directory/trainer/00435/')
+
+        # Execute (2)
+        self.pipeline.process_item(item, None)
+
+        # Check db (2)
+        records = self.sess.query(RaceResultData).all()
+        eq_(len(records), 1)
+
+    def test_process_race_result_item_2(self):
+        # Setup
+        item = RaceResultItem()
+        item['arrival_margin'] = ['1/2馬身']
+        item['arrival_time'] = ['\n1.12.6']
+        item['bracket_number'] = ['4']
+        item['favorite_order'] = ['\n3    ']
+        item['final_600_meters_time'] = ['37.8']
+        item['horse_id'] = ['/directory/horse/2017100827/']
+        item['horse_number'] = ['\n7  ']
+        item['jockey_id'] = ['/directory/jocky/01092/']
+        item['odds'] = ['(4.9)']
+        item['passing_order'] = ['\n02-02']
+        item['race_id'] = ['1906050201']
+        item['result'] = ['\n2  ']
+        item['trainer_id'] = ['/directory/trainer/01100/']
+
+        # Before check
+        records = self.sess.query(RaceResultData).all()
+        eq_(len(records), 0)
+
+        # Execute
+        self.pipeline.process_item(item, None)
+
+        # Check db
+        records = self.sess.query(RaceResultData).all()
+        eq_(len(records), 1)
+
+        record = records[0]
+        eq_(len(record.id), 64)
+        eq_(record.arrival_margin, '1/2馬身')
+        eq_(record.arrival_time, '\n1.12.6')
+        eq_(record.bracket_number, '4')
+        eq_(record.favorite_order, '\n3    ')
+        eq_(record.final_600_meters_time, '37.8')
+        eq_(record.horse_id, '/directory/horse/2017100827/')
+        eq_(record.horse_number, '\n7  ')
+        eq_(record.jockey_id, '/directory/jocky/01092/')
+        eq_(record.odds, '(4.9)')
+        eq_(record.passing_order, '\n02-02')
+        eq_(record.race_id, '1906050201')
+        eq_(record.result, '\n2  ')
+        eq_(record.trainer_id, '/directory/trainer/01100/')
 
         # Execute (2)
         self.pipeline.process_item(item, None)

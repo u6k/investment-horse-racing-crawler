@@ -112,6 +112,7 @@ class HorseRacingSpider(scrapy.Spider):
             loader.add_xpath("horse_number", "td[3]/text()")
             loader.add_xpath("horse_id", "td[4]/a/@href")
             loader.add_xpath("arrival_time", "td[5]/text()[1]")
+            loader.add_xpath("arrival_margin", "td[5]/span/text()")
             loader.add_xpath("passing_order", "td[6]/text()[1]")
             loader.add_xpath("final_600_meters_time", "td[6]/span/text()")
             loader.add_xpath("jockey_id", "td[7]/a/@href")

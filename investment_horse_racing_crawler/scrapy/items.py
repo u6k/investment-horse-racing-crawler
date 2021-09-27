@@ -34,6 +34,7 @@ class RaceResultItem(Item):
     horse_number = Field()
     horse_id = Field()
     arrival_time = Field()
+    arrival_margin = Field()
     passing_order = Field()
     final_600_meters_time = Field()
     jockey_id = Field()

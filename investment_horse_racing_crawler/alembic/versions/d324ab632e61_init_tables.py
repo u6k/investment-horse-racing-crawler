@@ -53,6 +53,7 @@ def upgrade():
         sa.Column("horse_number", sa.String(255), nullable=True),
         sa.Column("horse_id", sa.String(255), nullable=True),
         sa.Column("arrival_time", sa.String(255), nullable=True),
+        sa.Column("arrival_margin", sa.String(255), nullable=True),
         sa.Column("passing_order", sa.String(255), nullable=True),
         sa.Column("final_600_meters_time", sa.String(255), nullable=True),
         sa.Column("jockey_id", sa.String(255), nullable=True),
