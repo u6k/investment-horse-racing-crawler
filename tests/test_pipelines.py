@@ -239,6 +239,20 @@ class TestPostgreSQLPipeline:
         item['name'] = ['エリンクロノス']
         item['owner'] = ['田頭 勇貴']
         item['trainer_id'] = ['/directory/trainer/01012/']
+        item['parent_horse_name_male_1'] = ['トーセンジョーダン']
+        item['parent_horse_name_male_21'] = ['ジャングルポケット']
+        item['parent_horse_name_male_22'] = ['ネオユニヴァース']
+        item['parent_horse_name_male_31'] = ['トニービン']
+        item['parent_horse_name_male_32'] = ['ノーザンテースト']
+        item['parent_horse_name_male_33'] = ['サンデーサイレンス']
+        item['parent_horse_name_male_34'] = ['Bluebird']
+        item['parent_horse_name_female_1'] = ['エリンズハープ']
+        item['parent_horse_name_female_21'] = ['エヴリウィスパー']
+        item['parent_horse_name_female_22'] = ['エリンバード']
+        item['parent_horse_name_female_31'] = ['ダンスチャーマー']
+        item['parent_horse_name_female_32'] = ['クラフテイワイフ']
+        item['parent_horse_name_female_33'] = ['ポインテッドパス']
+        item['parent_horse_name_female_34'] = ['Maid of Erin']
 
         # Before check
         records = self.sess.query(HorseData).all()
@@ -262,6 +276,20 @@ class TestPostgreSQLPipeline:
         eq_(record.name, 'エリンクロノス')
         eq_(record.owner, '田頭 勇貴')
         eq_(record.trainer_id, '/directory/trainer/01012/')
+        eq_(record.parent_horse_name_female_1, 'エリンズハープ')
+        eq_(record.parent_horse_name_female_21, 'エヴリウィスパー')
+        eq_(record.parent_horse_name_female_22, 'エリンバード')
+        eq_(record.parent_horse_name_female_31, 'ダンスチャーマー')
+        eq_(record.parent_horse_name_female_32, 'クラフテイワイフ')
+        eq_(record.parent_horse_name_female_33, 'ポインテッドパス')
+        eq_(record.parent_horse_name_female_34, 'Maid of Erin')
+        eq_(record.parent_horse_name_male_1, 'トーセンジョーダン')
+        eq_(record.parent_horse_name_male_21, 'ジャングルポケット')
+        eq_(record.parent_horse_name_male_22, 'ネオユニヴァース')
+        eq_(record.parent_horse_name_male_31, 'トニービン')
+        eq_(record.parent_horse_name_male_32, 'ノーザンテースト')
+        eq_(record.parent_horse_name_male_33, 'サンデーサイレンス')
+        eq_(record.parent_horse_name_male_34, 'Bluebird')
 
         # Execute (2)
         self.pipeline.process_item(item, None)

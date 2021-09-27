@@ -6,6 +6,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+### Added
+- [#9227: 祖先馬のデータを取得する](https://redmine.u6k.me/issues/9227)
+
 ### Changed
 - [#9111: CIをGitHub Actionsに、コンテナレジストリをGitHub Container Registryに移行する](https://redmine.u6k.me/issues/9111)
 - [#9104: クローラー仕様をlocal-horse-racingに合わせる](https://redmine.u6k.me/issues/9104)
