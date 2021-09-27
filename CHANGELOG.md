@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 ### Added
 - [#9227: 祖先馬のデータを取得する](https://redmine.u6k.me/issues/9227)
+- [#8411: レース結果から、着差・上がり3ハロンを取得する](https://redmine.u6k.me/issues/8411)
 
 ### Changed
 - [#9111: CIをGitHub Actionsに、コンテナレジストリをGitHub Container Registryに移行する](https://redmine.u6k.me/issues/9111)

@@ -26,6 +26,8 @@ class RaceInfoData(Base):
     course_type_length = sa.Column(sa.String())
     weather = sa.Column(sa.String())
     course_condition = sa.Column(sa.String())
+    race_condition_1 = sa.Column(sa.String())
+    race_condition_2 = sa.Column(sa.String())
     added_money = sa.Column(sa.String())
 
     @classmethod
@@ -44,6 +46,8 @@ class RaceInfoData(Base):
             course_type_length=item["course_type_length"][0] if "course_type_length" in item else None,
             weather=item["weather"][0] if "weather" in item else None,
             course_condition=item["course_condition"][0] if "course_condition" in item else None,
+            race_condition_1=item["race_condition_1"][0] if "race_condition_1" in item else None,
+            race_condition_2=item["race_condition_2"][0] if "race_condition_2" in item else None,
             added_money=item["added_money"][0] if "added_money" in item else None,
         )
 
@@ -85,17 +89,13 @@ class RaceResultData(Base):
     bracket_number = sa.Column(sa.String())
     horse_number = sa.Column(sa.String())
     horse_id = sa.Column(sa.String())
-    horse_name = sa.Column(sa.String())
-    horse_gender_age = sa.Column(sa.String())
-    horse_weight_and_diff = sa.Column(sa.String())
     arrival_time = sa.Column(sa.String())
+    passing_order = sa.Column(sa.String())
+    final_600_meters_time = sa.Column(sa.String())
     jockey_id = sa.Column(sa.String())
-    jockey_name = sa.Column(sa.String())
-    jockey_weight = sa.Column(sa.String())
     favorite_order = sa.Column(sa.String())
     odds = sa.Column(sa.String())
     trainer_id = sa.Column(sa.String())
-    trainer_name = sa.Column(sa.String())
 
     @classmethod
     def from_item(cls, item):
@@ -110,17 +110,13 @@ class RaceResultData(Base):
             result=item["result"][0] if "result" in item else None,
             bracket_number=item["bracket_number"][0] if "bracket_number" in item else None,
             horse_id=item["horse_id"][0] if "horse_id" in item else None,
-            horse_name=item["horse_name"][0] if "horse_name" in item else None,
-            horse_gender_age=item["horse_gender_age"][0] if "horse_gender_age" in item else None,
-            horse_weight_and_diff=item["horse_weight_and_diff"][0] if "horse_weight_and_diff" in item else None,
             arrival_time=item["arrival_time"][0] if "arrival_time" in item else None,
+            passing_order=item["passing_order"][0] if "passing_order" in item else None,
+            final_600_meters_time=item["final_600_meters_time"][0] if "final_600_meters_time" in item else None,
             jockey_id=item["jockey_id"][0] if "jockey_id" in item else None,
-            jockey_name=item["jockey_name"][0] if "jockey_name" in item else None,
-            jockey_weight=item["jockey_weight"][0] if "jockey_weight" in item else None,
             favorite_order=item["favorite_order"][0] if "favorite_order" in item else None,
             odds=item["odds"][0] if "odds" in item else None,
             trainer_id=item["trainer_id"][0] if "trainer_id" in item else None,
-            trainer_name=item["trainer_name"][0] if "trainer_name" in item else None,
         )
 
         return d
@@ -260,6 +256,8 @@ class JockeyData(Base):
     birthday = sa.Column(sa.String())
     belong_to = sa.Column(sa.String())
     first_licensing_year = sa.Column(sa.String())
+    first_entry_day = sa.Column(sa.String())
+    first_win_day = sa.Column(sa.String())
 
     @classmethod
     def from_item(cls, item):
@@ -274,6 +272,8 @@ class JockeyData(Base):
             birthday=item["birthday"][0] if "birthday" in item else None,
             belong_to=item["belong_to"][0] if "belong_to" in item else None,
             first_licensing_year=item["first_licensing_year"][0] if "first_licensing_year" in item else None,
+            first_entry_day=item["first_entry_day"][0] if "first_entry_day" in item else None,
+            first_win_day=item["first_win_day"][0] if "first_win_day" in item else None,
         )
 
         return d

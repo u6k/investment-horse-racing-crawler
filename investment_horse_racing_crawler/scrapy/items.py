@@ -14,6 +14,8 @@ class RaceInfoItem(Item):
     course_type_length = Field()
     weather = Field()
     course_condition = Field()
+    race_condition_1 = Field()
+    race_condition_2 = Field()
     added_money = Field()
 
 
@@ -31,17 +33,13 @@ class RaceResultItem(Item):
     bracket_number = Field()
     horse_number = Field()
     horse_id = Field()
-    horse_name = Field()
-    horse_gender_age = Field()
-    horse_weight_and_diff = Field()
     arrival_time = Field()
+    passing_order = Field()
+    final_600_meters_time = Field()
     jockey_id = Field()
-    jockey_name = Field()
-    jockey_weight = Field()
     favorite_order = Field()
     odds = Field()
     trainer_id = Field()
-    trainer_name = Field()
 
 
 class RaceDenmaItem(Item):
@@ -98,6 +96,8 @@ class JockeyItem(Item):
     birthday = Field()
     belong_to = Field()
     first_licensing_year = Field()
+    first_entry_day = Field()
+    first_win_day = Field()
 
 
 class OddsWinPlaceItem(Item):

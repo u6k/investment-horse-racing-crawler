@@ -54,6 +54,8 @@ class TestPostgreSQLPipeline:
         item['course_condition'] = ['良']
         item['course_type_length'] = ['ダート・右 1200m ']
         item['place_name'] = [' 5回中山2日 ']
+        item['race_condition_1'] = [' 2歳 ']
+        item['race_condition_2'] = [' 未勝利 （混合）[指定] 馬齢 ']
         item['race_id'] = ['1906050201']
         item['race_name'] = ['\n2歳未勝利']
         item['race_round'] = ['1R']
@@ -78,6 +80,8 @@ class TestPostgreSQLPipeline:
         eq_(record.course_condition, '良')
         eq_(record.course_type_length, 'ダート・右 1200m ')
         eq_(record.place_name, ' 5回中山2日 ')
+        eq_(record.race_condition_1, ' 2歳 ')
+        eq_(record.race_condition_2, ' 未勝利 （混合）[指定] 馬齢 ')
         eq_(record.race_id, '1906050201')
         eq_(record.race_name, '\n2歳未勝利')
         eq_(record.race_round, '1R')
@@ -133,19 +137,15 @@ class TestPostgreSQLPipeline:
         item['arrival_time'] = ['\n1.12.5']
         item['bracket_number'] = ['6']
         item['favorite_order'] = ['\n4    ']
-        item['horse_gender_age'] = ['\n牡2/484(-2)/    ']
+        item['final_600_meters_time'] = ['37.5']
         item['horse_id'] = ['/directory/horse/2017103493/']
-        item['horse_name'] = ['バウンティハンター']
         item['horse_number'] = ['\n12  ']
-        item['horse_weight_and_diff'] = ['\n牡2/484(-2)/    ']
         item['jockey_id'] = ['/directory/jocky/01109/']
-        item['jockey_name'] = ['黛 弘人']
-        item['jockey_weight'] = ['55.0']
         item['odds'] = ['(5.5)']
+        item['passing_order'] = ['\n05-04']
         item['race_id'] = ['1906050201']
         item['result'] = ['\n1  ']
         item['trainer_id'] = ['/directory/trainer/00435/']
-        item['trainer_name'] = ['藤原 辰雄']
 
         # Before check
         records = self.sess.query(RaceResultData).all()
@@ -163,19 +163,15 @@ class TestPostgreSQLPipeline:
         eq_(record.arrival_time, '\n1.12.5')
         eq_(record.bracket_number, '6')
         eq_(record.favorite_order, '\n4    ')
-        eq_(record.horse_gender_age, '\n牡2/484(-2)/    ')
+        eq_(record.final_600_meters_time, '37.5')
         eq_(record.horse_id, '/directory/horse/2017103493/')
-        eq_(record.horse_name, 'バウンティハンター')
         eq_(record.horse_number, '\n12  ')
-        eq_(record.horse_weight_and_diff, '\n牡2/484(-2)/    ')
         eq_(record.jockey_id, '/directory/jocky/01109/')
-        eq_(record.jockey_name, '黛 弘人')
-        eq_(record.jockey_weight, '55.0')
         eq_(record.odds, '(5.5)')
+        eq_(record.passing_order, '\n05-04')
         eq_(record.race_id, '1906050201')
         eq_(record.result, '\n1  ')
         eq_(record.trainer_id, '/directory/trainer/00435/')
-        eq_(record.trainer_name, '藤原 辰雄')
 
         # Execute (2)
         self.pipeline.process_item(item, None)
@@ -340,7 +336,9 @@ class TestPostgreSQLPipeline:
         item = JockeyItem()
         item['belong_to'] = ['\n美浦(藤沢 和雄)']
         item['birthday'] = ['1998年9月21日']
+        item['first_entry_day'] = ['2017/03/04 2回中山3日目5R ', '（13着/16頭） ']
         item['first_licensing_year'] = ['2017年（平地・障害）']
+        item['first_win_day'] = ['2017/04/15 1回福島3日目7R ']
         item['jockey_id'] = ['01167']
         item['name'] = ['木幡 育也']
         item['name_kana'] = ['コワタ イクヤ ']
@@ -360,7 +358,9 @@ class TestPostgreSQLPipeline:
         eq_(len(record.id), 64)
         eq_(record.belong_to, '\n美浦(藤沢 和雄)')
         eq_(record.birthday, '1998年9月21日')
+        eq_(record.first_entry_day, '2017/03/04 2回中山3日目5R ', '（13着/16頭） ')
         eq_(record.first_licensing_year, '2017年（平地・障害）')
+        eq_(record.first_win_day, '2017/04/15 1回福島3日目7R ')
         eq_(record.jockey_id, '01167')
         eq_(record.name, '木幡 育也')
         eq_(record.name_kana, 'コワタ イクヤ ')

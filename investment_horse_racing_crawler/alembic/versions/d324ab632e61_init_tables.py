@@ -29,6 +29,8 @@ def upgrade():
         sa.Column("course_type_length", sa.String(255), nullable=True),
         sa.Column("weather", sa.String(255), nullable=True),
         sa.Column("course_condition", sa.String(255), nullable=True),
+        sa.Column("race_condition_1", sa.String(255), nullable=True),
+        sa.Column("race_condition_2", sa.String(255), nullable=True),
         sa.Column("added_money", sa.String(255), nullable=True),
     )
 
@@ -50,17 +52,13 @@ def upgrade():
         sa.Column("bracket_number", sa.String(255), nullable=True),
         sa.Column("horse_number", sa.String(255), nullable=True),
         sa.Column("horse_id", sa.String(255), nullable=True),
-        sa.Column("horse_name", sa.String(255), nullable=True),
-        sa.Column("horse_gender_age", sa.String(255), nullable=True),
-        sa.Column("horse_weight_and_diff", sa.String(255), nullable=True),
         sa.Column("arrival_time", sa.String(255), nullable=True),
+        sa.Column("passing_order", sa.String(255), nullable=True),
+        sa.Column("final_600_meters_time", sa.String(255), nullable=True),
         sa.Column("jockey_id", sa.String(255), nullable=True),
-        sa.Column("jockey_name", sa.String(255), nullable=True),
-        sa.Column("jockey_weight", sa.String(255), nullable=True),
         sa.Column("favorite_order", sa.String(255), nullable=True),
         sa.Column("odds", sa.String(255), nullable=True),
         sa.Column("trainer_id", sa.String(255), nullable=True),
-        sa.Column("trainer_name", sa.String(255), nullable=True),
     )
 
     op.create_table(
@@ -125,6 +123,8 @@ def upgrade():
         sa.Column("birthday", sa.String(255), nullable=True),
         sa.Column("belong_to", sa.String(255), nullable=True),
         sa.Column("first_licensing_year", sa.String(255), nullable=True),
+        sa.Column("first_entry_day", sa.String(255), nullable=True),
+        sa.Column("first_win_day", sa.String(255), nullable=True),
     )
 
     op.create_table(
