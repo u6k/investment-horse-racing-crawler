@@ -90,6 +90,7 @@ class RaceResultData(Base):
     horse_number = sa.Column(sa.String())
     horse_id = sa.Column(sa.String())
     arrival_time = sa.Column(sa.String())
+    arrival_margin = sa.Column(sa.String())
     passing_order = sa.Column(sa.String())
     final_600_meters_time = sa.Column(sa.String())
     jockey_id = sa.Column(sa.String())
@@ -111,6 +112,7 @@ class RaceResultData(Base):
             bracket_number=item["bracket_number"][0] if "bracket_number" in item else None,
             horse_id=item["horse_id"][0] if "horse_id" in item else None,
             arrival_time=item["arrival_time"][0] if "arrival_time" in item else None,
+            arrival_margin=item["arrival_margin"][0] if "arrival_margin" in item else None,
             passing_order=item["passing_order"][0] if "passing_order" in item else None,
             final_600_meters_time=item["final_600_meters_time"][0] if "final_600_meters_time" in item else None,
             jockey_id=item["jockey_id"][0] if "jockey_id" in item else None,
