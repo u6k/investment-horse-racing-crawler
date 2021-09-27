@@ -2,9 +2,8 @@ name: build and push
 
 on:
   push:
-    # TODO
-    # branches:
-    #   - main
+    branches:
+      - main
 
 env:
   SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
