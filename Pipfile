@@ -4,15 +4,13 @@ url = "https://pypi.org/simple"
 verify_ssl = true
 
 [packages]
-scrapy = "*"
 flake8 = "*"
 autopep8 = "*"
 nose = "*"
+scrapy = "*"
 boto3 = "*"
-psycopg2 = "*"
 alembic = "*"
-Flask = "*"
-billiard = "*"
+psycopg2 = "*"
 requests = "*"
 
 [requires]
@@ -24,4 +22,5 @@ fix = "autopep8 -ivr ."
 test = "nosetests -v"
 check = "scrapy check horse_racing -L DEBUG"
 migrate = "alembic upgrade head"
-flask = "flask run --host=0.0.0.0"
+crawl = "scrapy crawl"
+help = "scrapy -h"
