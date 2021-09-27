@@ -173,6 +173,20 @@ class HorseData(Base):
     owner = sa.Column(sa.String())
     breeder = sa.Column(sa.String())
     breeding_farm = sa.Column(sa.String())
+    parent_horse_name_male_1 = sa.Column(sa.String())
+    parent_horse_name_male_21 = sa.Column(sa.String())
+    parent_horse_name_male_22 = sa.Column(sa.String())
+    parent_horse_name_male_31 = sa.Column(sa.String())
+    parent_horse_name_male_32 = sa.Column(sa.String())
+    parent_horse_name_male_33 = sa.Column(sa.String())
+    parent_horse_name_male_34 = sa.Column(sa.String())
+    parent_horse_name_female_1 = sa.Column(sa.String())
+    parent_horse_name_female_21 = sa.Column(sa.String())
+    parent_horse_name_female_22 = sa.Column(sa.String())
+    parent_horse_name_female_31 = sa.Column(sa.String())
+    parent_horse_name_female_32 = sa.Column(sa.String())
+    parent_horse_name_female_33 = sa.Column(sa.String())
+    parent_horse_name_female_34 = sa.Column(sa.String())
 
     @classmethod
     def from_item(cls, item):
@@ -190,6 +204,20 @@ class HorseData(Base):
             owner=item["owner"][0] if "owner" in item else None,
             breeder=item["breeder"][0] if "breeder" in item else None,
             breeding_farm=item["breeding_farm"][0] if "breeding_farm" in item else None,
+            parent_horse_name_male_1=item["parent_horse_name_male_1"][0] if "parent_horse_name_male_1" in item else None,
+            parent_horse_name_male_21=item["parent_horse_name_male_21"][0] if "parent_horse_name_male_21" in item else None,
+            parent_horse_name_male_22=item["parent_horse_name_male_22"][0] if "parent_horse_name_male_22" in item else None,
+            parent_horse_name_male_31=item["parent_horse_name_male_31"][0] if "parent_horse_name_male_31" in item else None,
+            parent_horse_name_male_32=item["parent_horse_name_male_32"][0] if "parent_horse_name_male_32" in item else None,
+            parent_horse_name_male_33=item["parent_horse_name_male_33"][0] if "parent_horse_name_male_33" in item else None,
+            parent_horse_name_male_34=item["parent_horse_name_male_34"][0] if "parent_horse_name_male_34" in item else None,
+            parent_horse_name_female_1=item["parent_horse_name_female_1"][0] if "parent_horse_name_female_1" in item else None,
+            parent_horse_name_female_21=item["parent_horse_name_female_21"][0] if "parent_horse_name_female_21" in item else None,
+            parent_horse_name_female_22=item["parent_horse_name_female_22"][0] if "parent_horse_name_female_22" in item else None,
+            parent_horse_name_female_31=item["parent_horse_name_female_31"][0] if "parent_horse_name_female_31" in item else None,
+            parent_horse_name_female_32=item["parent_horse_name_female_32"][0] if "parent_horse_name_female_32" in item else None,
+            parent_horse_name_female_33=item["parent_horse_name_female_33"][0] if "parent_horse_name_female_33" in item else None,
+            parent_horse_name_female_34=item["parent_horse_name_female_34"][0] if "parent_horse_name_female_34" in item else None,
         )
 
         return d

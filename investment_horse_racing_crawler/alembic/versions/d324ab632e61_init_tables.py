@@ -89,6 +89,20 @@ def upgrade():
         sa.Column("owner", sa.String(255), nullable=True),
         sa.Column("breeder", sa.String(255), nullable=True),
         sa.Column("breeding_farm", sa.String(255), nullable=True),
+        sa.Column("parent_horse_name_male_1", sa.String(255), nullable=True),
+        sa.Column("parent_horse_name_male_21", sa.String(255), nullable=True),
+        sa.Column("parent_horse_name_male_22", sa.String(255), nullable=True),
+        sa.Column("parent_horse_name_male_31", sa.String(255), nullable=True),
+        sa.Column("parent_horse_name_male_32", sa.String(255), nullable=True),
+        sa.Column("parent_horse_name_male_33", sa.String(255), nullable=True),
+        sa.Column("parent_horse_name_male_34", sa.String(255), nullable=True),
+        sa.Column("parent_horse_name_female_1", sa.String(255), nullable=True),
+        sa.Column("parent_horse_name_female_21", sa.String(255), nullable=True),
+        sa.Column("parent_horse_name_female_22", sa.String(255), nullable=True),
+        sa.Column("parent_horse_name_female_31", sa.String(255), nullable=True),
+        sa.Column("parent_horse_name_female_32", sa.String(255), nullable=True),
+        sa.Column("parent_horse_name_female_33", sa.String(255), nullable=True),
+        sa.Column("parent_horse_name_female_34", sa.String(255), nullable=True),
     )
 
     op.create_table(
