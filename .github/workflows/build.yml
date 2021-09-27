@@ -24,8 +24,8 @@ jobs:
         run: docker-compose run app pipenv run check
       - name: Migrate
         run: docker-compose run app pipenv run migrate
-      #- name: Test
-      #  run: docker-compose run app pipenv run test
+      - name: Test
+        run: docker-compose run app pipenv run test
 
       # Slack notification
       - name: Slack notification on success
