@@ -66,6 +66,20 @@ class HorseItem(Item):
     owner = Field()
     breeder = Field()
     breeding_farm = Field()
+    parent_horse_name_male_1 = Field()
+    parent_horse_name_male_21 = Field()
+    parent_horse_name_male_22 = Field()
+    parent_horse_name_male_31 = Field()
+    parent_horse_name_male_32 = Field()
+    parent_horse_name_male_33 = Field()
+    parent_horse_name_male_34 = Field()
+    parent_horse_name_female_1 = Field()
+    parent_horse_name_female_21 = Field()
+    parent_horse_name_female_22 = Field()
+    parent_horse_name_female_31 = Field()
+    parent_horse_name_female_32 = Field()
+    parent_horse_name_female_33 = Field()
+    parent_horse_name_female_34 = Field()
 
 
 class TrainerItem(Item):
