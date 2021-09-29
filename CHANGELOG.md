@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 ### Fixed
 - [#9229: crawl.shに実行権限が付いていない](https://redmine.u6k.me/issues/9229)
+- [#9230: RacePayoffItemのDB格納でエラーになることがある](https://redmine.u6k.me/issues/9230)
 
 ## [4.0.1] - 2021-09-28
 ### Fixed
