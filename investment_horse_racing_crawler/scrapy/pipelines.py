@@ -65,6 +65,9 @@ class RacePayoffData(Base):
 
     @classmethod
     def from_item(cls, item):
+        if "horse_number" not in item:
+            return None
+
         race_id = item["race_id"][0]
         horse_number = item["horse_number"][0]
         id = hashlib.sha256((race_id + "." + horse_number).encode()).hexdigest()
@@ -491,58 +494,48 @@ class PostgreSQLPipeline(object):
             try:
                 # Build query
                 if isinstance(item, RaceInfoItem):
-                    d = RaceInfoData.from_item(item)
-                    q = sess.query(RaceInfoData).filter(RaceInfoData.id == d.id)
+                    clazz = RaceInfoData
                 elif isinstance(item, RacePayoffItem):
-                    d = RacePayoffData.from_item(item)
-                    q = sess.query(RacePayoffData).filter(RacePayoffData.id == d.id)
+                    clazz = RacePayoffData
                 elif isinstance(item, RaceResultItem):
-                    d = RaceResultData.from_item(item)
-                    q = sess.query(RaceResultData).filter(RaceResultData.id == d.id)
+                    clazz = RaceResultData
                 elif isinstance(item, RaceDenmaItem):
-                    d = RaceDenmaData.from_item(item)
-                    q = sess.query(RaceDenmaData).filter(RaceDenmaData.id == d.id)
+                    clazz = RaceDenmaData
                 elif isinstance(item, HorseItem):
-                    d = HorseData.from_item(item)
-                    q = sess.query(HorseData).filter(HorseData.id == d.id)
+                    clazz = HorseData
                 elif isinstance(item, TrainerItem):
-                    d = TrainerData.from_item(item)
-                    q = sess.query(TrainerData).filter(TrainerData.id == d.id)
+                    clazz = TrainerData
                 elif isinstance(item, JockeyItem):
-                    d = JockeyData.from_item(item)
-                    q = sess.query(JockeyData).filter(JockeyData.id == d.id)
+                    clazz = JockeyData
                 elif isinstance(item, OddsWinPlaceItem):
-                    d = OddsWinPlaceData.from_item(item)
-                    q = sess.query(OddsWinPlaceData).filter(OddsWinPlaceData.id == d.id)
+                    clazz = OddsWinPlaceData
                 elif isinstance(item, OddsBracketQuinellaItem):
-                    d = OddsBracketQuinellaData.from_item(item)
-                    q = sess.query(OddsBracketQuinellaData).filter(OddsBracketQuinellaData.id == d.id)
+                    clazz = OddsBracketQuinellaData
                 elif isinstance(item, OddsExactaItem):
-                    d = OddsExactaData.from_item(item)
-                    q = sess.query(OddsExactaData).filter(OddsExactaData.id == d.id)
+                    clazz = OddsExactaData
                 elif isinstance(item, OddsQuinellaItem):
-                    d = OddsQuinellaData.from_item(item)
-                    q = sess.query(OddsQuinellaData).filter(OddsQuinellaData.id == d.id)
+                    clazz = OddsQuinellaData
                 elif isinstance(item, OddsQuinellaPlaceItem):
-                    d = OddsQuinellaPlaceData.from_item(item)
-                    q = sess.query(OddsQuinellaPlaceData).filter(OddsQuinellaPlaceData.id == d.id)
+                    clazz = OddsQuinellaPlaceData
                 elif isinstance(item, OddsTrifectaItem):
-                    d = OddsTrifectaData.from_item(item)
-                    q = sess.query(OddsTrifectaData).filter(OddsTrifectaData.id == d.id)
+                    clazz = OddsTrifectaData
                 elif isinstance(item, OddsTrioItem):
-                    d = OddsTrioData.from_item(item)
-                    q = sess.query(OddsTrioData).filter(OddsTrioData.id == d.id)
+                    clazz = OddsTrioData
                 else:
                     raise DropItem("Unknown item type")
 
-                # Delete data
-                logger.debug(f"#process_item: delete: id={d.id}")
-                q.delete()
+                data = clazz.from_item(item)
+                if data is not None:
+                    query = sess.query(clazz).filter(clazz.id == data.id)
 
-                # Insert data
-                logger.debug(f"#process_item: insert: data={d.__dict__}")
-                sess.add(d)
-                sess.commit()
+                    # Delete data
+                    logger.debug(f"#process_item: delete: id={data.id}")
+                    query.delete()
+
+                    # Insert data
+                    logger.debug(f"#process_item: insert: data={data.__dict__}")
+                    sess.add(data)
+                    sess.commit()
             except Exception as e:
                 logger.exception("except Exception")
                 raise DropItem("except Exception") from e
