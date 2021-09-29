@@ -72,7 +72,7 @@ class HorseRacingSpider(scrapy.Spider):
     def parse_race_result(self, response):
         """ Parse race result page.
 
-        @url https://keiba.yahoo.co.jp/race/result/1906050201/
+        @url https://keiba.yahoo.co.jp/race/result/2110040606/
         @returns items 1
         @returns requests 0 0
         @race_result

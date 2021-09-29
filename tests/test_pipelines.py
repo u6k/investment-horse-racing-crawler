@@ -96,7 +96,7 @@ class TestPostgreSQLPipeline:
         records = self.sess.query(RaceInfoData).all()
         eq_(len(records), 1)
 
-    def test_process_race_payoff_item(self):
+    def test_process_race_payoff_item_1(self):
         # Setup
         item = RacePayoffItem()
         item['favorite_order'] = ['4番人気']
@@ -130,6 +130,25 @@ class TestPostgreSQLPipeline:
         # Check db (2)
         records = self.sess.query(RacePayoffData).all()
         eq_(len(records), 1)
+
+    def test_process_race_payoff_item_2(self):
+        # Setup
+        item = RacePayoffItem()
+        item['favorite_order'] = ['-番人気']
+        item['odds'] = ['円']
+        item['payoff_type'] = ['枠連']
+        item['race_id'] = ['2110040606']
+
+        # Before check
+        records = self.sess.query(RacePayoffData).all()
+        eq_(len(records), 0)
+
+        # Execute
+        self.pipeline.process_item(item, None)
+
+        # Check db
+        records = self.sess.query(RacePayoffData).all()
+        eq_(len(records), 0)
 
     def test_process_race_result_item_1(self):
         # Setup
