@@ -70,13 +70,14 @@ class RacePayoffData(Base):
 
         race_id = item["race_id"][0]
         horse_number = item["horse_number"][0]
-        id = hashlib.sha256((race_id + "." + horse_number).encode()).hexdigest()
+        payoff_type = item["payoff_type"][0]
+        id = hashlib.sha256((race_id + "." + payoff_type + "." + horse_number).encode()).hexdigest()
 
         d = cls(
             id=id,
             race_id=race_id,
             horse_number=horse_number,
-            payoff_type=item["payoff_type"][0] if "payoff_type" in item else None,
+            payoff_type=payoff_type,
             odds=item["odds"][0] if "odds" in item else None,
             favorite_order=item["favorite_order"][0] if "favorite_order" in item else None,
         )
