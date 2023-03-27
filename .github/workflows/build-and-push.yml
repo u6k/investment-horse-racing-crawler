@@ -23,7 +23,7 @@ jobs:
       # - name: Setup dotenv
       #   run: cp .env.original .env
       - name: Lint
-        run: docker-compose run app poetry run pflake8 ./horse_racing_crawler/ ./tests/
+        run: docker-compose run app poe lint
       # - name: Scrapy check
       #   run: docker-compose run app pipenv run check
       # - name: Migrate
