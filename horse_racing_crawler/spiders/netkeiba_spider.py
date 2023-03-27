@@ -11,8 +11,7 @@ class NetkeibaSpider(scrapy.Spider):
         self.start_urls = [start_url]
 
     def parse(self, response):
-        """Parse start_url.
-        """
+        """Parse start_url."""
         self.logger.info(f"#parse: start: response={response.url}")
 
         yield self._follow(self.start_urls[0])
@@ -29,8 +28,7 @@ class NetkeibaSpider(scrapy.Spider):
             return scrapy.Request(url, callback=self.parse_race_list)
 
     def parse_calendar(self, response):
-        """Parse calendar page.
-        """
+        """Parse calendar page."""
         self.logger.info(f"#parse_calendar: start: response={response.url}")
 
         for a in response.xpath("//a"):
@@ -41,6 +39,5 @@ class NetkeibaSpider(scrapy.Spider):
                 yield self._follow(race_list_url)
 
     def parse_race_list(self, response):
-        """Parse race_list page.
-        """
+        """Parse race_list page."""
         self.logger.info(f"#parse_race_list: start: response={response.url}")
