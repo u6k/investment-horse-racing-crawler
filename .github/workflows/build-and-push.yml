@@ -24,12 +24,8 @@ jobs:
       #   run: cp .env.original .env
       - name: Lint
         run: docker-compose run app poe lint
-      # - name: Scrapy check
-      #   run: docker-compose run app pipenv run check
-      # - name: Migrate
-      #   run: docker-compose run app pipenv run migrate
-      # - name: Test
-      #   run: docker-compose run app pipenv run test
+      - name: Test
+        run: docker-compose run app poe test
       - name: Login to GitHub Container Repository
         uses: docker/login-action@v1
         with:
