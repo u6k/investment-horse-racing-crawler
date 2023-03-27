@@ -35,3 +35,4 @@ line_length = 1000
 [tool.poe.tasks]
 lint = "pflake8 ./horse_racing_crawler/ ./tests/"
 fix = [{cmd="black ./horse_racing_crawler/ ./tests/"}, {cmd="isort ./horse_racing_crawler/ ./tests/"}]
+test = [{cmd="scrapy check netkeiba_spider -L DEBUG"}]
