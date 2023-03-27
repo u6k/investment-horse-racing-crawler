@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 ### Added
 - [#9911: Scrapyプロジェクトを新規構築して、カレンダーページのみスクレイピングする](https://redmine.u6k.me/issues/9911)
+- [#9913: コードフォーマット、Lintチェックを実行する](https://redmine.u6k.me/issues/9913)
 
 ### Changed
 - [#9910: パッケージ管理をPoetryに移行する](https://redmine.u6k.me/issues/9910)
