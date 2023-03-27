@@ -16,6 +16,10 @@ DOWNLOAD_DELAY = 1
 DOWNLOAD_TIMEOUT = 60
 RETRY_TIMES = 10
 
+SPIDER_CONTRACTS = {
+    "horse_racing_crawler.contracts.CalendarContract": 10,
+}
+
 # Set settings whose default value is deprecated to a future-proof value
 REQUEST_FINGERPRINTER_IMPLEMENTATION = "2.7"
 TWISTED_REACTOR = "twisted.internet.asyncioreactor.AsyncioSelectorReactor"
