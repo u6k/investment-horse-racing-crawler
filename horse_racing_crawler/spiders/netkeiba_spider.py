@@ -28,7 +28,13 @@ class NetkeibaSpider(scrapy.Spider):
             return scrapy.Request(url, callback=self.parse_race_list)
 
     def parse_calendar(self, response):
-        """Parse calendar page."""
+        """Parse calendar page.
+
+        @url https://race.netkeiba.com/top/calendar.html?year=2023&month=3
+        @returns items 0 0
+        @returns requests 8 8
+        @calendar_contract
+        """
         self.logger.info(f"#parse_calendar: start: response={response.url}")
 
         for a in response.xpath("//a"):
