@@ -5,5 +5,9 @@ services:
     build: .
     volumes:
       - ".:/var/myapp"
-    environment:
-      - "TZ=Asia/Tokyo"
+    env_file: .env
+
+  s3:
+    image: quay.io/minio/minio
+    env_file: .env
+    command: server /data

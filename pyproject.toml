@@ -9,6 +9,8 @@ packages = [{include = "horse_racing_crawler"}]
 [tool.poetry.dependencies]
 python = "^3.9"
 scrapy = "2.8.0"
+boto3 = "1.26.99"
+joblib = "1.2.0"
 
 
 [tool.poetry.group.dev.dependencies]
