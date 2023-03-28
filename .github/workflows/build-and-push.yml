@@ -23,7 +23,7 @@ jobs:
       - name: Setup dotenv
         run: cp .env.original .env
       - name: Start MiniO
-        run: docker-compose up -d
+        run: docker-compose up -d s3
       - name: Lint
         run: docker-compose run app poe lint
       - name: Test
