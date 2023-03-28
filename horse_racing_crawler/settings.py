@@ -1,3 +1,4 @@
+import logging
 import os
 
 BOT_NAME = "horse_racing_crawler"
@@ -16,6 +17,9 @@ DOWNLOAD_DELAY = 1
 DOWNLOAD_TIMEOUT = 60
 RETRY_TIMES = 10
 
+HTTPCACHE_ENABLED = True
+HTTPCACHE_STORAGE = "horse_racing_crawler.middlewares.S3CacheStorage"
+
 SPIDER_CONTRACTS = {
     "horse_racing_crawler.contracts.CalendarContract": 10,
 }
@@ -24,3 +28,13 @@ SPIDER_CONTRACTS = {
 REQUEST_FINGERPRINTER_IMPLEMENTATION = "2.7"
 TWISTED_REACTOR = "twisted.internet.asyncioreactor.AsyncioSelectorReactor"
 FEED_EXPORT_ENCODING = "utf-8"
+
+logging.getLogger("boto3").setLevel(logging.INFO)
+logging.getLogger("botocore").setLevel(logging.INFO)
+
+S3_ENDPOINT = os.environ["S3_ENDPOINT"]
+S3_REGION = os.environ["S3_REGION"]
+S3_ACCESS_KEY = os.environ["S3_ACCESS_KEY"]
+S3_SECRET_KEY = os.environ["S3_SECRET_KEY"]
+S3_BUCKET = os.environ["S3_BUCKET"]
+S3_FOLDER = os.environ["S3_FOLDER"]
