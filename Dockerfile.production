@@ -18,6 +18,6 @@ RUN echo 'forward-socks5 / localhost:9050 .' >/etc/privoxy/config
 WORKDIR /var/myapp
 
 COPY . /var/myapp
-RUN poetry install --no-root
+RUN poetry install --no-root --without dev
 
 CMD ["poetry", "help"]
