@@ -3,6 +3,7 @@ import os
 
 BOT_NAME = "horse_racing_crawler"
 USER_AGENT = os.environ.get("USER_AGENT", "horse_racing_crawler/1.0 (+https://github.com/u6k/investment-horse-racing-crawler)")
+CRAWL_HTTP_PROXY = os.environ.get("CRAWL_HTTP_PROXY")
 
 SPIDER_MODULES = ["horse_racing_crawler.spiders"]
 NEWSPIDER_MODULE = "horse_racing_crawler.spiders"

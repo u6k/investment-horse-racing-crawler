@@ -19,13 +19,18 @@ class NetkeibaSpider(scrapy.Spider):
     def _follow(self, url):
         self.logger.debug(f"#_follow: start: url={url}")
 
+        meta = {}
+        if self.settings["CRAWL_HTTP_PROXY"]:
+            meta["proxy"] = self.settings["CRAWL_HTTP_PROXY"]
+        self.logger.debug(f"#_follow: start: meta={meta}")
+
         if url.startswith("https://race.netkeiba.com/top/calendar.html"):
             self.logger.debug("#_follow: follow calendar page")
-            return scrapy.Request(url, callback=self.parse_calendar)
+            return scrapy.Request(url, callback=self.parse_calendar, meta=meta)
 
         if url.startswith("https://race.netkeiba.com/top/race_list.html?kaisai_date="):
             self.logger.debug("#_follow: follow race_list page")
-            return scrapy.Request(url, callback=self.parse_race_list)
+            return scrapy.Request(url, callback=self.parse_race_list, meta=meta)
 
     def parse_calendar(self, response):
         """Parse calendar page.
