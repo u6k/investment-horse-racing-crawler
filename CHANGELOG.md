@@ -15,6 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 - [#9910: パッケージ管理をPoetryに移行する](https://redmine.u6k.me/issues/9910)
+- [#9923: poe installにwithoutオプションを指定する](https://redmine.u6k.me/issues/9923)
 
 ## [4.0.4] - 2021-11-20
 ### Fixed
