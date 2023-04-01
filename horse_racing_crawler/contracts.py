@@ -33,7 +33,7 @@ class RaceListContract(Contract):
             url = urlparse(r.url)
             qs = parse_qs(url.query)
 
-            if url.hostname == "race.netkeiba.com" and url.path == "/top/race_list_sub.html" and "kaisai_date" in qs:
+            if url.hostname == "race.netkeiba.com" and url.path == "/race/result.html" and "race_id" in qs:
                 continue
 
             raise ContractFail(f"Unknown request: url={r.url}")

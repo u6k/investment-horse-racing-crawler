@@ -82,5 +82,8 @@ class NetkeibaSpider(scrapy.Spider):
                 yield self._follow(race_result_url)
 
     def parse_race_result(self, response):
-        """Parse race_result page."""
+        """Parse race_result page.
+
+        @url https://race.netkeiba.com/race/result.html?race_id=202306020702
+        """
         self.logger.info(f"#parse_race_result: start: response={response.url}")
