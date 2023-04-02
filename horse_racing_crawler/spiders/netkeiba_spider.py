@@ -112,6 +112,9 @@ class NetkeibaSpider(scrapy.Spider):
         """Parse race_result page.
 
         @url https://race.netkeiba.com/race/result.html?race_id=202306020702
+        @returns items 27 27
+        @returns requests 50 50
+        @race_result_contract
         """
         self.logger.info(f"#parse_race_result: start: response={response.url}")
 
