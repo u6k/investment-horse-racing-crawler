@@ -58,8 +58,8 @@ class RaceResultContract(Contract):
         assert i["race_id"][0] == "202306020702"
         assert i["race_round"][0].strip() == "2R"
         assert i["race_name"][0].strip() == "3歳未勝利"
-        assert i["race_data1"][0].strip() == "10:35発走 / ダ1800m (右)\n      / 天候:雨\n      \n      / 馬場:重"
-        assert i["race_data2"][0].strip() == "2回\n        中山\n        7日目\n        サラ系３歳\n        未勝利\n        \xa0\xa0\xa0\xa0\xa0\n        (混)[指]\n        馬齢\n        16頭\n        \n        本賞金:550,220,140,83,55万円"
+        assert i["race_data1"][0].strip() == "10:35発走 / ダ1800m (右)\n/ 天候:雨\n\n/ 馬場:重"
+        assert i["race_data2"][0].strip() == "2回\n中山\n7日目\nサラ系３歳\n未勝利\n\xa0\xa0\xa0\xa0\xa0\n(混)[指]\n馬齢\n16頭\n\n本賞金:550,220,140,83,55万円"
 
         # race result
         items = list(filter(lambda o: isinstance(o, RaceResultItem), output))
