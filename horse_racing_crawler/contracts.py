@@ -402,9 +402,9 @@ class RaceResultContract(Contract):
         requests = list(filter(lambda o: isinstance(o, Request), output))
 
         # odds page
-        odds_page_links = list(filter(lambda r: r.url.startswith("https://race.netkeiba.com/odds/index.html?race_id="), requests))
+        odds_page_links = list(filter(lambda r: r.url.startswith("https://race.netkeiba.com/api/api_get_jra_odds.html?type="), requests))
 
-        assert len(odds_page_links) == 1
+        assert len(odds_page_links) == 7
 
         # training page
         training_page_links = list(filter(lambda r: r.url.startswith("https://race.netkeiba.com/race/oikiri.html?race_id="), requests))

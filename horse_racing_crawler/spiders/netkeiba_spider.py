@@ -1,4 +1,5 @@
 import re
+import time
 from urllib.parse import parse_qs, urlparse
 
 import scrapy
@@ -43,9 +44,33 @@ class NetkeibaSpider(scrapy.Spider):
             self.logger.debug("#_follow: follow race_result page")
             return scrapy.Request(url, callback=self.parse_race_result, meta=meta)
 
-        elif url.startswith("https://race.netkeiba.com/odds/index.html?race_id="):
-            self.logger.debug("#_follow: follow race_odds_top page")
-            return scrapy.Request(url, callback=self.parse_race_odds_top, meta=meta)
+        elif url.startswith("https://race.netkeiba.com/api/api_get_jra_odds.html?type=1&race_id="):
+            self.logger.debug("#_follow: follow race_odds_win_place page")
+            return scrapy.Request(url, callback=self.parse_race_odds_win_place, meta=meta)
+
+        elif url.startswith("https://race.netkeiba.com/api/api_get_jra_odds.html?type=3&race_id="):
+            self.logger.debug("#_follow: follow race_odds_bracket_quinella page")
+            return scrapy.Request(url, callback=self.parse_race_odds_bracket_quinella, meta=meta)
+
+        elif url.startswith("https://race.netkeiba.com/api/api_get_jra_odds.html?type=4&race_id="):
+            self.logger.debug("#_follow: follow race_odds_quinella page")
+            return scrapy.Request(url, callback=self.parse_race_odds_quinella, meta=meta)
+
+        elif url.startswith("https://race.netkeiba.com/api/api_get_jra_odds.html?type=5&race_id="):
+            self.logger.debug("#_follow: follow race_odds_win_quinella_place page")
+            return scrapy.Request(url, callback=self.parse_race_odds_quinella_place, meta=meta)
+
+        elif url.startswith("https://race.netkeiba.com/api/api_get_jra_odds.html?type=6&race_id="):
+            self.logger.debug("#_follow: follow race_odds_exacta page")
+            return scrapy.Request(url, callback=self.parse_race_odds_exacta, meta=meta)
+
+        elif url.startswith("https://race.netkeiba.com/api/api_get_jra_odds.html?type=7&race_id="):
+            self.logger.debug("#_follow: follow race_odds_trio page")
+            return scrapy.Request(url, callback=self.parse_race_odds_trio, meta=meta)
+
+        elif url.startswith("https://race.netkeiba.com/api/api_get_jra_odds.html?type=8&race_id="):
+            self.logger.debug("#_follow: follow race_odds_trifecta page")
+            return scrapy.Request(url, callback=self.parse_race_odds_trifecta, meta=meta)
 
         elif url.startswith("https://race.netkeiba.com/race/oikiri.html?race_id="):
             self.logger.debug("#_follow: follow race_training page")
@@ -113,7 +138,7 @@ class NetkeibaSpider(scrapy.Spider):
 
         @url https://race.netkeiba.com/race/result.html?race_id=202306020702
         @returns items 27 27
-        @returns requests 50 50
+        @returns requests 56 56
         @race_result_contract
         """
         self.logger.info(f"#parse_race_result: start: response={response.url}")
@@ -155,6 +180,7 @@ class NetkeibaSpider(scrapy.Spider):
         assert tr.xpath("string(th[14])").extract_first() == "厩舎", tr.xpath("string(th[14])").extract_first()
         assert tr.xpath("string(th[15])").extract_first() == "馬体重(増減)", tr.xpath("string(th[15])").extract_first()
 
+        horse_number = 0
         for tr in response.xpath("//table[@id='All_Result_Table']/tbody/tr"):
             loader = ItemLoader(item=RaceResultItem(), selector=tr)
             loader.add_value("race_id", race_result_url_qs["race_id"])
@@ -175,6 +201,8 @@ class NetkeibaSpider(scrapy.Spider):
 
             self.logger.info(f"#parse_race_result: race_result={i}")
             yield i
+
+            horse_number += 1
 
         # Parse race payoff
         self.logger.info("#parse_race_result: parse race payoff")
@@ -286,7 +314,34 @@ class NetkeibaSpider(scrapy.Spider):
             if url.hostname == "race.netkeiba.com" and url.path == "/odds/index.html" and "race_id" in url_qs:
                 self.logger.info(f"#parse_race_result: odds top page link. a={url.geturl()}")
 
-                race_odds_url = f"https://race.netkeiba.com/odds/index.html?race_id={url_qs['race_id'][0]}"
+                t = int(time.time())  # キャッシュ回避のため、リクエストに付与する現在時刻
+
+                # 単勝・複勝
+                race_odds_url = f"https://race.netkeiba.com/api/api_get_jra_odds.html?type=1&race_id={url_qs['race_id'][0]}&_={t}"
+                yield self._follow(race_odds_url)
+
+                # 枠連
+                race_odds_url = f"https://race.netkeiba.com/api/api_get_jra_odds.html?type=3&race_id={url_qs['race_id'][0]}&_={t}"
+                yield self._follow(race_odds_url)
+
+                # 馬連
+                race_odds_url = f"https://race.netkeiba.com/api/api_get_jra_odds.html?type=4&race_id={url_qs['race_id'][0]}&_={t}"
+                yield self._follow(race_odds_url)
+
+                # ワイド
+                race_odds_url = f"https://race.netkeiba.com/api/api_get_jra_odds.html?type=5&race_id={url_qs['race_id'][0]}&_={t}"
+                yield self._follow(race_odds_url)
+
+                # 馬単
+                race_odds_url = f"https://race.netkeiba.com/api/api_get_jra_odds.html?type=6&race_id={url_qs['race_id'][0]}&_={t}"
+                yield self._follow(race_odds_url)
+
+                # 3連複
+                race_odds_url = f"https://race.netkeiba.com/api/api_get_jra_odds.html?type=7&race_id={url_qs['race_id'][0]}&_={t}"
+                yield self._follow(race_odds_url)
+
+                # 3連単
+                race_odds_url = f"https://race.netkeiba.com/api/api_get_jra_odds.html?type=8&race_id={url_qs['race_id'][0]}&_={t}"
                 yield self._follow(race_odds_url)
 
             elif url.hostname == "race.netkeiba.com" and url.path == "/race/oikiri.html" and "race_id" in url_qs:
@@ -319,8 +374,26 @@ class NetkeibaSpider(scrapy.Spider):
 
                 yield self._follow(trainer_url)
 
-    def parse_race_odds_top(self, response):
-        self.logger.info(f"#parse_race_odds_top: start: response={response.url}")
+    def parse_race_odds_win_place(self, response):
+        self.logger.info(f"#parse_race_odds_win_place: start: response={response.url}")
+
+    def parse_race_odds_bracket_quinella(self, response):
+        self.logger.info(f"#parse_race_odds_bracket_quinella: start: response={response.url}")
+
+    def parse_race_odds_quinella(self, response):
+        self.logger.info(f"#parse_race_odds_quinella: start: response={response.url}")
+
+    def parse_race_odds_quinella_place(self, response):
+        self.logger.info(f"#parse_race_odds_quinella_place: start: response={response.url}")
+
+    def parse_race_odds_exacta(self, response):
+        self.logger.info(f"#parse_race_odds_exacta: start: response={response.url}")
+
+    def parse_race_odds_trio(self, response):
+        self.logger.info(f"#parse_race_odds_trio: start: response={response.url}")
+
+    def parse_race_odds_trifecta(self, response):
+        self.logger.info(f"#parse_race_odds_trifecta: start: response={response.url}")
 
     def parse_race_training(self, response):
         self.logger.info(f"#parse_race_training: start: response={response.url}")
