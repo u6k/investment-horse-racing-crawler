@@ -49,3 +49,12 @@ class RaceLapTimeItem(Item):
     length = Field()
     time1 = Field()
     time2 = Field()
+
+
+class OddsItem(Item):
+    race_id = Field()
+    odds_type = Field()
+    horse_number = Field()
+    odds1 = Field()
+    odds2 = Field()
+    favorite_order = Field()

@@ -1,3 +1,4 @@
+import json
 import re
 import time
 from urllib.parse import parse_qs, urlparse
@@ -5,7 +6,7 @@ from urllib.parse import parse_qs, urlparse
 import scrapy
 from scrapy.loader import ItemLoader
 
-from horse_racing_crawler.items import RaceCornerPassingItem, RaceInfoItem, RaceLapTimeItem, RacePayoffItem, RaceResultItem
+from horse_racing_crawler.items import OddsItem, RaceCornerPassingItem, RaceInfoItem, RaceLapTimeItem, RacePayoffItem, RaceResultItem
 
 
 class NetkeibaSpider(scrapy.Spider):
@@ -375,7 +376,37 @@ class NetkeibaSpider(scrapy.Spider):
                 yield self._follow(trainer_url)
 
     def parse_race_odds_win_place(self, response):
+        """Parse odds_win_place page.
+
+        @url https://race.netkeiba.com/api/api_get_jra_odds.html?type=1&race_id=202306020702
+        @returns items 32
+        @returns requests 0 0
+        @odds_win_place_contract
+        """
         self.logger.info(f"#parse_race_odds_win_place: start: response={response.url}")
+
+        odds_url = urlparse(response.url)
+        odds_qs = parse_qs(odds_url.query)
+
+        # Assertion
+        json_odds = json.loads(response.text)
+
+        assert json_odds["status"] == "result"
+        assert json_odds["data"]["official_datetime"] is not None
+
+        # Parse win odds
+        for horse_number, odds in json_odds["data"]["odds"]["1"].items():
+            item = OddsItem(race_id=odds_qs["race_id"], odds_type=1, horse_number=horse_number, odds1=odds[0], odds2=odds[1], favorite_order=odds[2])
+
+            self.logger.debug(f"#parse_race_odds_win_place: odds={item}")
+            yield item
+
+        # Parse place odds
+        for horse_number, odds in json_odds["data"]["odds"]["2"].items():
+            item = OddsItem(race_id=odds_qs["race_id"], odds_type=2, horse_number=horse_number, odds1=odds[0], odds2=odds[1], favorite_order=odds[2])
+
+            self.logger.debug(f"#parse_race_odds_win_place: odds={item}")
+            yield item
 
     def parse_race_odds_bracket_quinella(self, response):
         self.logger.info(f"#parse_race_odds_bracket_quinella: start: response={response.url}")
