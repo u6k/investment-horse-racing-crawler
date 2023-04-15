@@ -798,3 +798,50 @@ class OddsQuinellaContract(Contract):
         assert i["odds2"] == ""
         assert i["odds_type"] == 4
         assert i["race_id"] == ["202306020702"]
+
+
+class OddsQuinellaPlaceContract(Contract):
+    name = "odds_quinella_place_contract"
+
+    def post_process(self, output):
+        #
+        # Check items
+        #
+
+        odds_items = list(filter(lambda o: isinstance(o, OddsItem), output))
+
+        items = list(filter(lambda i: i["odds_type"] == 5, odds_items))
+
+        assert len(odds_items) == len(items)
+
+        i = items[0]
+        assert i["favorite_order"] == "22"
+        assert i["horse_number"] == "0102"
+        assert i["odds1"] == "24.1"
+        assert i["odds2"] == "26.9"
+        assert i["odds_type"] == 5
+        assert i["race_id"] == ["202306020702"]
+
+        i = items[1]
+        assert i["favorite_order"] == "79"
+        assert i["horse_number"] == "0103"
+        assert i["odds1"] == "331.2"
+        assert i["odds2"] == "349.0"
+        assert i["odds_type"] == 5
+        assert i["race_id"] == ["202306020702"]
+
+        i = items[118]
+        assert i["favorite_order"] == "31"
+        assert i["horse_number"] == "1416"
+        assert i["odds1"] == "45.5"
+        assert i["odds2"] == "51.6"
+        assert i["odds_type"] == 5
+        assert i["race_id"] == ["202306020702"]
+
+        i = items[119]
+        assert i["favorite_order"] == "85"
+        assert i["horse_number"] == "1516"
+        assert i["odds1"] == "450.4"
+        assert i["odds2"] == "468.1"
+        assert i["odds_type"] == 5
+        assert i["race_id"] == ["202306020702"]
