@@ -6,7 +6,7 @@ from urllib.parse import parse_qs, urlparse
 import scrapy
 from scrapy.loader import ItemLoader
 
-from horse_racing_crawler.items import OddsItem, RaceCornerPassingItem, RaceInfoItem, RaceLapTimeItem, RacePayoffItem, RaceResultItem
+from horse_racing_crawler.items import OddsItem, RaceCornerPassingItem, RaceInfoItem, RaceLapTimeItem, RacePayoffItem, RaceResultItem, TrainingItem
 
 
 class NetkeibaSpider(scrapy.Spider):
@@ -74,8 +74,8 @@ class NetkeibaSpider(scrapy.Spider):
             return scrapy.Request(url, callback=self.parse_race_odds_trifecta, meta=meta)
 
         elif url.startswith("https://race.netkeiba.com/race/oikiri.html?race_id="):
-            self.logger.debug("#_follow: follow race_training page")
-            return scrapy.Request(url, callback=self.parse_race_training, meta=meta)
+            self.logger.debug("#_follow: follow training page")
+            return scrapy.Request(url, callback=self.parse_training, meta=meta)
 
         elif url.startswith("https://db.netkeiba.com/horse/"):
             self.logger.debug("#_follow: follow horse page")
@@ -564,8 +564,39 @@ class NetkeibaSpider(scrapy.Spider):
             self.logger.debug(f"#parse_race_odds_trifecta: odds={item}")
             yield item
 
-    def parse_race_training(self, response):
-        self.logger.info(f"#parse_race_training: start: response={response.url}")
+    def parse_training(self, response):
+        """Parse training page.
+
+        @url https://race.netkeiba.com/race/oikiri.html?race_id=202306020702
+        @returns items 16 16
+        @returns requests 0 0
+        @training_contract
+        """
+        self.logger.info(f"#parse_training: start: response={response.url}")
+
+        training_url = urlparse(response.url)
+        training_url_qs = parse_qs(training_url.query)
+
+        # Parse training
+        for i, tr in enumerate(response.xpath("//table[@id='All_Oikiri_Table']/tr")):
+            if i == 0:
+                assert tr.xpath("string(th[1])").extract_first() == "枠", tr.xpath("string(th[1])").extract_first()
+                assert tr.xpath("string(th[2])").extract_first() == "馬番", tr.xpath("string(th[2])").extract_first()
+                assert tr.xpath("string(th[3])").extract_first().strip() == "印", tr.xpath("string(th[3])").extract_first()
+                assert tr.xpath("string(th[4])").extract_first() == "馬名", tr.xpath("string(th[4])").extract_first()
+                assert tr.xpath("string(th[5])").extract_first() == "評価", tr.xpath("string(th[5])").extract_first()
+
+            else:
+                loader = ItemLoader(item=TrainingItem(), selector=tr)
+                loader.add_value("race_id", training_url_qs["race_id"])
+                loader.add_xpath("horse_number", "string(td[1])")
+                loader.add_xpath("horse_id_url", "td[4]/div[@class='Horse_Name']/a/@href")
+                loader.add_xpath("evaluation_text", "string(td[5])")
+                loader.add_xpath("evaluation_rank", "string(td[6])")
+                i = loader.load_item()
+
+                self.logger.info(f"#parse_training: training={i}")
+                yield i
 
     def parse_horse(self, response):
         self.logger.info(f"#parse_horse: start: response={response.url}")

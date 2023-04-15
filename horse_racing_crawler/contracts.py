@@ -4,7 +4,7 @@ from scrapy.contracts import Contract
 from scrapy.exceptions import ContractFail
 from scrapy.http import Request
 
-from horse_racing_crawler.items import OddsItem, RaceCornerPassingItem, RaceInfoItem, RaceLapTimeItem, RacePayoffItem, RaceResultItem
+from horse_racing_crawler.items import OddsItem, RaceCornerPassingItem, RaceInfoItem, RaceLapTimeItem, RacePayoffItem, RaceResultItem, TrainingItem
 
 
 class CalendarContract(Contract):
@@ -985,4 +985,127 @@ class OddsTrifectaContract(Contract):
         assert i["odds1"] == "151276.0"
         assert i["odds2"] == ""
         assert i["odds_type"] == 8
+        assert i["race_id"] == ["202306020702"]
+
+
+class TrainingContract(Contract):
+    name = "training_contract"
+
+    def post_process(self, output):
+        #
+        # Check items
+        #
+
+        items = list(filter(lambda i: isinstance(i, TrainingItem), output))
+
+        i = items[0]
+        assert i["evaluation_rank"] == ["B"]
+        assert i["evaluation_text"] == ["変身十分"]
+        assert i["horse_id_url"] == ["https://db.netkeiba.com/horse/2020110080"]
+        assert i["horse_number"] == ["1"]
+        assert i["race_id"] == ["202306020702"]
+
+        i = items[1]
+        assert i["evaluation_rank"] == ["B"]
+        assert i["evaluation_text"] == ["動き良化"]
+        assert i["horse_id_url"] == ["https://db.netkeiba.com/horse/2020105372"]
+        assert i["horse_number"] == ["1"]
+        assert i["race_id"] == ["202306020702"]
+
+        i = items[2]
+        assert i["evaluation_rank"] == ["D"]
+        assert i["evaluation_text"] == ["動き平凡"]
+        assert i["horse_id_url"] == ["https://db.netkeiba.com/horse/2020103272"]
+        assert i["horse_number"] == ["2"]
+        assert i["race_id"] == ["202306020702"]
+
+        i = items[3]
+        assert i["evaluation_rank"] == ["C"]
+        assert i["evaluation_text"] == ["仕上十分"]
+        assert i["horse_id_url"] == ["https://db.netkeiba.com/horse/2020104495"]
+        assert i["horse_number"] == ["2"]
+        assert i["race_id"] == ["202306020702"]
+
+        i = items[4]
+        assert i["evaluation_rank"] == ["B"]
+        assert i["evaluation_text"] == ["動き良化"]
+        assert i["horse_id_url"] == ["https://db.netkeiba.com/horse/2020100397"]
+        assert i["horse_number"] == ["3"]
+        assert i["race_id"] == ["202306020702"]
+
+        i = items[5]
+        assert i["evaluation_rank"] == ["C"]
+        assert i["evaluation_text"] == ["多少良化"]
+        assert i["horse_id_url"] == ["https://db.netkeiba.com/horse/2020104355"]
+        assert i["horse_number"] == ["3"]
+        assert i["race_id"] == ["202306020702"]
+
+        i = items[6]
+        assert i["evaluation_rank"] == ["C"]
+        assert i["evaluation_text"] == ["まずまず"]
+        assert i["horse_id_url"] == ["https://db.netkeiba.com/horse/2020109101"]
+        assert i["horse_number"] == ["4"]
+        assert i["race_id"] == ["202306020702"]
+
+        i = items[7]
+        assert i["evaluation_rank"] == ["C"]
+        assert i["evaluation_text"] == ["反応平凡"]
+        assert i["horse_id_url"] == ["https://db.netkeiba.com/horse/2020100274"]
+        assert i["horse_number"] == ["4"]
+        assert i["race_id"] == ["202306020702"]
+
+        i = items[8]
+        assert i["evaluation_rank"] == ["B"]
+        assert i["evaluation_text"] == ["好調子"]
+        assert i["horse_id_url"] == ["https://db.netkeiba.com/horse/2020100583"]
+        assert i["horse_number"] == ["5"]
+        assert i["race_id"] == ["202306020702"]
+
+        i = items[9]
+        assert i["evaluation_rank"] == ["C"]
+        assert i["evaluation_text"] == ["気配平凡"]
+        assert i["horse_id_url"] == ["https://db.netkeiba.com/horse/2020106142"]
+        assert i["horse_number"] == ["5"]
+        assert i["race_id"] == ["202306020702"]
+
+        i = items[10]
+        assert i["evaluation_rank"] == ["B"]
+        assert i["evaluation_text"] == ["動き上々"]
+        assert i["horse_id_url"] == ["https://db.netkeiba.com/horse/2020104452"]
+        assert i["horse_number"] == ["6"]
+        assert i["race_id"] == ["202306020702"]
+
+        i = items[11]
+        assert i["evaluation_rank"] == ["B"]
+        assert i["evaluation_text"] == ["力強い"]
+        assert i["horse_id_url"] == ["https://db.netkeiba.com/horse/2020103318"]
+        assert i["horse_number"] == ["6"]
+        assert i["race_id"] == ["202306020702"]
+
+        i = items[12]
+        assert i["evaluation_rank"] == ["C"]
+        assert i["evaluation_text"] == ["目立たず"]
+        assert i["horse_id_url"] == ["https://db.netkeiba.com/horse/2020100043"]
+        assert i["horse_number"] == ["7"]
+        assert i["race_id"] == ["202306020702"]
+
+        i = items[13]
+        assert i["evaluation_rank"] == ["B"]
+        assert i["evaluation_text"] == ["好調持続"]
+        assert i["horse_id_url"] == ["https://db.netkeiba.com/horse/2020110020"]
+        assert i["horse_number"] == ["7"]
+        assert i["race_id"] == ["202306020702"]
+
+        i = items[14]
+        assert i["evaluation_rank"] == ["B"]
+        assert i["evaluation_text"] == ["力強い"]
+        assert i["horse_id_url"] == ["https://db.netkeiba.com/horse/2020101092"]
+        assert i["horse_number"] == ["8"]
+        assert i["race_id"] == ["202306020702"]
+
+        i = items[15]
+        assert i["evaluation_rank"] == ["B"]
+        assert i["evaluation_text"] == ["好気配"]
+        assert i["horse_id_url"] == ["https://db.netkeiba.com/horse/2020109130"]
+        assert i["horse_number"] == ["8"]
         assert i["race_id"] == ["202306020702"]

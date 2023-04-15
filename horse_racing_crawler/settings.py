@@ -32,6 +32,7 @@ SPIDER_CONTRACTS = {
     "horse_racing_crawler.contracts.OddsExactaContract": 10,
     "horse_racing_crawler.contracts.OddsTrioContract": 10,
     "horse_racing_crawler.contracts.OddsTrifectaContract": 10,
+    "horse_racing_crawler.contracts.TrainingContract": 10,
 }
 
 # Set settings whose default value is deprecated to a future-proof value

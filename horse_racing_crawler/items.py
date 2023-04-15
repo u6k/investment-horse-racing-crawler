@@ -58,3 +58,11 @@ class OddsItem(Item):
     odds1 = Field()
     odds2 = Field()
     favorite_order = Field()
+
+
+class TrainingItem(Item):
+    race_id = Field()
+    horse_number = Field()
+    horse_id_url = Field()
+    evaluation_text = Field()
+    evaluation_rank = Field()
