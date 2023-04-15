@@ -409,7 +409,30 @@ class NetkeibaSpider(scrapy.Spider):
             yield item
 
     def parse_race_odds_bracket_quinella(self, response):
+        """Parse odds_bracket_quinella page.
+
+        @url https://race.netkeiba.com/api/api_get_jra_odds.html?type=3&race_id=202306020702
+        @returns items 36
+        @returns requests 0 0
+        @odds_bracket_quinella_contract
+        """
         self.logger.info(f"#parse_race_odds_bracket_quinella: start: response={response.url}")
+
+        odds_url = urlparse(response.url)
+        odds_qs = parse_qs(odds_url.query)
+
+        # Assertion
+        json_odds = json.loads(response.text)
+
+        assert json_odds["status"] == "result"
+        assert json_odds["data"]["official_datetime"] is not None
+
+        # Parse bracket_quinella odds
+        for horse_number, odds in json_odds["data"]["odds"]["3"].items():
+            item = OddsItem(race_id=odds_qs["race_id"], odds_type=3, horse_number=horse_number, odds1=odds[0], odds2=odds[1], favorite_order=odds[2])
+
+            self.logger.debug(f"#parse_race_odds_bracket_quinella: odds={item}")
+            yield item
 
     def parse_race_odds_quinella(self, response):
         self.logger.info(f"#parse_race_odds_quinella: start: response={response.url}")
