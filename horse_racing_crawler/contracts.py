@@ -939,3 +939,50 @@ class OddsTrioContract(Contract):
         assert i["odds2"] == ""
         assert i["odds_type"] == 7
         assert i["race_id"] == ["202306020702"]
+
+
+class OddsTrifectaContract(Contract):
+    name = "odds_trifecta_contract"
+
+    def post_process(self, output):
+        #
+        # Check items
+        #
+
+        odds_items = list(filter(lambda o: isinstance(o, OddsItem), output))
+
+        items = list(filter(lambda i: i["odds_type"] == 8, odds_items))
+
+        assert len(odds_items) == len(items)
+
+        i = items[0]
+        assert i["favorite_order"] == "805"
+        assert i["horse_number"] == "010203"
+        assert i["odds1"] == "14182.1"
+        assert i["odds2"] == ""
+        assert i["odds_type"] == 8
+        assert i["race_id"] == ["202306020702"]
+
+        i = items[1]
+        assert i["favorite_order"] == "998"
+        assert i["horse_number"] == "010204"
+        assert i["odds1"] == "23273.2"
+        assert i["odds2"] == ""
+        assert i["odds_type"] == 8
+        assert i["race_id"] == ["202306020702"]
+
+        i = items[3358]
+        assert i["favorite_order"] == "2632"
+        assert i["horse_number"] == "161513"
+        assert i["odds1"] == "302552.1"
+        assert i["odds2"] == ""
+        assert i["odds_type"] == 8
+        assert i["race_id"] == ["202306020702"]
+
+        i = items[3359]
+        assert i["favorite_order"] == "2139"
+        assert i["horse_number"] == "161514"
+        assert i["odds1"] == "151276.0"
+        assert i["odds2"] == ""
+        assert i["odds_type"] == 8
+        assert i["race_id"] == ["202306020702"]
