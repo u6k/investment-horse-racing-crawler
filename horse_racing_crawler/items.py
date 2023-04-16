@@ -82,3 +82,11 @@ class HorseItem(Item):
     trainer_id = Field()
     breeder_id = Field()
     owner_id = Field()
+
+
+class JockeyItem(Item):
+    jockey_id = Field()
+    jockey_name = Field()
+    jockey_text = Field()
+    birth_place = Field()
+    debut_year = Field()

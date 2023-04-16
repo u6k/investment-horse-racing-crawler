@@ -6,7 +6,7 @@ from urllib.parse import parse_qs, urlparse
 import scrapy
 from scrapy.loader import ItemLoader
 
-from horse_racing_crawler.items import HorseItem, OddsItem, RaceCornerPassingItem, RaceInfoItem, RaceLapTimeItem, RacePayoffItem, RaceResultItem, TrainingItem
+from horse_racing_crawler.items import HorseItem, JockeyItem, OddsItem, RaceCornerPassingItem, RaceInfoItem, RaceLapTimeItem, RacePayoffItem, RaceResultItem, TrainingItem
 
 
 class NetkeibaSpider(scrapy.Spider):
@@ -148,7 +148,7 @@ class NetkeibaSpider(scrapy.Spider):
         race_result_url_qs = parse_qs(race_result_url.query)
 
         # Parse race info
-        self.logger.info("#parse_race_result: parse race info")
+        self.logger.debug("#parse_race_result: parse race info")
 
         loader = ItemLoader(item=RaceInfoItem(), response=response)
         loader.add_value("race_id", race_result_url_qs["race_id"])
@@ -158,11 +158,11 @@ class NetkeibaSpider(scrapy.Spider):
         loader.add_xpath("race_data2", "string(//div[@class='RaceData02'])")
         i = loader.load_item()
 
-        self.logger.info(f"#parse_race_result: race_info={i}")
+        self.logger.debug(f"#parse_race_result: race_info={i}")
         yield i
 
         # Parse race result
-        self.logger.info("#parse_race_result: parse race result")
+        self.logger.debug("#parse_race_result: parse race result")
 
         tr = response.xpath("//table[@id='All_Result_Table']/thead/tr[@class='Header']")
         assert tr.xpath("string(th[1])").extract_first() == "着順", tr.xpath("string(th[1])").extract_first()
@@ -200,13 +200,13 @@ class NetkeibaSpider(scrapy.Spider):
             loader.add_xpath("horse_weight_and_diff", "string(td[15])")
             i = loader.load_item()
 
-            self.logger.info(f"#parse_race_result: race_result={i}")
+            self.logger.debug(f"#parse_race_result: race_result={i}")
             yield i
 
             horse_number += 1
 
         # Parse race payoff
-        self.logger.info("#parse_race_result: parse race payoff")
+        self.logger.debug("#parse_race_result: parse race payoff")
 
         tr = response.xpath("//table[@class='Payout_Detail_Table'][1]/tbody/tr[@class='Tansho']")
         loader = ItemLoader(item=RacePayoffItem(), selector=tr)
@@ -217,7 +217,7 @@ class NetkeibaSpider(scrapy.Spider):
         i = loader.load_item()
         assert i["betting_type"][0] == "単勝", i["betting_type"][0]
 
-        self.logger.info(f"#parse_race_result: race_payoff={i}")
+        self.logger.debug(f"#parse_race_result: race_payoff={i}")
         yield i
 
         tr = response.xpath("//table[@class='Payout_Detail_Table'][1]/tbody/tr[@class='Fukusho']")
@@ -229,7 +229,7 @@ class NetkeibaSpider(scrapy.Spider):
         i = loader.load_item()
         assert i["betting_type"][0] == "複勝", i["betting_type"][0]
 
-        self.logger.info(f"#parse_race_result: race_payoff={i}")
+        self.logger.debug(f"#parse_race_result: race_payoff={i}")
         yield i
 
         def load_item_ren(tr):
@@ -244,42 +244,42 @@ class NetkeibaSpider(scrapy.Spider):
         i = load_item_ren(tr)
         assert i["betting_type"][0] == "枠連", i["betting_type"][0]
 
-        self.logger.info(f"#parse_race_result: race_payoff={i}")
+        self.logger.debug(f"#parse_race_result: race_payoff={i}")
         yield i
 
         tr = response.xpath("//table[@class='Payout_Detail_Table'][1]/tbody/tr[@class='Umaren']")
         i = load_item_ren(tr)
         assert i["betting_type"][0] == "馬連", i["betting_type"][0]
 
-        self.logger.info(f"#parse_race_result: race_payoff={i}")
+        self.logger.debug(f"#parse_race_result: race_payoff={i}")
         yield i
 
         tr = response.xpath("//table[@class='Payout_Detail_Table'][2]/tbody/tr[@class='Wide']")
         i = load_item_ren(tr)
         assert i["betting_type"][0] == "ワイド", i["betting_type"][0]
 
-        self.logger.info(f"#parse_race_result: race_payoff={i}")
+        self.logger.debug(f"#parse_race_result: race_payoff={i}")
         yield i
 
         tr = response.xpath("//table[@class='Payout_Detail_Table'][2]/tbody/tr[@class='Umatan']")
         i = load_item_ren(tr)
         assert i["betting_type"][0] == "馬単", i["betting_type"][0]
 
-        self.logger.info(f"#parse_race_result: race_payoff={i}")
+        self.logger.debug(f"#parse_race_result: race_payoff={i}")
         yield i
 
         tr = response.xpath("//table[@class='Payout_Detail_Table'][2]/tbody/tr[@class='Fuku3']")
         i = load_item_ren(tr)
         assert i["betting_type"][0] == "3連複", i["betting_type"][0]
 
-        self.logger.info(f"#parse_race_result: race_payoff={i}")
+        self.logger.debug(f"#parse_race_result: race_payoff={i}")
         yield i
 
         tr = response.xpath("//table[@class='Payout_Detail_Table'][2]/tbody/tr[@class='Tan3']")
         i = load_item_ren(tr)
         assert i["betting_type"][0] == "3連単", i["betting_type"][0]
 
-        self.logger.info(f"#parse_race_result: race_payoff={i}")
+        self.logger.debug(f"#parse_race_result: race_payoff={i}")
         yield i
 
         # Parse corner passing
@@ -290,7 +290,7 @@ class NetkeibaSpider(scrapy.Spider):
         loader.add_xpath("passing_order", "tr/td")
         i = loader.load_item()
 
-        self.logger.info(f"#parse_race_result: race_corner_passing={i}")
+        self.logger.debug(f"#parse_race_result: race_corner_passing={i}")
         yield i
 
         # Parse lap time
@@ -302,18 +302,18 @@ class NetkeibaSpider(scrapy.Spider):
         loader.add_xpath("time2", "tr[3]/td/text()")
         i = loader.load_item()
 
-        self.logger.info(f"#parse_race_result: race_lap_time={i}")
+        self.logger.debug(f"#parse_race_result: race_lap_time={i}")
         yield i
 
         # Parse link
-        self.logger.info("#parse_race_result: parse link")
+        self.logger.debug("#parse_race_result: parse link")
 
         for a in response.xpath("//a"):
             url = urlparse(response.urljoin(a.xpath("@href").get()))
             url_qs = parse_qs(url.query)
 
             if url.hostname == "race.netkeiba.com" and url.path == "/odds/index.html" and "race_id" in url_qs:
-                self.logger.info(f"#parse_race_result: odds top page link. a={url.geturl()}")
+                self.logger.debug(f"#parse_race_result: odds top page link. a={url.geturl()}")
 
                 t = int(time.time())  # キャッシュ回避のため、リクエストに付与する現在時刻
 
@@ -346,13 +346,13 @@ class NetkeibaSpider(scrapy.Spider):
                 yield self._follow(race_odds_url)
 
             elif url.hostname == "race.netkeiba.com" and url.path == "/race/oikiri.html" and "race_id" in url_qs:
-                self.logger.info(f"#parse_race_result: training page link. a={url.geturl()}")
+                self.logger.debug(f"#parse_race_result: training page link. a={url.geturl()}")
 
                 race_training_url = f"https://race.netkeiba.com/race/oikiri.html?race_id={url_qs['race_id'][0]}"
                 yield self._follow(race_training_url)
 
             elif url.hostname == "db.netkeiba.com" and url.path.startswith("/horse/"):
-                self.logger.info(f"#parse_race_result: horse page link. a={url.geturl()}")
+                self.logger.debug(f"#parse_race_result: horse page link. a={url.geturl()}")
 
                 horse_id_re = re.match("^/horse/([0-9]+)$", url.path)
                 horse_url = f"https://db.netkeiba.com/v1.1/?pid=api_db_horse_info_simple&input=UTF-8&output=json&id={horse_id_re.group(1)}&_={t}"
@@ -360,7 +360,7 @@ class NetkeibaSpider(scrapy.Spider):
                 yield self._follow(horse_url)
 
             elif url.hostname == "db.netkeiba.com" and url.path.startswith("/jockey/result/recent/"):
-                self.logger.info(f"#parse_race_result: jockey page link. a={url.geturl()}")
+                self.logger.debug(f"#parse_race_result: jockey page link. a={url.geturl()}")
 
                 jockey_id_re = re.match("^/jockey/result/recent/([0-9]+)/$", url.path)
                 jockey_url = f"https://db.netkeiba.com/jockey/{jockey_id_re.group(1)}"
@@ -368,7 +368,7 @@ class NetkeibaSpider(scrapy.Spider):
                 yield self._follow(jockey_url)
 
             elif url.hostname == "db.netkeiba.com" and url.path.startswith("/trainer/result/recent/"):
-                self.logger.info(f"#parse_race_result: trainer page link. a={url.geturl()}")
+                self.logger.debug(f"#parse_race_result: trainer page link. a={url.geturl()}")
 
                 trainer_id_re = re.match("^/trainer/result/recent/([0-9]+)/$", url.path)
                 trainer_url = f"https://db.netkeiba.com/trainer/{trainer_id_re.group(1)}"
@@ -637,8 +637,38 @@ class NetkeibaSpider(scrapy.Spider):
         self.logger.debug(f"#parse_horse: horse={item}")
         yield item
 
+    def parse_parent_horse(self, response):
+        # TODO: 血統ページを解析する
+        pass
+
     def parse_jockey(self, response):
+        """Parse jockey page.
+
+        @url https://db.netkeiba.com/jockey/01075/
+        @returns items 1 1
+        @returns requests 0 0
+        @jockey_contract
+        """
         self.logger.info(f"#parse_jockey: start: response={response.url}")
+
+        jockey_url = urlparse(response.url)
+
+        loader = ItemLoader(item=JockeyItem(), response=response)
+        loader.add_value("jockey_id", jockey_url.path)
+        loader.add_xpath("jockey_name", "//div[@class='Name']/h1/text()")
+        loader.add_xpath("jockey_text", "//div[@class='Name']/p/text()")
+
+        for tr in response.xpath("//table[@id='DetailTable']/tbody/tr"):
+            if tr.xpath("th/text()").extract_first() == "出身地":
+                loader.add_value("birth_place", tr.xpath("td/text()").extract_first())
+
+            elif tr.xpath("th/text()").extract_first() == "デビュー年":
+                loader.add_value("debut_year", tr.xpath("td/text()").extract_first())
+
+        i = loader.load_item()
+
+        self.logger.debug(f"#parse_jockey: jockey={i}")
+        yield i
 
     def parse_trainer(self, response):
         self.logger.info(f"#parse_trainer: start: response={response.url}")

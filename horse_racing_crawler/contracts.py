@@ -4,7 +4,7 @@ from scrapy.contracts import Contract
 from scrapy.exceptions import ContractFail
 from scrapy.http import Request
 
-from horse_racing_crawler.items import HorseItem, OddsItem, RaceCornerPassingItem, RaceInfoItem, RaceLapTimeItem, RacePayoffItem, RaceResultItem, TrainingItem
+from horse_racing_crawler.items import HorseItem, JockeyItem, OddsItem, RaceCornerPassingItem, RaceInfoItem, RaceLapTimeItem, RacePayoffItem, RaceResultItem, TrainingItem
 
 
 class CalendarContract(Contract):
@@ -1135,3 +1135,21 @@ class HorseContract(Contract):
         assert i["seri_price"] == "31900000"
         assert i["tozai"] == "1"
         assert i["trainer_id"] == "01027"
+
+
+class JockeyContract(Contract):
+    name = "jockey_contract"
+
+    def post_process(self, output):
+        #
+        # Check items
+        #
+
+        items = list(filter(lambda i: isinstance(i, JockeyItem), output))
+
+        i = items[0]
+        assert i["birth_place"] == ["福島県/A型"]
+        assert i["debut_year"] == ["2002年(22年目)"]
+        assert i["jockey_id"] == ["/jockey/01075/"]
+        assert i["jockey_name"][0].strip() == "田辺裕信\xa0\n          \n          (タナベヒロノブ)"
+        assert i["jockey_text"][0].strip() == "1984/02/12\n            \n            \n            [美浦]フリー"
