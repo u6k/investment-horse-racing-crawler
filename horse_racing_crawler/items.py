@@ -66,3 +66,19 @@ class TrainingItem(Item):
     horse_id_url = Field()
     evaluation_text = Field()
     evaluation_rank = Field()
+
+
+class HorseItem(Item):
+    horse_id = Field()
+    horse_name = Field()
+    gender = Field()
+    birthday = Field()
+    coat_color = Field()
+    kigo = Field()
+    tozai = Field()
+    farm = Field()
+    seri_name = Field()
+    seri_price = Field()
+    trainer_id = Field()
+    breeder_id = Field()
+    owner_id = Field()

@@ -6,7 +6,7 @@ from urllib.parse import parse_qs, urlparse
 import scrapy
 from scrapy.loader import ItemLoader
 
-from horse_racing_crawler.items import OddsItem, RaceCornerPassingItem, RaceInfoItem, RaceLapTimeItem, RacePayoffItem, RaceResultItem, TrainingItem
+from horse_racing_crawler.items import HorseItem, OddsItem, RaceCornerPassingItem, RaceInfoItem, RaceLapTimeItem, RacePayoffItem, RaceResultItem, TrainingItem
 
 
 class NetkeibaSpider(scrapy.Spider):
@@ -77,8 +77,8 @@ class NetkeibaSpider(scrapy.Spider):
             self.logger.debug("#_follow: follow training page")
             return scrapy.Request(url, callback=self.parse_training, meta=meta)
 
-        elif url.startswith("https://db.netkeiba.com/horse/"):
-            self.logger.debug("#_follow: follow horse page")
+        elif url.startswith("https://db.netkeiba.com/v1.1/?pid=api_db_horse_info_simple"):
+            self.logger.debug("#_follow: follow horse data")
             return scrapy.Request(url, callback=self.parse_horse, meta=meta)
 
         elif url.startswith("https://db.netkeiba.com/jockey/"):
@@ -355,7 +355,7 @@ class NetkeibaSpider(scrapy.Spider):
                 self.logger.info(f"#parse_race_result: horse page link. a={url.geturl()}")
 
                 horse_id_re = re.match("^/horse/([0-9]+)$", url.path)
-                horse_url = f"https://db.netkeiba.com/horse/{horse_id_re.group(1)}"
+                horse_url = f"https://db.netkeiba.com/v1.1/?pid=api_db_horse_info_simple&input=UTF-8&output=json&id={horse_id_re.group(1)}&_={t}"
 
                 yield self._follow(horse_url)
 
@@ -595,11 +595,47 @@ class NetkeibaSpider(scrapy.Spider):
                 loader.add_xpath("evaluation_rank", "string(td[6])")
                 i = loader.load_item()
 
-                self.logger.info(f"#parse_training: training={i}")
+                self.logger.debug(f"#parse_training: training={i}")
                 yield i
 
     def parse_horse(self, response):
+        """Parse horse data.
+
+        @url https://db.netkeiba.com/v1.1/?pid=api_db_horse_info_simple&input=UTF-8&output=json&id=2020100583
+        @returns items 1 1
+        @returns requests 0 0
+        @horse_contract
+        """
         self.logger.info(f"#parse_horse: start: response={response.url}")
+
+        horse_url = urlparse(response.url)
+        horse_qs = parse_qs(horse_url.query)
+
+        # Assertion
+        json_horse = json.loads(response.text)
+
+        assert json_horse["status"] == "OK"
+        assert json_horse["data"]["Horse"] is not None
+
+        # Parse horse
+        item = HorseItem(
+            horse_id=horse_qs["id"][0],
+            horse_name=json_horse["data"]["Horse"]["Bamei"],
+            gender=json_horse["data"]["Horse"]["SexCD"],
+            birthday=json_horse["data"]["Horse"]["BirthDate"],
+            coat_color=json_horse["data"]["Horse"]["KeiroCD"],
+            kigo=json_horse["data"]["Horse"]["UmaKigoCD"],
+            tozai=json_horse["data"]["Horse"]["TozaiCD"],
+            farm=json_horse["data"]["Horse"]["SanchiName"],
+            seri_name=json_horse["data"]["Horse"]["SeriName"],
+            seri_price=json_horse["data"]["Horse"]["SeriPrice"],
+            trainer_id=json_horse["data"]["Horse"]["ChokyosiCode"],
+            breeder_id=json_horse["data"]["Horse"]["BreederCode"],
+            owner_id=json_horse["data"]["Horse"]["BanusiCode"],
+        )
+
+        self.logger.debug(f"#parse_horse: horse={item}")
+        yield item
 
     def parse_jockey(self, response):
         self.logger.info(f"#parse_jockey: start: response={response.url}")

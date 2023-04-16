@@ -4,7 +4,7 @@ from scrapy.contracts import Contract
 from scrapy.exceptions import ContractFail
 from scrapy.http import Request
 
-from horse_racing_crawler.items import OddsItem, RaceCornerPassingItem, RaceInfoItem, RaceLapTimeItem, RacePayoffItem, RaceResultItem, TrainingItem
+from horse_racing_crawler.items import HorseItem, OddsItem, RaceCornerPassingItem, RaceInfoItem, RaceLapTimeItem, RacePayoffItem, RaceResultItem, TrainingItem
 
 
 class CalendarContract(Contract):
@@ -412,7 +412,7 @@ class RaceResultContract(Contract):
         assert len(training_page_links) == 1
 
         # horse page
-        horse_page_links = list(filter(lambda r: r.url.startswith("https://db.netkeiba.com/horse/"), requests))
+        horse_page_links = list(filter(lambda r: r.url.startswith("https://db.netkeiba.com/v1.1/?pid=api_db_horse_info_simple"), requests))
 
         assert len(horse_page_links) == 16
 
@@ -1109,3 +1109,29 @@ class TrainingContract(Contract):
         assert i["horse_id_url"] == ["https://db.netkeiba.com/horse/2020109130"]
         assert i["horse_number"] == ["8"]
         assert i["race_id"] == ["202306020702"]
+
+
+class HorseContract(Contract):
+    name = "horse_contract"
+
+    def post_process(self, output):
+        #
+        # Check items
+        #
+
+        items = list(filter(lambda i: isinstance(i, HorseItem), output))
+
+        i = items[0]
+        assert i["birthday"] == "2020-04-24"
+        assert i["breeder_id"] == "510045"
+        assert i["coat_color"] == "03"
+        assert i["farm"] == "浦河町"
+        assert i["gender"] == "1"
+        assert i["horse_id"] == "2020100583"
+        assert i["horse_name"] == "レイズカイザー"
+        assert i["kigo"] == "00"
+        assert i["owner_id"] == "652031"
+        assert i["seri_name"] == "2021年 北海道セレクションセール"
+        assert i["seri_price"] == "31900000"
+        assert i["tozai"] == "1"
+        assert i["trainer_id"] == "01027"
