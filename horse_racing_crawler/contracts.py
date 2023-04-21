@@ -4,7 +4,7 @@ from scrapy.contracts import Contract
 from scrapy.exceptions import ContractFail
 from scrapy.http import Request
 
-from horse_racing_crawler.items import HorseItem, JockeyItem, OddsItem, RaceCornerPassingItem, RaceInfoItem, RaceLapTimeItem, RacePayoffItem, RaceResultItem, TrainingItem
+from horse_racing_crawler.items import HorseItem, JockeyItem, OddsItem, RaceCornerPassingItem, RaceInfoItem, RaceLapTimeItem, RacePayoffItem, RaceResultItem, TrainerItem, TrainingItem
 
 
 class CalendarContract(Contract):
@@ -1153,3 +1153,21 @@ class JockeyContract(Contract):
         assert i["jockey_id"] == ["/jockey/01075/"]
         assert i["jockey_name"][0].strip() == "田辺裕信\xa0\n          \n          (タナベヒロノブ)"
         assert i["jockey_text"][0].strip() == "1984/02/12\n            \n            \n            [美浦]フリー"
+
+
+class TrainerContract(Contract):
+    name = "trainer_contract"
+
+    def post_process(self, output):
+        #
+        # Check items
+        #
+
+        items = list(filter(lambda i: isinstance(i, TrainerItem), output))
+
+        i = items[0]
+        assert i["birth_place"] == ["千葉県"]
+        assert i["debut_year"] == ["1997年(27年目)"]
+        assert i["trainer_id"] == ["/trainer/01027/"]
+        assert i["trainer_name"][0].strip() == "田村康仁\xa0\n                \n                (タムラヤスヒト)"
+        assert i["trainer_text"][0].strip() == "1963/03/30\n                \n                美浦"

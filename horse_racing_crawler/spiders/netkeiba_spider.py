@@ -6,7 +6,7 @@ from urllib.parse import parse_qs, urlparse
 import scrapy
 from scrapy.loader import ItemLoader
 
-from horse_racing_crawler.items import HorseItem, JockeyItem, OddsItem, RaceCornerPassingItem, RaceInfoItem, RaceLapTimeItem, RacePayoffItem, RaceResultItem, TrainingItem
+from horse_racing_crawler.items import HorseItem, JockeyItem, OddsItem, RaceCornerPassingItem, RaceInfoItem, RaceLapTimeItem, RacePayoffItem, RaceResultItem, TrainerItem, TrainingItem
 
 
 class NetkeibaSpider(scrapy.Spider):
@@ -671,4 +671,30 @@ class NetkeibaSpider(scrapy.Spider):
         yield i
 
     def parse_trainer(self, response):
+        """Parse trainer page.
+
+        @url https://db.netkeiba.com/trainer/01027/
+        @returns items 1 1
+        @returns requests 0 0
+        @trainer_contract
+        """
         self.logger.info(f"#parse_trainer: start: response={response.url}")
+
+        trainer_url = urlparse(response.url)
+
+        loader = ItemLoader(item=TrainerItem(), response=response)
+        loader.add_value("trainer_id", trainer_url.path)
+        loader.add_xpath("trainer_name", "//div[@class='Name']/h1/text()")
+        loader.add_xpath("trainer_text", "//div[@class='Name']/p/text()")
+
+        for tr in response.xpath("//table[@id='DetailTable']/tbody/tr"):
+            if tr.xpath("th/text()").extract_first() == "出身地":
+                loader.add_value("birth_place", tr.xpath("td/text()").extract_first())
+
+            elif tr.xpath("th/text()").extract_first() == "デビュー年":
+                loader.add_value("debut_year", tr.xpath("td/text()").extract_first())
+
+        i = loader.load_item()
+
+        self.logger.debug(f"#parse_trainer: trainer={i}")
+        yield i

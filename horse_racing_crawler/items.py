@@ -90,3 +90,11 @@ class JockeyItem(Item):
     jockey_text = Field()
     birth_place = Field()
     debut_year = Field()
+
+
+class TrainerItem(Item):
+    trainer_id = Field()
+    trainer_name = Field()
+    trainer_text = Field()
+    birth_place = Field()
+    debut_year = Field()
