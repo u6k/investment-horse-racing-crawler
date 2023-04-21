@@ -6,7 +6,7 @@ from urllib.parse import parse_qs, urlparse
 import scrapy
 from scrapy.loader import ItemLoader
 
-from horse_racing_crawler.items import HorseItem, JockeyItem, OddsItem, RaceCornerPassingItem, RaceInfoItem, RaceLapTimeItem, RacePayoffItem, RaceResultItem, TrainerItem, TrainingItem
+from horse_racing_crawler.items import HorseItem, JockeyItem, OddsItem, ParentHorseItem, RaceCornerPassingItem, RaceInfoItem, RaceLapTimeItem, RacePayoffItem, RaceResultItem, TrainerItem, TrainingItem
 
 
 class NetkeibaSpider(scrapy.Spider):
@@ -81,6 +81,10 @@ class NetkeibaSpider(scrapy.Spider):
             self.logger.debug("#_follow: follow horse data")
             return scrapy.Request(url, callback=self.parse_horse, meta=meta)
 
+        elif url.startswith("https://db.netkeiba.com/horse/ped/"):
+            self.logger.debug("#_follow: follow parent_horse page")
+            return scrapy.Request(url, callback=self.parse_parent_horse, meta=meta)
+
         elif url.startswith("https://db.netkeiba.com/jockey/"):
             self.logger.debug("#_follow: follow jockey page")
             return scrapy.Request(url, callback=self.parse_jockey, meta=meta)
@@ -139,7 +143,7 @@ class NetkeibaSpider(scrapy.Spider):
 
         @url https://race.netkeiba.com/race/result.html?race_id=202306020702
         @returns items 27 27
-        @returns requests 56 56
+        @returns requests 72 72
         @race_result_contract
         """
         self.logger.info(f"#parse_race_result: start: response={response.url}")
@@ -358,6 +362,10 @@ class NetkeibaSpider(scrapy.Spider):
                 horse_url = f"https://db.netkeiba.com/v1.1/?pid=api_db_horse_info_simple&input=UTF-8&output=json&id={horse_id_re.group(1)}&_={t}"
 
                 yield self._follow(horse_url)
+
+                parent_horse_url = f"https://db.netkeiba.com/horse/ped/{horse_id_re.group(1)}/"
+
+                yield self._follow(parent_horse_url)
 
             elif url.hostname == "db.netkeiba.com" and url.path.startswith("/jockey/result/recent/"):
                 self.logger.debug(f"#parse_race_result: jockey page link. a={url.geturl()}")
@@ -638,8 +646,119 @@ class NetkeibaSpider(scrapy.Spider):
         yield item
 
     def parse_parent_horse(self, response):
-        # TODO: 血統ページを解析する
-        pass
+        """Parse parent_horse page.
+
+        @url https://db.netkeiba.com/horse/ped/2020100583/
+        # https://db.netkeiba.com/horse/ped/000a00c61c/
+        @returns items 1 1
+        @returns requests 0 0
+        @parent_horse_contract
+        """
+        self.logger.info(f"#parse_parent_horse: start: response={response.url}")
+
+        parent_horse_url = urlparse(response.url)
+
+        loader = ItemLoader(item=ParentHorseItem(), selector=response.xpath("//table[contains(@class, 'blood_table')]"))
+        loader.add_value("parent_horse_id", parent_horse_url.path)
+
+        loader.add_xpath("parent1_id", "tr[1]/td[1]/a[1]/@href")
+        loader.add_xpath("parent2_id", "tr[1]/td[2]/a[1]/@href")
+        loader.add_xpath("parent3_id", "tr[1]/td[3]/a[1]/@href")
+        loader.add_xpath("parent4_id", "tr[1]/td[4]/a[1]/@href")
+        loader.add_xpath("parent5_id", "tr[1]/td[5]/a[1]/@href")
+
+        loader.add_xpath("parent5_id", "tr[2]/td[1]/a[1]/@href")
+
+        loader.add_xpath("parent4_id", "tr[3]/td[1]/a[1]/@href")
+        loader.add_xpath("parent5_id", "tr[3]/td[2]/a[1]/@href")
+
+        loader.add_xpath("parent5_id", "tr[4]/td[1]/a[1]/@href")
+
+        loader.add_xpath("parent3_id", "tr[5]/td[1]/a[1]/@href")
+        loader.add_xpath("parent4_id", "tr[5]/td[2]/a[1]/@href")
+        loader.add_xpath("parent5_id", "tr[5]/td[3]/a[1]/@href")
+
+        loader.add_xpath("parent5_id", "tr[6]/td[1]/a[1]/@href")
+
+        loader.add_xpath("parent4_id", "tr[7]/td[1]/a[1]/@href")
+        loader.add_xpath("parent5_id", "tr[7]/td[2]/a[1]/@href")
+
+        loader.add_xpath("parent5_id", "tr[8]/td[1]/a[1]/@href")
+
+        loader.add_xpath("parent2_id", "tr[9]/td[1]/a[1]/@href")
+        loader.add_xpath("parent3_id", "tr[9]/td[2]/a[1]/@href")
+        loader.add_xpath("parent4_id", "tr[9]/td[3]/a[1]/@href")
+        loader.add_xpath("parent5_id", "tr[9]/td[4]/a[1]/@href")
+
+        loader.add_xpath("parent5_id", "tr[10]/td[1]/a[1]/@href")
+
+        loader.add_xpath("parent4_id", "tr[11]/td[1]/a[1]/@href")
+        loader.add_xpath("parent5_id", "tr[11]/td[2]/a[1]/@href")
+
+        loader.add_xpath("parent5_id", "tr[12]/td[1]/a[1]/@href")
+
+        loader.add_xpath("parent3_id", "tr[13]/td[1]/a[1]/@href")
+        loader.add_xpath("parent4_id", "tr[13]/td[2]/a[1]/@href")
+        loader.add_xpath("parent5_id", "tr[13]/td[3]/a[1]/@href")
+
+        loader.add_xpath("parent5_id", "tr[14]/td[1]/a[1]/@href")
+
+        loader.add_xpath("parent4_id", "tr[15]/td[1]/a[1]/@href")
+        loader.add_xpath("parent5_id", "tr[15]/td[2]/a[1]/@href")
+
+        loader.add_xpath("parent5_id", "tr[16]/td[1]/a[1]/@href")
+
+        loader.add_xpath("parent1_id", "tr[17]/td[1]/a[1]/@href")
+        loader.add_xpath("parent2_id", "tr[17]/td[2]/a[1]/@href")
+        loader.add_xpath("parent3_id", "tr[17]/td[3]/a[1]/@href")
+        loader.add_xpath("parent4_id", "tr[17]/td[4]/a[1]/@href")
+        loader.add_xpath("parent5_id", "tr[17]/td[5]/a[1]/@href")
+
+        loader.add_xpath("parent5_id", "tr[18]/td[1]/a[1]/@href")
+
+        loader.add_xpath("parent4_id", "tr[19]/td[1]/a[1]/@href")
+        loader.add_xpath("parent5_id", "tr[19]/td[2]/a[1]/@href")
+
+        loader.add_xpath("parent5_id", "tr[20]/td[1]/a[1]/@href")
+
+        loader.add_xpath("parent3_id", "tr[21]/td[1]/a[1]/@href")
+        loader.add_xpath("parent4_id", "tr[21]/td[2]/a[1]/@href")
+        loader.add_xpath("parent5_id", "tr[21]/td[3]/a[1]/@href")
+
+        loader.add_xpath("parent5_id", "tr[22]/td[1]/a[1]/@href")
+
+        loader.add_xpath("parent4_id", "tr[23]/td[1]/a[1]/@href")
+        loader.add_xpath("parent5_id", "tr[23]/td[2]/a[1]/@href")
+
+        loader.add_xpath("parent5_id", "tr[24]/td[1]/a[1]/@href")
+
+        loader.add_xpath("parent2_id", "tr[25]/td[1]/a[1]/@href")
+        loader.add_xpath("parent3_id", "tr[25]/td[2]/a[1]/@href")
+        loader.add_xpath("parent4_id", "tr[25]/td[3]/a[1]/@href")
+        loader.add_xpath("parent5_id", "tr[25]/td[4]/a[1]/@href")
+
+        loader.add_xpath("parent5_id", "tr[26]/td[1]/a[1]/@href")
+
+        loader.add_xpath("parent4_id", "tr[27]/td[1]/a[1]/@href")
+        loader.add_xpath("parent5_id", "tr[27]/td[2]/a[1]/@href")
+
+        loader.add_xpath("parent5_id", "tr[28]/td[1]/a[1]/@href")
+
+        loader.add_xpath("parent3_id", "tr[29]/td[1]/a[1]/@href")
+        loader.add_xpath("parent4_id", "tr[29]/td[2]/a[1]/@href")
+        loader.add_xpath("parent5_id", "tr[29]/td[3]/a[1]/@href")
+
+        loader.add_xpath("parent5_id", "tr[30]/td[1]/a[1]/@href")
+
+        loader.add_xpath("parent4_id", "tr[31]/td[1]/a[1]/@href")
+        loader.add_xpath("parent5_id", "tr[31]/td[2]/a[1]/@href")
+
+        loader.add_xpath("parent5_id", "tr[32]/td[1]/a[1]/@href")
+
+        i = loader.load_item()
+
+        self.logger.debug(f"#parse_parent_horse: parent_horse={i}")
+        yield i
 
     def parse_jockey(self, response):
         """Parse jockey page.

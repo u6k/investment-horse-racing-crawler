@@ -4,7 +4,7 @@ from scrapy.contracts import Contract
 from scrapy.exceptions import ContractFail
 from scrapy.http import Request
 
-from horse_racing_crawler.items import HorseItem, JockeyItem, OddsItem, RaceCornerPassingItem, RaceInfoItem, RaceLapTimeItem, RacePayoffItem, RaceResultItem, TrainerItem, TrainingItem
+from horse_racing_crawler.items import HorseItem, JockeyItem, OddsItem, ParentHorseItem, RaceCornerPassingItem, RaceInfoItem, RaceLapTimeItem, RacePayoffItem, RaceResultItem, TrainerItem, TrainingItem
 
 
 class CalendarContract(Contract):
@@ -415,6 +415,11 @@ class RaceResultContract(Contract):
         horse_page_links = list(filter(lambda r: r.url.startswith("https://db.netkeiba.com/v1.1/?pid=api_db_horse_info_simple"), requests))
 
         assert len(horse_page_links) == 16
+
+        # parent horse page
+        parent_horse_page_links = list(filter(lambda r: r.url.startswith("https://db.netkeiba.com/horse/ped/"), requests))
+
+        assert len(parent_horse_page_links) == 16
 
         # jockey page
         jockey_page_links = list(filter(lambda r: r.url.startswith("https://db.netkeiba.com/jockey/"), requests))
@@ -1135,6 +1140,92 @@ class HorseContract(Contract):
         assert i["seri_price"] == "31900000"
         assert i["tozai"] == "1"
         assert i["trainer_id"] == "01027"
+
+
+class ParentHorseContract(Contract):
+    name = "parent_horse_contract"
+
+    def post_process(self, output):
+        #
+        # Check items
+        #
+
+        items = list(filter(lambda i: isinstance(i, ParentHorseItem), output))
+
+        i = items[0]
+        assert i["parent_horse_id"] == ["/horse/ped/2020100583/"]
+        assert i["parent1_id"] == [
+            "/horse/000a011155/",
+            "/horse/2013102789/",
+        ]
+        assert i["parent2_id"] == [
+            "/horse/000a000178/",
+            "/horse/000a01117d/",
+            "/horse/000a010542/",
+            "/horse/2005101307/",
+        ]
+        assert i["parent3_id"] == [
+            "/horse/000a001a98/",
+            "/horse/000a00a104/",
+            "/horse/000a001c0e/",
+            "/horse/000a009e3b/",
+            "/horse/000a001cd0/",
+            "/horse/000a01008f/",
+            "/horse/1995108676/",
+            "/horse/1992100605/",
+        ]
+        assert i["parent4_id"] == [
+            "/horse/000a0016d4/",
+            "/horse/000a008e05/",
+            "/horse/000a0010d6/",
+            "/horse/000a009f23/",
+            "/horse/000a00184d/",
+            "/horse/000a0092dd/",
+            "/horse/000a001db6/",
+            "/horse/000a009e3a/",
+            "/horse/000a001702/",
+            "/horse/000a00902d/",
+            "/horse/000a0019da/",
+            "/horse/000a008a92/",
+            "/horse/000a0019b4/",
+            "/horse/000a00a4b9/",
+            "/horse/000a0003bd/",
+            "/horse/1980101974/",
+        ]
+        assert i["parent5_id"] == [
+            "/horse/000a000e04/",
+            "/horse/000a00834c/",
+            "/horse/000a000ded/",
+            "/horse/000a008e04/",
+            "/horse/000a001236/",
+            "/horse/000a007525/",
+            "/horse/000a001ee1/",
+            "/horse/000a009f22/",
+            "/horse/000a00180b/",
+            "/horse/000a0086de/",
+            "/horse/000a000e46/",
+            "/horse/000a0092dc/",
+            "/horse/000a000dbc/",
+            "/horse/000a009a0c/",
+            "/horse/000a001eaf/",
+            "/horse/000a009e39/",
+            "/horse/000a001607/",
+            "/horse/000a0083e3/",
+            "/horse/000a000e44/",
+            "/horse/000a00902c/",
+            "/horse/000a000e04/",
+            "/horse/000a008298/",
+            "/horse/000a0010e2/",
+            "/horse/000a008a91/",
+            "/horse/000a0012cb/",
+            "/horse/000a008c0e/",
+            "/horse/000a0000d3/",
+            "/horse/000a00a4b8/",
+            "/horse/000a000dfe/",
+            "/horse/000a0002fd/",
+            "/horse/000a000444/",
+            "/horse/1966100143/",
+        ]
 
 
 class JockeyContract(Contract):

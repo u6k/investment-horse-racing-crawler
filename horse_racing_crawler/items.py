@@ -98,3 +98,12 @@ class TrainerItem(Item):
     trainer_text = Field()
     birth_place = Field()
     debut_year = Field()
+
+
+class ParentHorseItem(Item):
+    parent_horse_id = Field()
+    parent1_id = Field()
+    parent2_id = Field()
+    parent3_id = Field()
+    parent4_id = Field()
+    parent5_id = Field()
