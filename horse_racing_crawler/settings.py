@@ -24,6 +24,7 @@ HTTPCACHE_STORAGE = "horse_racing_crawler.middlewares.S3CacheStorage"
 SPIDER_CONTRACTS = {
     "horse_racing_crawler.contracts.CalendarContract": 10,
     "horse_racing_crawler.contracts.RaceListContract": 10,
+    "horse_racing_crawler.contracts.OldRaceListContract": 10,
     "horse_racing_crawler.contracts.RaceResultContract": 10,
     "horse_racing_crawler.contracts.OddsWinPlaceContract": 10,
     "horse_racing_crawler.contracts.OddsBracketQuinellaContract": 10,

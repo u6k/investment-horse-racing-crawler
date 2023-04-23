@@ -44,6 +44,20 @@ class RaceListContract(Contract):
             raise ContractFail(f"Unknown request: url={r.url}")
 
 
+class OldRaceListContract(Contract):
+    name = "old_race_list_contract"
+
+    def post_process(self, output):
+        # Check requests
+        requests = list(filter(lambda o: isinstance(o, Request), output))
+
+        for r in requests:
+            if r.url.startswith("https://db.netkeiba.com/race/"):
+                continue
+
+            raise ContractFail(f"Unknown request: url={r.url}")
+
+
 class RaceResultContract(Contract):
     name = "race_result_contract"
 

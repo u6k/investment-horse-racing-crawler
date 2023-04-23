@@ -49,6 +49,10 @@ class NetkeibaSpider(scrapy.Spider):
             self.logger.debug("#_follow: follow race_result page")
             return scrapy.Request(url, callback=self.parse_race_result, meta=meta)
 
+        elif url.startswith("https://db.netkeiba.com/race/"):
+            self.logger.debug("#_follow: follow old_race_result page")
+            return scrapy.Request(url, callback=self.parse_old_race_result, meta=meta)
+
         elif url.startswith("https://race.netkeiba.com/api/api_get_jra_odds.html?type=1&race_id="):
             self.logger.debug("#_follow: follow race_odds_win_place page")
             return scrapy.Request(url, callback=self.parse_race_odds_win_place, meta=meta)
@@ -150,7 +154,24 @@ class NetkeibaSpider(scrapy.Spider):
                 yield self._follow(race_result_url)
 
     def parse_old_race_list(self, response):
+        """Parse old_race_list page.
+
+        @url https://db.netkeiba.com/race/sum/06/19860301
+        @returns items 0 0
+        @returns requests 12 12
+        @old_race_list_contract
+        """
         self.logger.info(f"#parse_old_race_list: start: response={response.url}")
+
+        # Parse link
+        for a in response.xpath("//a"):
+            race_result_url = response.urljoin(a.xpath("@href").get())
+            race_result_url_re = re.match("^https://db.netkeiba.com/race/[0-9]+/$", race_result_url)
+
+            if race_result_url_re:
+                self.logger.debug(f"#parse_old_race_list: a={race_result_url}")
+
+                yield self._follow(race_result_url)
 
     def parse_race_result(self, response):
         """Parse race_result page.
@@ -429,6 +450,13 @@ class NetkeibaSpider(scrapy.Spider):
 
             self.logger.debug(f"#parse_race_odds_win_place: odds={item}")
             yield item
+
+    def parse_old_race_result(self, response):
+        """Parse old_race_result page.
+
+        @url https://db.netkeiba.com/race/198606020301/
+        """
+        self.logger.info(f"#parse_old_race_result: start: response={response.url}")
 
     def parse_race_odds_bracket_quinella(self, response):
         """Parse odds_bracket_quinella page.
