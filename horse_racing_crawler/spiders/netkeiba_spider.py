@@ -37,6 +37,10 @@ class NetkeibaSpider(scrapy.Spider):
             self.logger.debug("#_follow: follow calendar page")
             return scrapy.Request(url, callback=self.parse_calendar, meta=meta)
 
+        elif url.startswith("https://db.netkeiba.com/race/sum/"):
+            self.logger.debug("#_follow: follow old_race_list page")
+            return scrapy.Request(url, callback=self.parse_old_race_list, meta=meta)
+
         elif url.startswith("https://race.netkeiba.com/top/race_list_sub.html?kaisai_date="):
             self.logger.debug("#_follow: follow race_list page")
             return scrapy.Request(url, callback=self.parse_race_list, meta=meta)
@@ -100,8 +104,10 @@ class NetkeibaSpider(scrapy.Spider):
         """Parse calendar page.
 
         @url https://race.netkeiba.com/top/calendar.html?year=2023&month=3
+        # 旧カレンダーページ @url https://race.netkeiba.com/top/calendar.html?year=1986&month=4
         @returns items 0 0
         @returns requests 8 8
+        # 旧カレンダーページ @returns requests 20 20
         @calendar_contract
         """
         self.logger.info(f"#parse_calendar: start: response={response.url}")
@@ -116,6 +122,11 @@ class NetkeibaSpider(scrapy.Spider):
 
                 race_list_url = f"https://race.netkeiba.com/top/race_list_sub.html?kaisai_date={race_list_url_qs['kaisai_date'][0]}"
                 yield self._follow(race_list_url)
+
+            elif race_list_url.hostname == "db.netkeiba.com" and race_list_url.path.startswith("/race/sum/"):
+                self.logger.debug(f"#parse_calendar: a={race_list_url.geturl()}")
+
+                yield self._follow(race_list_url.geturl())
 
     def parse_race_list(self, response):
         """Parse race_list page.
@@ -137,6 +148,9 @@ class NetkeibaSpider(scrapy.Spider):
 
                 race_result_url = f"https://race.netkeiba.com/race/result.html?race_id={race_result_url_qs['race_id'][0]}"
                 yield self._follow(race_result_url)
+
+    def parse_old_race_list(self, response):
+        self.logger.info(f"#parse_old_race_list: start: response={response.url}")
 
     def parse_race_result(self, response):
         """Parse race_result page.

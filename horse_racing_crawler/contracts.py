@@ -21,6 +21,9 @@ class CalendarContract(Contract):
             if url.hostname == "race.netkeiba.com" and url.path == "/top/race_list_sub.html" and "kaisai_date" in qs:
                 continue
 
+            elif url.hostname == "db.netkeiba.com" and url.path.startswith("/race/sum/"):
+                continue
+
             raise ContractFail(f"Unknown request: url={r.url}")
 
 
