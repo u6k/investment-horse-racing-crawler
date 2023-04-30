@@ -280,11 +280,13 @@ class NetkeibaSpider(scrapy.Spider):
             return loader.load_item()
 
         tr = response.xpath("//table[@class='Payout_Detail_Table'][1]/tbody/tr[@class='Wakuren']")
-        i = load_item_ren(tr)
-        assert i["betting_type"][0] == "枠連", i["betting_type"][0]
+        if tr:
+            # NOTE: 枠連は存在しないことがある
+            i = load_item_ren(tr)
+            assert i["betting_type"][0] == "枠連", i["betting_type"][0]
 
-        self.logger.debug(f"#parse_race_result: race_payoff={i}")
-        yield i
+            self.logger.debug(f"#parse_race_result: race_payoff={i}")
+            yield i
 
         tr = response.xpath("//table[@class='Payout_Detail_Table'][1]/tbody/tr[@class='Umaren']")
         i = load_item_ren(tr)
