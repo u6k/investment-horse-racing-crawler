@@ -24,6 +24,9 @@ class S3CacheStorage:
         self.s3_bucket = settings["S3_BUCKET"]
         self.s3_folder = settings["S3_FOLDER"]
 
+        self.recache_race = settings["RECACHE_RACE"]
+        self.recache_data = settings["RECACHE_DATA"]
+
         # Setup s3 client
         self.s3_client = boto3.resource("s3", endpoint_url=self.s3_endpoint, aws_access_key_id=self.s3_access_key, aws_secret_access_key=self.s3_secret_key, region_name=self.s3_region)
 
@@ -40,15 +43,16 @@ class S3CacheStorage:
     def retrieve_response(self, spider, request):
         spider.logger.debug(f"#retrieve_response: start: url={request.url}")
 
-        # TODO: キャッシュを制御する
-        # if spider.recache_race and (("/schedule/list" in request.url) or ("/race/list" in request.url) or ("/race/result" in request.url) or ("/race/denma" in request.url) or ("/odds" in request.url)):
-        #     logger.debug("#retrieve_response: re-cache race")
-        #     return
+        # 再キャッシュする
+        if self.recache_race and ((request.url.startswith("https://race.netkeiba.com/top/calendar.html")) or (request.url.startswith("https://db.netkeiba.com/race/")) or (request.url.startswith("https://race.netkeiba.com/top/race_list_sub.html")) or (request.url.startswith("https://race.netkeiba.com/race/result.html")) or (request.url.startswith("https://race.netkeiba.com/api/api_get_jra_odds.html")) or (request.url.startswith("https://race.netkeiba.com/race/oikiri.html"))):
+            spider.logger.debug("#retrieve_response: re-cache race")
+            return
 
-        # if spider.recache_horse and (("/directory/horse" in request.url) or ("/directory/trainer" in request.url) or ("/directory/jocky" in request.url)):
-        #     logger.debug("#retrieve_response: re-cache horse/jockey/trainer")
-        #     return
+        if self.recache_data and ((request.url.startswith("https://db.netkeiba.com/v1.1/?pid=api_db_horse_info_simple")) or (request.url.startswith("https://db.netkeiba.com/horse/ped/")) or (request.url.startswith("https://db.netkeiba.com/jockey/")) or (request.url.startswith("https://db.netkeiba.com/trainer/"))):
+            spider.logger.debug("#retrieve_response: re-cache data")
+            return
 
+        # キャッシュから取得する
         rpath = self._get_request_path(spider, request)
         spider.logger.debug(f"#retrieve_response: cache path={rpath}")
 

@@ -1,5 +1,6 @@
 import logging
 import os
+from distutils.util import strtobool
 
 BOT_NAME = "horse_racing_crawler"
 USER_AGENT = os.environ.get("USER_AGENT", "horse_racing_crawler/1.0 (+https://github.com/u6k/investment-horse-racing-crawler)")
@@ -54,3 +55,6 @@ S3_ACCESS_KEY = os.environ["S3_ACCESS_KEY"]
 S3_SECRET_KEY = os.environ["S3_SECRET_KEY"]
 S3_BUCKET = os.environ["S3_BUCKET"]
 S3_FOLDER = os.environ["S3_FOLDER"]
+
+RECACHE_RACE = strtobool(os.environ.get("RECACHE_RACE", "False"))
+RECACHE_DATA = strtobool(os.environ.get("RECACHE_DATA", "False"))
