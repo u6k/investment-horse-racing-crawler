@@ -1,5 +1,6 @@
 import logging
 import os
+from distutils.util import strtobool
 
 BOT_NAME = "horse_racing_crawler"
 USER_AGENT = os.environ.get("USER_AGENT", "horse_racing_crawler/1.0 (+https://github.com/u6k/investment-horse-racing-crawler)")
@@ -23,6 +24,21 @@ HTTPCACHE_STORAGE = "horse_racing_crawler.middlewares.S3CacheStorage"
 
 SPIDER_CONTRACTS = {
     "horse_racing_crawler.contracts.CalendarContract": 10,
+    "horse_racing_crawler.contracts.RaceListContract": 10,
+    "horse_racing_crawler.contracts.OldRaceListContract": 10,
+    "horse_racing_crawler.contracts.RaceResultContract": 10,
+    "horse_racing_crawler.contracts.OddsWinPlaceContract": 10,
+    "horse_racing_crawler.contracts.OddsBracketQuinellaContract": 10,
+    "horse_racing_crawler.contracts.OddsQuinellaContract": 10,
+    "horse_racing_crawler.contracts.OddsQuinellaPlaceContract": 10,
+    "horse_racing_crawler.contracts.OddsExactaContract": 10,
+    "horse_racing_crawler.contracts.OddsTrioContract": 10,
+    "horse_racing_crawler.contracts.OddsTrifectaContract": 10,
+    "horse_racing_crawler.contracts.TrainingContract": 10,
+    "horse_racing_crawler.contracts.HorseContract": 10,
+    "horse_racing_crawler.contracts.ParentHorseContract": 10,
+    "horse_racing_crawler.contracts.JockeyContract": 10,
+    "horse_racing_crawler.contracts.TrainerContract": 10,
 }
 
 # Set settings whose default value is deprecated to a future-proof value
@@ -39,3 +55,6 @@ S3_ACCESS_KEY = os.environ["S3_ACCESS_KEY"]
 S3_SECRET_KEY = os.environ["S3_SECRET_KEY"]
 S3_BUCKET = os.environ["S3_BUCKET"]
 S3_FOLDER = os.environ["S3_FOLDER"]
+
+RECACHE_RACE = strtobool(os.environ.get("RECACHE_RACE", "False"))
+RECACHE_DATA = strtobool(os.environ.get("RECACHE_DATA", "False"))
