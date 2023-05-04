@@ -58,3 +58,10 @@ S3_FOLDER = os.environ["S3_FOLDER"]
 
 RECACHE_RACE = strtobool(os.environ.get("RECACHE_RACE", "False"))
 RECACHE_DATA = strtobool(os.environ.get("RECACHE_DATA", "False"))
+
+FEEDS = {
+    "items.json": {
+        "format": "json",
+        "encoding": "utf8",
+    }
+}
