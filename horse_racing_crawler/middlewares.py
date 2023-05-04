@@ -44,11 +44,11 @@ class S3CacheStorage:
         spider.logger.debug(f"#retrieve_response: start: url={request.url}")
 
         # 再キャッシュする
-        if self.recache_race and ((request.url.startswith("https://race.netkeiba.com/top/calendar.html")) or (request.url.startswith("https://db.netkeiba.com/race/")) or (request.url.startswith("https://race.netkeiba.com/top/race_list_sub.html")) or (request.url.startswith("https://race.netkeiba.com/race/result.html")) or (request.url.startswith("https://race.netkeiba.com/api/api_get_jra_odds.html")) or (request.url.startswith("https://race.netkeiba.com/race/oikiri.html"))):
+        if self.recache_race and (request.url.startswith("https://race.netkeiba.com/top/calendar.html") or request.url.startswith("https://db.netkeiba.com/race/") or request.url.startswith("https://race.netkeiba.com/top/race_list_sub.html") or request.url.startswith("https://race.netkeiba.com/race/result.html") or request.url.startswith("https://race.netkeiba.com/api/api_get_jra_odds.html") or request.url.startswith("https://race.netkeiba.com/race/oikiri.html")):
             spider.logger.debug("#retrieve_response: re-cache race")
             return
 
-        if self.recache_data and ((request.url.startswith("https://db.netkeiba.com/v1.1/?pid=api_db_horse_info_simple")) or (request.url.startswith("https://db.netkeiba.com/horse/ped/")) or (request.url.startswith("https://db.netkeiba.com/jockey/")) or (request.url.startswith("https://db.netkeiba.com/trainer/"))):
+        if self.recache_data and (request.url.startswith("https://db.netkeiba.com/v1.1/?pid=api_db_horse_info_simple") or request.url.startswith("https://db.netkeiba.com/horse/ped/") or request.url.startswith("https://db.netkeiba.com/jockey/") or request.url.startswith("https://db.netkeiba.com/trainer/")):
             spider.logger.debug("#retrieve_response: re-cache data")
             return
 

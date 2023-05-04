@@ -1,6 +1,5 @@
 import json
 import re
-import time
 from urllib.parse import parse_qs, urlparse
 
 import scrapy
@@ -356,34 +355,32 @@ class NetkeibaSpider(scrapy.Spider):
             if url.hostname == "race.netkeiba.com" and url.path == "/odds/index.html" and "race_id" in url_qs:
                 self.logger.debug(f"#parse_race_result: odds top page link. a={url.geturl()}")
 
-                t = int(time.time())  # キャッシュ回避のため、リクエストに付与する現在時刻
-
                 # 単勝・複勝
-                race_odds_url = f"https://race.netkeiba.com/api/api_get_jra_odds.html?type=1&race_id={url_qs['race_id'][0]}&_={t}"
+                race_odds_url = f"https://race.netkeiba.com/api/api_get_jra_odds.html?type=1&race_id={url_qs['race_id'][0]}"
                 yield self._follow(race_odds_url)
 
                 # 枠連
-                race_odds_url = f"https://race.netkeiba.com/api/api_get_jra_odds.html?type=3&race_id={url_qs['race_id'][0]}&_={t}"
+                race_odds_url = f"https://race.netkeiba.com/api/api_get_jra_odds.html?type=3&race_id={url_qs['race_id'][0]}"
                 yield self._follow(race_odds_url)
 
                 # 馬連
-                race_odds_url = f"https://race.netkeiba.com/api/api_get_jra_odds.html?type=4&race_id={url_qs['race_id'][0]}&_={t}"
+                race_odds_url = f"https://race.netkeiba.com/api/api_get_jra_odds.html?type=4&race_id={url_qs['race_id'][0]}"
                 yield self._follow(race_odds_url)
 
                 # ワイド
-                race_odds_url = f"https://race.netkeiba.com/api/api_get_jra_odds.html?type=5&race_id={url_qs['race_id'][0]}&_={t}"
+                race_odds_url = f"https://race.netkeiba.com/api/api_get_jra_odds.html?type=5&race_id={url_qs['race_id'][0]}"
                 yield self._follow(race_odds_url)
 
                 # 馬単
-                race_odds_url = f"https://race.netkeiba.com/api/api_get_jra_odds.html?type=6&race_id={url_qs['race_id'][0]}&_={t}"
+                race_odds_url = f"https://race.netkeiba.com/api/api_get_jra_odds.html?type=6&race_id={url_qs['race_id'][0]}"
                 yield self._follow(race_odds_url)
 
                 # 3連複
-                race_odds_url = f"https://race.netkeiba.com/api/api_get_jra_odds.html?type=7&race_id={url_qs['race_id'][0]}&_={t}"
+                race_odds_url = f"https://race.netkeiba.com/api/api_get_jra_odds.html?type=7&race_id={url_qs['race_id'][0]}"
                 yield self._follow(race_odds_url)
 
                 # 3連単
-                race_odds_url = f"https://race.netkeiba.com/api/api_get_jra_odds.html?type=8&race_id={url_qs['race_id'][0]}&_={t}"
+                race_odds_url = f"https://race.netkeiba.com/api/api_get_jra_odds.html?type=8&race_id={url_qs['race_id'][0]}"
                 yield self._follow(race_odds_url)
 
             elif url.hostname == "race.netkeiba.com" and url.path == "/race/oikiri.html" and "race_id" in url_qs:
@@ -396,7 +393,7 @@ class NetkeibaSpider(scrapy.Spider):
                 self.logger.debug(f"#parse_race_result: horse page link. a={url.geturl()}")
 
                 horse_id_re = re.match("^/horse/([0-9]+)$", url.path)
-                horse_url = f"https://db.netkeiba.com/v1.1/?pid=api_db_horse_info_simple&input=UTF-8&output=json&id={horse_id_re.group(1)}&_={t}"
+                horse_url = f"https://db.netkeiba.com/v1.1/?pid=api_db_horse_info_simple&input=UTF-8&output=json&id={horse_id_re.group(1)}"
 
                 yield self._follow(horse_url)
 
