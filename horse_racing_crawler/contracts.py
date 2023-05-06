@@ -462,269 +462,269 @@ class OddsWinPlaceContract(Contract):
         assert len(odds_items) == 32
 
         # win odds
-        items = list(filter(lambda i: i["odds_type"] == 1, odds_items))
+        items = list(filter(lambda i: i["odds_type"] == [1], odds_items))
 
         assert len(items) == 16
 
         i = items[0]
-        assert i["favorite_order"] == "5"
-        assert i["horse_number"] == "01"
-        assert i["odds1"] == "32.8"
-        assert i["odds2"] == ""
-        assert i["odds_type"] == 1
+        assert i["favorite_order"] == ["5"]
+        assert i["horse_number"] == ["01"]
+        assert i["odds1"] == ["32.8"]
+        assert i["odds2"] == [""]
+        assert i["odds_type"] == [1]
         assert i["race_id"] == ["202306020702"]
 
         i = items[1]
-        assert i["favorite_order"] == "4"
-        assert i["horse_number"] == "02"
-        assert i["odds1"] == "27.9"
-        assert i["odds2"] == ""
-        assert i["odds_type"] == 1
+        assert i["favorite_order"] == ["4"]
+        assert i["horse_number"] == ["02"]
+        assert i["odds1"] == ["27.9"]
+        assert i["odds2"] == [""]
+        assert i["odds_type"] == [1]
         assert i["race_id"] == ["202306020702"]
 
         i = items[2]
-        assert i["favorite_order"] == "15"
-        assert i["horse_number"] == "03"
-        assert i["odds1"] == "274.1"
-        assert i["odds2"] == ""
-        assert i["odds_type"] == 1
+        assert i["favorite_order"] == ["15"]
+        assert i["horse_number"] == ["03"]
+        assert i["odds1"] == ["274.1"]
+        assert i["odds2"] == [""]
+        assert i["odds_type"] == [1]
         assert i["race_id"] == ["202306020702"]
 
         i = items[3]
-        assert i["favorite_order"] == "11"
-        assert i["horse_number"] == "04"
-        assert i["odds1"] == "154.6"
-        assert i["odds2"] == ""
-        assert i["odds_type"] == 1
+        assert i["favorite_order"] == ["11"]
+        assert i["horse_number"] == ["04"]
+        assert i["odds1"] == ["154.6"]
+        assert i["odds2"] == [""]
+        assert i["odds_type"] == [1]
         assert i["race_id"] == ["202306020702"]
 
         i = items[4]
-        assert i["favorite_order"] == "9"
-        assert i["horse_number"] == "05"
-        assert i["odds1"] == "113.5"
-        assert i["odds2"] == ""
-        assert i["odds_type"] == 1
+        assert i["favorite_order"] == ["9"]
+        assert i["horse_number"] == ["05"]
+        assert i["odds1"] == ["113.5"]
+        assert i["odds2"] == [""]
+        assert i["odds_type"] == [1]
         assert i["race_id"] == ["202306020702"]
 
         i = items[5]
-        assert i["favorite_order"] == "6"
-        assert i["horse_number"] == "06"
-        assert i["odds1"] == "36.7"
-        assert i["odds2"] == ""
-        assert i["odds_type"] == 1
+        assert i["favorite_order"] == ["6"]
+        assert i["horse_number"] == ["06"]
+        assert i["odds1"] == ["36.7"]
+        assert i["odds2"] == [""]
+        assert i["odds_type"] == [1]
         assert i["race_id"] == ["202306020702"]
 
         i = items[6]
-        assert i["favorite_order"] == "7"
-        assert i["horse_number"] == "07"
-        assert i["odds1"] == "66.0"
-        assert i["odds2"] == ""
-        assert i["odds_type"] == 1
+        assert i["favorite_order"] == ["7"]
+        assert i["horse_number"] == ["07"]
+        assert i["odds1"] == ["66.0"]
+        assert i["odds2"] == [""]
+        assert i["odds_type"] == [1]
         assert i["race_id"] == ["202306020702"]
 
         i = items[7]
-        assert i["favorite_order"] == "10"
-        assert i["horse_number"] == "08"
-        assert i["odds1"] == "140.9"
-        assert i["odds2"] == ""
-        assert i["odds_type"] == 1
+        assert i["favorite_order"] == ["10"]
+        assert i["horse_number"] == ["08"]
+        assert i["odds1"] == ["140.9"]
+        assert i["odds2"] == [""]
+        assert i["odds_type"] == [1]
         assert i["race_id"] == ["202306020702"]
 
         i = items[8]
-        assert i["favorite_order"] == "1"
-        assert i["horse_number"] == "09"
-        assert i["odds1"] == "1.2"
-        assert i["odds2"] == ""
-        assert i["odds_type"] == 1
+        assert i["favorite_order"] == ["1"]
+        assert i["horse_number"] == ["09"]
+        assert i["odds1"] == ["1.2"]
+        assert i["odds2"] == [""]
+        assert i["odds_type"] == [1]
         assert i["race_id"] == ["202306020702"]
 
         i = items[9]
-        assert i["favorite_order"] == "13"
-        assert i["horse_number"] == "10"
-        assert i["odds1"] == "254.1"
-        assert i["odds2"] == ""
-        assert i["odds_type"] == 1
+        assert i["favorite_order"] == ["13"]
+        assert i["horse_number"] == ["10"]
+        assert i["odds1"] == ["254.1"]
+        assert i["odds2"] == [""]
+        assert i["odds_type"] == [1]
         assert i["race_id"] == ["202306020702"]
 
         i = items[10]
-        assert i["favorite_order"] == "12"
-        assert i["horse_number"] == "11"
-        assert i["odds1"] == "187.3"
-        assert i["odds2"] == ""
-        assert i["odds_type"] == 1
+        assert i["favorite_order"] == ["12"]
+        assert i["horse_number"] == ["11"]
+        assert i["odds1"] == ["187.3"]
+        assert i["odds2"] == [""]
+        assert i["odds_type"] == [1]
         assert i["race_id"] == ["202306020702"]
 
         i = items[11]
-        assert i["favorite_order"] == "2"
-        assert i["horse_number"] == "12"
-        assert i["odds1"] == "4.0"
-        assert i["odds2"] == ""
-        assert i["odds_type"] == 1
+        assert i["favorite_order"] == ["2"]
+        assert i["horse_number"] == ["12"]
+        assert i["odds1"] == ["4.0"]
+        assert i["odds2"] == [""]
+        assert i["odds_type"] == [1]
         assert i["race_id"] == ["202306020702"]
 
         i = items[12]
-        assert i["favorite_order"] == "16"
-        assert i["horse_number"] == "13"
-        assert i["odds1"] == "700.7"
-        assert i["odds2"] == ""
-        assert i["odds_type"] == 1
+        assert i["favorite_order"] == ["16"]
+        assert i["horse_number"] == ["13"]
+        assert i["odds1"] == ["700.7"]
+        assert i["odds2"] == [""]
+        assert i["odds_type"] == [1]
         assert i["race_id"] == ["202306020702"]
 
         i = items[13]
-        assert i["favorite_order"] == "3"
-        assert i["horse_number"] == "14"
-        assert i["odds1"] == "22.4"
-        assert i["odds2"] == ""
-        assert i["odds_type"] == 1
+        assert i["favorite_order"] == ["3"]
+        assert i["horse_number"] == ["14"]
+        assert i["odds1"] == ["22.4"]
+        assert i["odds2"] == [""]
+        assert i["odds_type"] == [1]
         assert i["race_id"] == ["202306020702"]
 
         i = items[14]
-        assert i["favorite_order"] == "14"
-        assert i["horse_number"] == "15"
-        assert i["odds1"] == "258.0"
-        assert i["odds2"] == ""
-        assert i["odds_type"] == 1
+        assert i["favorite_order"] == ["14"]
+        assert i["horse_number"] == ["15"]
+        assert i["odds1"] == ["258.0"]
+        assert i["odds2"] == [""]
+        assert i["odds_type"] == [1]
         assert i["race_id"] == ["202306020702"]
 
         i = items[15]
-        assert i["favorite_order"] == "8"
-        assert i["horse_number"] == "16"
-        assert i["odds1"] == "76.6"
-        assert i["odds2"] == ""
-        assert i["odds_type"] == 1
+        assert i["favorite_order"] == ["8"]
+        assert i["horse_number"] == ["16"]
+        assert i["odds1"] == ["76.6"]
+        assert i["odds2"] == [""]
+        assert i["odds_type"] == [1]
         assert i["race_id"] == ["202306020702"]
 
         # place odds
-        items = list(filter(lambda i: i["odds_type"] == 2, odds_items))
+        items = list(filter(lambda i: i["odds_type"] == [2], odds_items))
 
         assert len(items) == 16
 
         i = items[0]
-        assert i["favorite_order"] == "6"
-        assert i["horse_number"] == "01"
-        assert i["odds1"] == "3.2"
-        assert i["odds2"] == "24.2"
-        assert i["odds_type"] == 2
+        assert i["favorite_order"] == ["6"]
+        assert i["horse_number"] == ["01"]
+        assert i["odds1"] == ["3.2"]
+        assert i["odds2"] == ["24.2"]
+        assert i["odds_type"] == [2]
         assert i["race_id"] == ["202306020702"]
 
         i = items[1]
-        assert i["favorite_order"] == "3"
-        assert i["horse_number"] == "02"
-        assert i["odds1"] == "1.6"
-        assert i["odds2"] == "10.5"
-        assert i["odds_type"] == 2
+        assert i["favorite_order"] == ["3"]
+        assert i["horse_number"] == ["02"]
+        assert i["odds1"] == ["1.6"]
+        assert i["odds2"] == ["10.5"]
+        assert i["odds_type"] == [2]
         assert i["race_id"] == ["202306020702"]
 
         i = items[2]
-        assert i["favorite_order"] == "15"
-        assert i["horse_number"] == "03"
-        assert i["odds1"] == "21.6"
-        assert i["odds2"] == "186.5"
-        assert i["odds_type"] == 2
+        assert i["favorite_order"] == ["15"]
+        assert i["horse_number"] == ["03"]
+        assert i["odds1"] == ["21.6"]
+        assert i["odds2"] == ["186.5"]
+        assert i["odds_type"] == [2]
         assert i["race_id"] == ["202306020702"]
 
         i = items[3]
-        assert i["favorite_order"] == "12"
-        assert i["horse_number"] == "04"
-        assert i["odds1"] == "15.5"
-        assert i["odds2"] == "132.1"
-        assert i["odds_type"] == 2
+        assert i["favorite_order"] == ["12"]
+        assert i["horse_number"] == ["04"]
+        assert i["odds1"] == ["15.5"]
+        assert i["odds2"] == ["132.1"]
+        assert i["odds_type"] == [2]
         assert i["race_id"] == ["202306020702"]
 
         i = items[4]
-        assert i["favorite_order"] == "10"
-        assert i["horse_number"] == "05"
-        assert i["odds1"] == "7.4"
-        assert i["odds2"] == "61.5"
-        assert i["odds_type"] == 2
+        assert i["favorite_order"] == ["10"]
+        assert i["horse_number"] == ["05"]
+        assert i["odds1"] == ["7.4"]
+        assert i["odds2"] == ["61.5"]
+        assert i["odds_type"] == [2]
         assert i["race_id"] == ["202306020702"]
 
         i = items[5]
-        assert i["favorite_order"] == "5"
-        assert i["horse_number"] == "06"
-        assert i["odds1"] == "2.2"
-        assert i["odds2"] == "15.5"
-        assert i["odds_type"] == 2
+        assert i["favorite_order"] == ["5"]
+        assert i["horse_number"] == ["06"]
+        assert i["odds1"] == ["2.2"]
+        assert i["odds2"] == ["15.5"]
+        assert i["odds_type"] == [2]
         assert i["race_id"] == ["202306020702"]
 
         i = items[6]
-        assert i["favorite_order"] == "7"
-        assert i["horse_number"] == "07"
-        assert i["odds1"] == "4.0"
-        assert i["odds2"] == "31.4"
-        assert i["odds_type"] == 2
+        assert i["favorite_order"] == ["7"]
+        assert i["horse_number"] == ["07"]
+        assert i["odds1"] == ["4.0"]
+        assert i["odds2"] == ["31.4"]
+        assert i["odds_type"] == [2]
         assert i["race_id"] == ["202306020702"]
 
         i = items[7]
-        assert i["favorite_order"] == "9"
-        assert i["horse_number"] == "08"
-        assert i["odds1"] == "5.5"
-        assert i["odds2"] == "45.0"
-        assert i["odds_type"] == 2
+        assert i["favorite_order"] == ["9"]
+        assert i["horse_number"] == ["08"]
+        assert i["odds1"] == ["5.5"]
+        assert i["odds2"] == ["45.0"]
+        assert i["odds_type"] == [2]
         assert i["race_id"] == ["202306020702"]
 
         i = items[8]
-        assert i["favorite_order"] == "1"
-        assert i["horse_number"] == "09"
-        assert i["odds1"] == "1.0"
-        assert i["odds2"] == "1.1"
-        assert i["odds_type"] == 2
+        assert i["favorite_order"] == ["1"]
+        assert i["horse_number"] == ["09"]
+        assert i["odds1"] == ["1.0"]
+        assert i["odds2"] == ["1.1"]
+        assert i["odds_type"] == [2]
         assert i["race_id"] == ["202306020702"]
 
         i = items[9]
-        assert i["favorite_order"] == "14"
-        assert i["horse_number"] == "10"
-        assert i["odds1"] == "19.9"
-        assert i["odds2"] == "171.5"
-        assert i["odds_type"] == 2
+        assert i["favorite_order"] == ["14"]
+        assert i["horse_number"] == ["10"]
+        assert i["odds1"] == ["19.9"]
+        assert i["odds2"] == ["171.5"]
+        assert i["odds_type"] == [2]
         assert i["race_id"] == ["202306020702"]
 
         i = items[10]
-        assert i["favorite_order"] == "11"
-        assert i["horse_number"] == "11"
-        assert i["odds1"] == "10.2"
-        assert i["odds2"] == "86.1"
-        assert i["odds_type"] == 2
+        assert i["favorite_order"] == ["11"]
+        assert i["horse_number"] == ["11"]
+        assert i["odds1"] == ["10.2"]
+        assert i["odds2"] == ["86.1"]
+        assert i["odds_type"] == [2]
         assert i["race_id"] == ["202306020702"]
 
         i = items[11]
-        assert i["favorite_order"] == "2"
-        assert i["horse_number"] == "12"
-        assert i["odds1"] == "1.1"
-        assert i["odds2"] == "4.6"
-        assert i["odds_type"] == 2
+        assert i["favorite_order"] == ["2"]
+        assert i["horse_number"] == ["12"]
+        assert i["odds1"] == ["1.1"]
+        assert i["odds2"] == ["4.6"]
+        assert i["odds_type"] == [2]
         assert i["race_id"] == ["202306020702"]
 
         i = items[12]
-        assert i["favorite_order"] == "16"
-        assert i["horse_number"] == "13"
-        assert i["odds1"] == "47.7"
-        assert i["odds2"] == "415.7"
-        assert i["odds_type"] == 2
+        assert i["favorite_order"] == ["16"]
+        assert i["horse_number"] == ["13"]
+        assert i["odds1"] == ["47.7"]
+        assert i["odds2"] == ["415.7"]
+        assert i["odds_type"] == [2]
         assert i["race_id"] == ["202306020702"]
 
         i = items[13]
-        assert i["favorite_order"] == "4"
-        assert i["horse_number"] == "14"
-        assert i["odds1"] == "1.9"
-        assert i["odds2"] == "12.9"
-        assert i["odds_type"] == 2
+        assert i["favorite_order"] == ["4"]
+        assert i["horse_number"] == ["14"]
+        assert i["odds1"] == ["1.9"]
+        assert i["odds2"] == ["12.9"]
+        assert i["odds_type"] == [2]
         assert i["race_id"] == ["202306020702"]
 
         i = items[14]
-        assert i["favorite_order"] == "13"
-        assert i["horse_number"] == "15"
-        assert i["odds1"] == "19.8"
-        assert i["odds2"] == "170.1"
-        assert i["odds_type"] == 2
+        assert i["favorite_order"] == ["13"]
+        assert i["horse_number"] == ["15"]
+        assert i["odds1"] == ["19.8"]
+        assert i["odds2"] == ["170.1"]
+        assert i["odds_type"] == [2]
         assert i["race_id"] == ["202306020702"]
 
         i = items[15]
-        assert i["favorite_order"] == "8"
-        assert i["horse_number"] == "16"
-        assert i["odds1"] == "4.6"
-        assert i["odds2"] == "36.8"
-        assert i["odds_type"] == 2
+        assert i["favorite_order"] == ["8"]
+        assert i["horse_number"] == ["16"]
+        assert i["odds1"] == ["4.6"]
+        assert i["odds2"] == ["36.8"]
+        assert i["odds_type"] == [2]
         assert i["race_id"] == ["202306020702"]
 
 
@@ -738,40 +738,40 @@ class OddsBracketQuinellaContract(Contract):
 
         odds_items = list(filter(lambda o: isinstance(o, OddsItem), output))
 
-        items = list(filter(lambda i: i["odds_type"] == 3, odds_items))
+        items = list(filter(lambda i: i["odds_type"] == [3], odds_items))
 
         assert len(odds_items) == len(items)
 
         i = items[0]
-        assert i["favorite_order"] == "20"
-        assert i["horse_number"] == "0101"
-        assert i["odds1"] == "154.3"
-        assert i["odds2"] == ""
-        assert i["odds_type"] == 3
+        assert i["favorite_order"] == ["20"]
+        assert i["horse_number"] == ["0101"]
+        assert i["odds1"] == ["154.3"]
+        assert i["odds2"] == [""]
+        assert i["odds_type"] == [3]
         assert i["race_id"] == ["202306020702"]
 
         i = items[1]
-        assert i["favorite_order"] == "22"
-        assert i["horse_number"] == "0102"
-        assert i["odds1"] == "186.4"
-        assert i["odds2"] == ""
-        assert i["odds_type"] == 3
+        assert i["favorite_order"] == ["22"]
+        assert i["horse_number"] == ["0102"]
+        assert i["odds1"] == ["186.4"]
+        assert i["odds2"] == [""]
+        assert i["odds_type"] == [3]
         assert i["race_id"] == ["202306020702"]
 
         i = items[34]
-        assert i["favorite_order"] == "23"
-        assert i["horse_number"] == "0708"
-        assert i["odds1"] == "193.0"
-        assert i["odds2"] == ""
-        assert i["odds_type"] == 3
+        assert i["favorite_order"] == ["23"]
+        assert i["horse_number"] == ["0708"]
+        assert i["odds1"] == ["193.0"]
+        assert i["odds2"] == [""]
+        assert i["odds_type"] == [3]
         assert i["race_id"] == ["202306020702"]
 
         i = items[35]
-        assert i["favorite_order"] == "35"
-        assert i["horse_number"] == "0808"
-        assert i["odds1"] == "1717.1"
-        assert i["odds2"] == ""
-        assert i["odds_type"] == 3
+        assert i["favorite_order"] == ["35"]
+        assert i["horse_number"] == ["0808"]
+        assert i["odds1"] == ["1717.1"]
+        assert i["odds2"] == [""]
+        assert i["odds_type"] == [3]
         assert i["race_id"] == ["202306020702"]
 
 
@@ -785,40 +785,40 @@ class OddsQuinellaContract(Contract):
 
         odds_items = list(filter(lambda o: isinstance(o, OddsItem), output))
 
-        items = list(filter(lambda i: i["odds_type"] == 4, odds_items))
+        items = list(filter(lambda i: i["odds_type"] == [4], odds_items))
 
         assert len(odds_items) == len(items)
 
         i = items[0]
-        assert i["favorite_order"] == "21"
-        assert i["horse_number"] == "0102"
-        assert i["odds1"] == "140.4"
-        assert i["odds2"] == ""
-        assert i["odds_type"] == 4
+        assert i["favorite_order"] == ["21"]
+        assert i["horse_number"] == ["0102"]
+        assert i["odds1"] == ["140.4"]
+        assert i["odds2"] == [""]
+        assert i["odds_type"] == [4]
         assert i["race_id"] == ["202306020702"]
 
         i = items[1]
-        assert i["favorite_order"] == "69"
-        assert i["horse_number"] == "0103"
-        assert i["odds1"] == "1767.9"
-        assert i["odds2"] == ""
-        assert i["odds_type"] == 4
+        assert i["favorite_order"] == ["69"]
+        assert i["horse_number"] == ["0103"]
+        assert i["odds1"] == ["1767.9"]
+        assert i["odds2"] == [""]
+        assert i["odds_type"] == [4]
         assert i["race_id"] == ["202306020702"]
 
         i = items[118]
-        assert i["favorite_order"] == "40"
-        assert i["horse_number"] == "1416"
-        assert i["odds1"] == "530.8"
-        assert i["odds2"] == ""
-        assert i["odds_type"] == 4
+        assert i["favorite_order"] == ["40"]
+        assert i["horse_number"] == ["1416"]
+        assert i["odds1"] == ["530.8"]
+        assert i["odds2"] == [""]
+        assert i["odds_type"] == [4]
         assert i["race_id"] == ["202306020702"]
 
         i = items[119]
-        assert i["favorite_order"] == "96"
-        assert i["horse_number"] == "1516"
-        assert i["odds1"] == "4362.2"
-        assert i["odds2"] == ""
-        assert i["odds_type"] == 4
+        assert i["favorite_order"] == ["96"]
+        assert i["horse_number"] == ["1516"]
+        assert i["odds1"] == ["4362.2"]
+        assert i["odds2"] == [""]
+        assert i["odds_type"] == [4]
         assert i["race_id"] == ["202306020702"]
 
 
@@ -832,40 +832,40 @@ class OddsQuinellaPlaceContract(Contract):
 
         odds_items = list(filter(lambda o: isinstance(o, OddsItem), output))
 
-        items = list(filter(lambda i: i["odds_type"] == 5, odds_items))
+        items = list(filter(lambda i: i["odds_type"] == [5], odds_items))
 
         assert len(odds_items) == len(items)
 
         i = items[0]
-        assert i["favorite_order"] == "22"
-        assert i["horse_number"] == "0102"
-        assert i["odds1"] == "24.1"
-        assert i["odds2"] == "26.9"
-        assert i["odds_type"] == 5
+        assert i["favorite_order"] == ["22"]
+        assert i["horse_number"] == ["0102"]
+        assert i["odds1"] == ["24.1"]
+        assert i["odds2"] == ["26.9"]
+        assert i["odds_type"] == [5]
         assert i["race_id"] == ["202306020702"]
 
         i = items[1]
-        assert i["favorite_order"] == "79"
-        assert i["horse_number"] == "0103"
-        assert i["odds1"] == "331.2"
-        assert i["odds2"] == "349.0"
-        assert i["odds_type"] == 5
+        assert i["favorite_order"] == ["79"]
+        assert i["horse_number"] == ["0103"]
+        assert i["odds1"] == ["331.2"]
+        assert i["odds2"] == ["349.0"]
+        assert i["odds_type"] == [5]
         assert i["race_id"] == ["202306020702"]
 
         i = items[118]
-        assert i["favorite_order"] == "31"
-        assert i["horse_number"] == "1416"
-        assert i["odds1"] == "45.5"
-        assert i["odds2"] == "51.6"
-        assert i["odds_type"] == 5
+        assert i["favorite_order"] == ["31"]
+        assert i["horse_number"] == ["1416"]
+        assert i["odds1"] == ["45.5"]
+        assert i["odds2"] == ["51.6"]
+        assert i["odds_type"] == [5]
         assert i["race_id"] == ["202306020702"]
 
         i = items[119]
-        assert i["favorite_order"] == "85"
-        assert i["horse_number"] == "1516"
-        assert i["odds1"] == "450.4"
-        assert i["odds2"] == "468.1"
-        assert i["odds_type"] == 5
+        assert i["favorite_order"] == ["85"]
+        assert i["horse_number"] == ["1516"]
+        assert i["odds1"] == ["450.4"]
+        assert i["odds2"] == ["468.1"]
+        assert i["odds_type"] == [5]
         assert i["race_id"] == ["202306020702"]
 
 
@@ -879,40 +879,40 @@ class OddsExactaContract(Contract):
 
         odds_items = list(filter(lambda o: isinstance(o, OddsItem), output))
 
-        items = list(filter(lambda i: i["odds_type"] == 6, odds_items))
+        items = list(filter(lambda i: i["odds_type"] == [6], odds_items))
 
         assert len(odds_items) == len(items)
 
         i = items[0]
-        assert i["favorite_order"] == "44"
-        assert i["horse_number"] == "0102"
-        assert i["odds1"] == "391.5"
-        assert i["odds2"] == ""
-        assert i["odds_type"] == 6
+        assert i["favorite_order"] == ["44"]
+        assert i["horse_number"] == ["0102"]
+        assert i["odds1"] == ["391.5"]
+        assert i["odds2"] == [""]
+        assert i["odds_type"] == [6]
         assert i["race_id"] == ["202306020702"]
 
         i = items[1]
-        assert i["favorite_order"] == "139"
-        assert i["horse_number"] == "0103"
-        assert i["odds1"] == "4791.5"
-        assert i["odds2"] == ""
-        assert i["odds_type"] == 6
+        assert i["favorite_order"] == ["139"]
+        assert i["horse_number"] == ["0103"]
+        assert i["odds1"] == ["4791.5"]
+        assert i["odds2"] == [""]
+        assert i["odds_type"] == [6]
         assert i["race_id"] == ["202306020702"]
 
         i = items[238]
-        assert i["favorite_order"] == "76"
-        assert i["horse_number"] == "1614"
-        assert i["odds1"] == "1121.4"
-        assert i["odds2"] == ""
-        assert i["odds_type"] == 6
+        assert i["favorite_order"] == ["76"]
+        assert i["horse_number"] == ["1614"]
+        assert i["odds1"] == ["1121.4"]
+        assert i["odds2"] == [""]
+        assert i["odds_type"] == [6]
         assert i["race_id"] == ["202306020702"]
 
         i = items[239]
-        assert i["favorite_order"] == "195"
-        assert i["horse_number"] == "1615"
-        assert i["odds1"] == "13870.3"
-        assert i["odds2"] == ""
-        assert i["odds_type"] == 6
+        assert i["favorite_order"] == ["195"]
+        assert i["horse_number"] == ["1615"]
+        assert i["odds1"] == ["13870.3"]
+        assert i["odds2"] == [""]
+        assert i["odds_type"] == [6]
         assert i["race_id"] == ["202306020702"]
 
 
@@ -926,40 +926,40 @@ class OddsTrioContract(Contract):
 
         odds_items = list(filter(lambda o: isinstance(o, OddsItem), output))
 
-        items = list(filter(lambda i: i["odds_type"] == 7, odds_items))
+        items = list(filter(lambda i: i["odds_type"] == [7], odds_items))
 
         assert len(odds_items) == len(items)
 
         i = items[0]
-        assert i["favorite_order"] == "154"
-        assert i["horse_number"] == "010203"
-        assert i["odds1"] == "2028.6"
-        assert i["odds2"] == ""
-        assert i["odds_type"] == 7
+        assert i["favorite_order"] == ["154"]
+        assert i["horse_number"] == ["010203"]
+        assert i["odds1"] == ["2028.6"]
+        assert i["odds2"] == [""]
+        assert i["odds_type"] == [7]
         assert i["race_id"] == ["202306020702"]
 
         i = items[1]
-        assert i["favorite_order"] == "167"
-        assert i["horse_number"] == "010204"
-        assert i["odds1"] == "2302.1"
-        assert i["odds2"] == ""
-        assert i["odds_type"] == 7
+        assert i["favorite_order"] == ["167"]
+        assert i["horse_number"] == ["010204"]
+        assert i["odds1"] == ["2302.1"]
+        assert i["odds2"] == [""]
+        assert i["odds_type"] == [7]
         assert i["race_id"] == ["202306020702"]
 
         i = items[558]
-        assert i["favorite_order"] == "364"
-        assert i["horse_number"] == "131516"
-        assert i["odds1"] == "17074.3"
-        assert i["odds2"] == ""
-        assert i["odds_type"] == 7
+        assert i["favorite_order"] == ["364"]
+        assert i["horse_number"] == ["131516"]
+        assert i["odds1"] == ["17074.3"]
+        assert i["odds2"] == [""]
+        assert i["odds_type"] == [7]
         assert i["race_id"] == ["202306020702"]
 
         i = items[559]
-        assert i["favorite_order"] == "245"
-        assert i["horse_number"] == "141516"
-        assert i["odds1"] == "5744.6"
-        assert i["odds2"] == ""
-        assert i["odds_type"] == 7
+        assert i["favorite_order"] == ["245"]
+        assert i["horse_number"] == ["141516"]
+        assert i["odds1"] == ["5744.6"]
+        assert i["odds2"] == [""]
+        assert i["odds_type"] == [7]
         assert i["race_id"] == ["202306020702"]
 
 
@@ -973,40 +973,40 @@ class OddsTrifectaContract(Contract):
 
         odds_items = list(filter(lambda o: isinstance(o, OddsItem), output))
 
-        items = list(filter(lambda i: i["odds_type"] == 8, odds_items))
+        items = list(filter(lambda i: i["odds_type"] == [8], odds_items))
 
         assert len(odds_items) == len(items)
 
         i = items[0]
-        assert i["favorite_order"] == "805"
-        assert i["horse_number"] == "010203"
-        assert i["odds1"] == "14182.1"
-        assert i["odds2"] == ""
-        assert i["odds_type"] == 8
+        assert i["favorite_order"] == ["805"]
+        assert i["horse_number"] == ["010203"]
+        assert i["odds1"] == ["14182.1"]
+        assert i["odds2"] == [""]
+        assert i["odds_type"] == [8]
         assert i["race_id"] == ["202306020702"]
 
         i = items[1]
-        assert i["favorite_order"] == "998"
-        assert i["horse_number"] == "010204"
-        assert i["odds1"] == "23273.2"
-        assert i["odds2"] == ""
-        assert i["odds_type"] == 8
+        assert i["favorite_order"] == ["998"]
+        assert i["horse_number"] == ["010204"]
+        assert i["odds1"] == ["23273.2"]
+        assert i["odds2"] == [""]
+        assert i["odds_type"] == [8]
         assert i["race_id"] == ["202306020702"]
 
         i = items[3358]
-        assert i["favorite_order"] == "2632"
-        assert i["horse_number"] == "161513"
-        assert i["odds1"] == "302552.1"
-        assert i["odds2"] == ""
-        assert i["odds_type"] == 8
+        assert i["favorite_order"] == ["2632"]
+        assert i["horse_number"] == ["161513"]
+        assert i["odds1"] == ["302552.1"]
+        assert i["odds2"] == [""]
+        assert i["odds_type"] == [8]
         assert i["race_id"] == ["202306020702"]
 
         i = items[3359]
-        assert i["favorite_order"] == "2139"
-        assert i["horse_number"] == "161514"
-        assert i["odds1"] == "151276.0"
-        assert i["odds2"] == ""
-        assert i["odds_type"] == 8
+        assert i["favorite_order"] == ["2139"]
+        assert i["horse_number"] == ["161514"]
+        assert i["odds1"] == ["151276.0"]
+        assert i["odds2"] == [""]
+        assert i["odds_type"] == [8]
         assert i["race_id"] == ["202306020702"]
 
 
@@ -1144,19 +1144,19 @@ class HorseContract(Contract):
         items = list(filter(lambda i: isinstance(i, HorseItem), output))
 
         i = items[0]
-        assert i["birthday"] == "2020-04-24"
-        assert i["breeder_id"] == "510045"
-        assert i["coat_color"] == "03"
-        assert i["farm"] == "浦河町"
-        assert i["gender"] == "1"
-        assert i["horse_id"] == "2020100583"
-        assert i["horse_name"] == "レイズカイザー"
-        assert i["kigo"] == "00"
-        assert i["owner_id"] == "652031"
-        assert i["seri_name"] == "2021年 北海道セレクションセール"
-        assert i["seri_price"] == "31900000"
-        assert i["tozai"] == "1"
-        assert i["trainer_id"] == "01027"
+        assert i["birthday"] == ["2020-04-24"]
+        assert i["breeder_id"] == ["510045"]
+        assert i["coat_color"] == ["03"]
+        assert i["farm"] == ["浦河町"]
+        assert i["gender"] == ["1"]
+        assert i["horse_id"] == ["2020100583"]
+        assert i["horse_name"] == ["レイズカイザー"]
+        assert i["kigo"] == ["00"]
+        assert i["owner_id"] == ["652031"]
+        assert i["seri_name"] == ["2021年 北海道セレクションセール"]
+        assert i["seri_price"] == ["31900000"]
+        assert i["tozai"] == ["1"]
+        assert i["trainer_id"] == ["01027"]
 
 
 class ParentHorseContract(Contract):

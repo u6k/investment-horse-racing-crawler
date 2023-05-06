@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [#9914: キャッシュをS3に保存する](https://redmine.u6k.me/issues/9914)
 - [#9921: tor経由でスクレイピングする](https://redmine.u6k.me/issues/9921)
 - [#9916: カレンダーページを起点として、全ページをスクレイピングする](https://redmine.u6k.me/issues/9916)
+- [#9915: スクレイピング結果をS3に出力する](https://redmine.u6k.me/issues/9915)
 
 ### Changed
 - [#9910: パッケージ管理をPoetryに移行する](https://redmine.u6k.me/issues/9910)

@@ -7,6 +7,7 @@ from scrapy import Field, Item
 
 
 class RaceInfoItem(Item):
+    type = Field()
     race_id = Field()
     race_round = Field()
     race_name = Field()
@@ -15,6 +16,7 @@ class RaceInfoItem(Item):
 
 
 class RaceResultItem(Item):
+    type = Field()
     race_id = Field()
     result = Field()
     bracket_number = Field()
@@ -32,6 +34,7 @@ class RaceResultItem(Item):
 
 
 class RacePayoffItem(Item):
+    type = Field()
     race_id = Field()
     betting_type = Field()
     horse_numbers = Field()
@@ -39,12 +42,14 @@ class RacePayoffItem(Item):
 
 
 class RaceCornerPassingItem(Item):
+    type = Field()
     race_id = Field()
     corner_name = Field()
     passing_order = Field()
 
 
 class RaceLapTimeItem(Item):
+    type = Field()
     race_id = Field()
     length = Field()
     time1 = Field()
@@ -52,6 +57,7 @@ class RaceLapTimeItem(Item):
 
 
 class OddsItem(Item):
+    type = Field()
     race_id = Field()
     odds_type = Field()
     horse_number = Field()
@@ -61,6 +67,7 @@ class OddsItem(Item):
 
 
 class TrainingItem(Item):
+    type = Field()
     race_id = Field()
     horse_number = Field()
     horse_id_url = Field()
@@ -69,6 +76,7 @@ class TrainingItem(Item):
 
 
 class HorseItem(Item):
+    type = Field()
     horse_id = Field()
     horse_name = Field()
     gender = Field()
@@ -85,6 +93,7 @@ class HorseItem(Item):
 
 
 class JockeyItem(Item):
+    type = Field()
     jockey_id = Field()
     jockey_name = Field()
     jockey_text = Field()
@@ -93,6 +102,7 @@ class JockeyItem(Item):
 
 
 class TrainerItem(Item):
+    type = Field()
     trainer_id = Field()
     trainer_name = Field()
     trainer_text = Field()
@@ -101,6 +111,7 @@ class TrainerItem(Item):
 
 
 class ParentHorseItem(Item):
+    type = Field()
     parent_horse_id = Field()
     parent1_id = Field()
     parent2_id = Field()
