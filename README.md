@@ -37,34 +37,45 @@ Server: Docker Engine - Community
 `docker pull`します。
 
 ```
-docker pull u6kapps/investment-horse-racing-crawler
+docker pull ghcr.io/u6k/horse-racing-crawler
 ```
 
 前提
 
-- PostgreSQL
 - S3 (またはS3互換ストレージ)
 
 コンポーネント構成、環境変数などは[docker-compose.yml](https://github.com/u6k/investment-horse-racing-crawler/blob/main/docker-compose.yml)を参照してください。
 
 ## Usage
 
-DBにテーブルを作成する。
-
-```
-$ docker run --rm u6kapps/investment-horse-racing-crawler pipenv run migrate
-```
-
 クロールを開始する。
 
 ```
-$ docker run --rm u6kapps/investment-horse-racing-crawler pipenv run crawl horse_racing
+docker run --rm ghcr.io/u6k/horse-racing-crawler \
+    poe crawl -a start_url=https://race.netkeiba.com/xxx
+
+# または
+
+docker run --rm ghcr.io/u6k/horse-racing-crawler \
+    bin/crawl.sh -a start_url=https://race.netkeiba.com/xxx
 ```
 
-引数を指定してクロールする場合は、次のように実行する。
+キャッシュ制御する場合、次の環境変数を設定する。
+- `RECACHE_RACE`…レース関連ページを再キャッシュする(デフォルト=`False`)。
+- `RECACHE_DATA`…データ関連ページを再キャッシュする(デフォルト=`False`)。
+
+Linkチェックを実行する。
 
 ```
-$ docker run --rm u6kapps/investment-horse-racing-crawler pipenv run crawl -a start_url=https://xxx.com/xxx -a recache_race=trrue -a recache_horse=false horse_racing
+docker run --rm ghcr.io/u6k/horse-racing-crawler \
+    poe lint
+```
+
+フォーマッターを実行する。
+
+```
+docker run --rm ghcr.io/u6k/horse-racing-crawler \
+    poe fix
 ```
 
 ## Other
