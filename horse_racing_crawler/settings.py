@@ -49,18 +49,17 @@ FEED_EXPORT_ENCODING = "utf-8"
 logging.getLogger("boto3").setLevel(logging.INFO)
 logging.getLogger("botocore").setLevel(logging.INFO)
 
-S3_ENDPOINT = os.environ["S3_ENDPOINT"]
-S3_REGION = os.environ["S3_REGION"]
-S3_ACCESS_KEY = os.environ["S3_ACCESS_KEY"]
-S3_SECRET_KEY = os.environ["S3_SECRET_KEY"]
-S3_BUCKET = os.environ["S3_BUCKET"]
-S3_FOLDER = os.environ["S3_FOLDER"]
+AWS_ENDPOINT_URL = os.environ["AWS_ENDPOINT_URL"]
+AWS_ACCESS_KEY_ID = os.environ["AWS_ACCESS_KEY_ID"]
+AWS_SECRET_ACCESS_KEY = os.environ["AWS_SECRET_ACCESS_KEY"]
+AWS_S3_CACHE_BUCKET = os.environ["AWS_S3_CACHE_BUCKET"]
+AWS_S3_CACHE_FOLDER = os.environ["AWS_S3_CACHE_FOLDER"]
 
 RECACHE_RACE = strtobool(os.environ.get("RECACHE_RACE", "False"))
 RECACHE_DATA = strtobool(os.environ.get("RECACHE_DATA", "False"))
 
 FEEDS = {
-    "items.json": {
+    os.environ["AWS_S3_FEED_URL"]: {
         "format": "json",
         "encoding": "utf8",
     }

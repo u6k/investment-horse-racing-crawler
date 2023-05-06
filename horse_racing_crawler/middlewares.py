@@ -17,18 +17,17 @@ from scrapy.responsetypes import responsetypes
 class S3CacheStorage:
     def __init__(self, settings):
         # Store parameters
-        self.s3_endpoint = settings["S3_ENDPOINT"]
-        self.s3_region = settings["S3_REGION"]
-        self.s3_access_key = settings["S3_ACCESS_KEY"]
-        self.s3_secret_key = settings["S3_SECRET_KEY"]
-        self.s3_bucket = settings["S3_BUCKET"]
-        self.s3_folder = settings["S3_FOLDER"]
+        self.s3_endpoint = settings["AWS_ENDPOINT_URL"]
+        self.s3_access_key = settings["AWS_ACCESS_KEY_ID"]
+        self.s3_secret_key = settings["AWS_SECRET_ACCESS_KEY"]
+        self.s3_bucket = settings["AWS_S3_CACHE_BUCKET"]
+        self.s3_folder = settings["AWS_S3_CACHE_FOLDER"]
 
         self.recache_race = settings["RECACHE_RACE"]
         self.recache_data = settings["RECACHE_DATA"]
 
         # Setup s3 client
-        self.s3_client = boto3.resource("s3", endpoint_url=self.s3_endpoint, aws_access_key_id=self.s3_access_key, aws_secret_access_key=self.s3_secret_key, region_name=self.s3_region)
+        self.s3_client = boto3.resource("s3", endpoint_url=self.s3_endpoint, aws_access_key_id=self.s3_access_key, aws_secret_access_key=self.s3_secret_key)
 
         self.s3_bucket_obj = self.s3_client.Bucket(self.s3_bucket)
         if not self.s3_bucket_obj.creation_date:
