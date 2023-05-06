@@ -1,0 +1,41 @@
+[tool.poetry]
+name = "horse-racing-crawler"
+version = "5.0.0-dev"
+description = "中央競馬データを収集する"
+authors = ["u6k <u6k.apps@gmail.com>"]
+readme = "README.md"
+packages = [{include = "horse_racing_crawler"}]
+
+[tool.poetry.dependencies]
+python = "^3.9"
+scrapy = "2.8.0"
+boto3 = "1.26.99"
+joblib = "1.2.0"
+
+
+[tool.poetry.group.dev.dependencies]
+black = "^23.1.0"
+isort = "^5.12.0"
+flake8 = "^6.0.0"
+pyproject-flake8 = "^6.0.0.post1"
+poethepoet = "^0.19.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.black]
+line-length = 1000
+
+[tool.flake8]
+max-line-length = 1000
+
+[tool.isort]
+profile = "black"
+line_length = 1000
+
+[tool.poe.tasks]
+lint = "pflake8 ./horse_racing_crawler/ ./tests/"
+fix = [{cmd="black ./horse_racing_crawler/ ./tests/"}, {cmd="isort ./horse_racing_crawler/ ./tests/"}]
+test = [{cmd="scrapy check netkeiba_spider -L DEBUG"}]
+crawl = "scrapy crawl netkeiba_spider"

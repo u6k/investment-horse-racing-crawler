@@ -1,18 +1,24 @@
-FROM python:3.8
+FROM python:3.9.16-bullseye
 LABEL maintainer="u6k.apps@gmail.com"
 
 RUN apt-get update && \
-    apt-get -y upgrade && \
-    apt-get -y install tor privoxy && \
+    # Install tor
+    apt-get install -y tor privoxy && \
     apt-get clean && \
-    pip install pipenv
+    rm -rf /var/lib/apt/lists/* && \
+    # Install Poetry
+    curl -sSL https://install.python-poetry.org | python3 - && \
+    ln -s /root/.local/bin/poetry /usr/local/bin/ && \
+    poetry config virtualenvs.create false
 
+# Setting tor
 RUN echo 'forward-socks5 / localhost:9050 .' >/etc/privoxy/config
 
+# Install poetry packages
 WORKDIR /var/myapp
 VOLUME /var/myapp
 
-COPY Pipfile Pipfile.lock ./
-RUN pipenv install
+COPY pyproject.toml poetry.lock ./
+RUN poetry install --no-root
 
-CMD ["pipenv", "run", "help"]
+CMD ["poetry", "help"]
