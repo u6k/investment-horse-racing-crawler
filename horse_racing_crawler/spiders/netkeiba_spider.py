@@ -475,6 +475,7 @@ class NetkeibaSpider(scrapy.Spider):
         """Parse odds_bracket_quinella page.
 
         @url https://race.netkeiba.com/api/api_get_jra_odds.html?type=3&race_id=202306020702
+        # 枠連が無い @url https://race.netkeiba.com/api/api_get_jra_odds.html?type=3&race_id=202304010304
         @returns items 36 36
         @returns requests 0 0
         @odds_bracket_quinella_contract
@@ -486,6 +487,10 @@ class NetkeibaSpider(scrapy.Spider):
 
         # Assertion
         json_odds = json.loads(response.text)
+
+        if json_odds["status"] == "middle":
+            # NOTE: 枠連オッズが無い場合
+            return
 
         assert json_odds["status"] == "result"
         assert json_odds["data"]["official_datetime"] is not None
