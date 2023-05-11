@@ -405,6 +405,11 @@ class NetkeibaSpider(scrapy.Spider):
             elif url.hostname == "db.netkeiba.com" and url.path.startswith("/jockey/result/recent/"):
                 self.logger.debug(f"#parse_race_result: jockey page link. a={url.geturl()}")
 
+                if url.path.startswith("/jockey/result/recent//"):
+                    # NOTE: 騎手IDが存在しない場合がある、何故か
+                    self.logger.debug("#parse_race_result: skip")
+                    continue
+
                 jockey_id_re = re.match("^/jockey/result/recent/([0-9]+)/?$", url.path)
                 jockey_url = f"https://db.netkeiba.com/jockey/{jockey_id_re.group(1)}"
 
