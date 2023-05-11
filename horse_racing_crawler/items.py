@@ -13,6 +13,7 @@ class RaceInfoItem(Item):
     race_name = Field()
     race_data1 = Field()
     race_data2 = Field()
+    race_data3 = Field()
 
 
 class RaceResultItem(Item):
