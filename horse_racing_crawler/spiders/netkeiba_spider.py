@@ -418,7 +418,12 @@ class NetkeibaSpider(scrapy.Spider):
             elif url.hostname == "db.netkeiba.com" and url.path.startswith("/trainer/result/recent/"):
                 self.logger.debug(f"#parse_race_result: trainer page link. a={url.geturl()}")
 
-                trainer_id_re = re.match("^/trainer/result/recent/([0-9]+)/?$", url.path)
+                if url.path.startswith("/trainer/result/recent//"):
+                    # NOTE: 調教師IDが存在しない場合がある、何故か
+                    self.logger.debug("#parse_race_result: skip")
+                    continue
+
+                trainer_id_re = re.match("^/trainer/result/recent/(\\w+)/?$", url.path)
                 trainer_url = f"https://db.netkeiba.com/trainer/{trainer_id_re.group(1)}"
 
                 yield self._follow(trainer_url)
