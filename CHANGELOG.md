@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 ### Fixed
 - [#9953: RaceInfoItemに出走日データが無い](https://redmine.u6k.me/issues/9953)
+- [#9950: 騎手リンクのパースがエラーになる](https://redmine.u6k.me/issues/9950)
 
 ## [5.0.2] - 2023-05-06
 ### Fixed
