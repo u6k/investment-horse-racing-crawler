@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [5.0.3] - 2023-05-12
+### Fixed
+- [#9953: RaceInfoItemに出走日データが無い](https://redmine.u6k.me/issues/9953)
+- [#9950: 騎手リンクのパースがエラーになる](https://redmine.u6k.me/issues/9950)
+- [#9954: 調教師リンクのパースがエラーになる](https://redmine.u6k.me/issues/9954)
+- [#9955: 存在するはずのオッズデータが無いことがある](https://redmine.u6k.me/issues/9955)
+
 ## [5.0.2] - 2023-05-06
 ### Fixed
 - [#9949: 枠連オッズの取得がエラーになることがある](https://redmine.u6k.me/issues/9949)

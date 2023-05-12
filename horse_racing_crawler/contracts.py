@@ -77,6 +77,7 @@ class RaceResultContract(Contract):
         assert i["race_name"][0].strip() == "3歳未勝利"
         assert i["race_data1"][0].strip() == "10:35発走 / ダ1800m (右)\n/ 天候:雨\n\n/ 馬場:重"
         assert i["race_data2"][0].strip() == "2回\n中山\n7日目\nサラ系３歳\n未勝利\n\xa0\xa0\xa0\xa0\xa0\n(混)[指]\n馬齢\n16頭\n\n本賞金:550,220,140,83,55万円"
+        assert i["race_data3"][0].strip() == "３歳未勝利 結果・払戻 | 2023年3月18日 中山2R レース情報(JRA) - netkeiba.com"
 
         # race result
         items = list(filter(lambda o: isinstance(o, RaceResultItem), output))

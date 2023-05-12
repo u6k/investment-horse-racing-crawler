@@ -194,6 +194,7 @@ class NetkeibaSpider(scrapy.Spider):
         loader.add_xpath("race_name", "string(//div[@class='RaceName'])")
         loader.add_xpath("race_data1", "string(//div[@class='RaceData01'])")
         loader.add_xpath("race_data2", "string(//div[@class='RaceData02'])")
+        loader.add_xpath("race_data3", "//title/text()")
         i = loader.load_item()
 
         self.logger.debug(f"#parse_race_result: race_info={i}")
@@ -404,6 +405,11 @@ class NetkeibaSpider(scrapy.Spider):
             elif url.hostname == "db.netkeiba.com" and url.path.startswith("/jockey/result/recent/"):
                 self.logger.debug(f"#parse_race_result: jockey page link. a={url.geturl()}")
 
+                if url.path.startswith("/jockey/result/recent//"):
+                    # NOTE: 騎手IDが存在しない場合がある、何故か
+                    self.logger.debug("#parse_race_result: skip")
+                    continue
+
                 jockey_id_re = re.match("^/jockey/result/recent/([0-9]+)/?$", url.path)
                 jockey_url = f"https://db.netkeiba.com/jockey/{jockey_id_re.group(1)}"
 
@@ -412,7 +418,12 @@ class NetkeibaSpider(scrapy.Spider):
             elif url.hostname == "db.netkeiba.com" and url.path.startswith("/trainer/result/recent/"):
                 self.logger.debug(f"#parse_race_result: trainer page link. a={url.geturl()}")
 
-                trainer_id_re = re.match("^/trainer/result/recent/([0-9]+)/?$", url.path)
+                if url.path.startswith("/trainer/result/recent//"):
+                    # NOTE: 調教師IDが存在しない場合がある、何故か
+                    self.logger.debug("#parse_race_result: skip")
+                    continue
+
+                trainer_id_re = re.match("^/trainer/result/recent/(\\w+)/?$", url.path)
                 trainer_url = f"https://db.netkeiba.com/trainer/{trainer_id_re.group(1)}"
 
                 yield self._follow(trainer_url)
@@ -432,6 +443,10 @@ class NetkeibaSpider(scrapy.Spider):
 
         # Assertion
         json_odds = json.loads(response.text)
+
+        if json_odds["status"] == "middle":
+            # NOTE: オッズが無い場合
+            return
 
         assert json_odds["status"] == "result"
         assert json_odds["data"]["official_datetime"] is not None
@@ -489,7 +504,7 @@ class NetkeibaSpider(scrapy.Spider):
         json_odds = json.loads(response.text)
 
         if json_odds["status"] == "middle":
-            # NOTE: 枠連オッズが無い場合
+            # NOTE: オッズが無い場合
             return
 
         assert json_odds["status"] == "result"
@@ -525,6 +540,10 @@ class NetkeibaSpider(scrapy.Spider):
         # Assertion
         json_odds = json.loads(response.text)
 
+        if json_odds["status"] == "middle":
+            # NOTE: オッズが無い場合
+            return
+
         assert json_odds["status"] == "result"
         assert json_odds["data"]["official_datetime"] is not None
 
@@ -557,6 +576,10 @@ class NetkeibaSpider(scrapy.Spider):
 
         # Assertion
         json_odds = json.loads(response.text)
+
+        if json_odds["status"] == "middle":
+            # NOTE: オッズが無い場合
+            return
 
         assert json_odds["status"] == "result"
         assert json_odds["data"]["official_datetime"] is not None
@@ -591,6 +614,10 @@ class NetkeibaSpider(scrapy.Spider):
         # Assertion
         json_odds = json.loads(response.text)
 
+        if json_odds["status"] == "middle":
+            # NOTE: オッズが無い場合
+            return
+
         assert json_odds["status"] == "result"
         assert json_odds["data"]["official_datetime"] is not None
 
@@ -624,6 +651,10 @@ class NetkeibaSpider(scrapy.Spider):
         # Assertion
         json_odds = json.loads(response.text)
 
+        if json_odds["status"] == "middle":
+            # NOTE: オッズが無い場合
+            return
+
         assert json_odds["status"] == "result"
         assert json_odds["data"]["official_datetime"] is not None
 
@@ -656,6 +687,10 @@ class NetkeibaSpider(scrapy.Spider):
 
         # Assertion
         json_odds = json.loads(response.text)
+
+        if json_odds["status"] == "middle":
+            # NOTE: オッズが無い場合
+            return
 
         assert json_odds["status"] == "result"
         assert json_odds["data"]["official_datetime"] is not None
