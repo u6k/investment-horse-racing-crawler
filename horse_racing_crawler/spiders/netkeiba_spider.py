@@ -444,6 +444,10 @@ class NetkeibaSpider(scrapy.Spider):
         # Assertion
         json_odds = json.loads(response.text)
 
+        if json_odds["status"] == "middle":
+            # NOTE: オッズが無い場合
+            return
+
         assert json_odds["status"] == "result"
         assert json_odds["data"]["official_datetime"] is not None
 
@@ -500,7 +504,7 @@ class NetkeibaSpider(scrapy.Spider):
         json_odds = json.loads(response.text)
 
         if json_odds["status"] == "middle":
-            # NOTE: 枠連オッズが無い場合
+            # NOTE: オッズが無い場合
             return
 
         assert json_odds["status"] == "result"
@@ -536,6 +540,10 @@ class NetkeibaSpider(scrapy.Spider):
         # Assertion
         json_odds = json.loads(response.text)
 
+        if json_odds["status"] == "middle":
+            # NOTE: オッズが無い場合
+            return
+
         assert json_odds["status"] == "result"
         assert json_odds["data"]["official_datetime"] is not None
 
@@ -568,6 +576,10 @@ class NetkeibaSpider(scrapy.Spider):
 
         # Assertion
         json_odds = json.loads(response.text)
+
+        if json_odds["status"] == "middle":
+            # NOTE: オッズが無い場合
+            return
 
         assert json_odds["status"] == "result"
         assert json_odds["data"]["official_datetime"] is not None
@@ -602,6 +614,10 @@ class NetkeibaSpider(scrapy.Spider):
         # Assertion
         json_odds = json.loads(response.text)
 
+        if json_odds["status"] == "middle":
+            # NOTE: オッズが無い場合
+            return
+
         assert json_odds["status"] == "result"
         assert json_odds["data"]["official_datetime"] is not None
 
@@ -635,6 +651,10 @@ class NetkeibaSpider(scrapy.Spider):
         # Assertion
         json_odds = json.loads(response.text)
 
+        if json_odds["status"] == "middle":
+            # NOTE: オッズが無い場合
+            return
+
         assert json_odds["status"] == "result"
         assert json_odds["data"]["official_datetime"] is not None
 
@@ -667,6 +687,10 @@ class NetkeibaSpider(scrapy.Spider):
 
         # Assertion
         json_odds = json.loads(response.text)
+
+        if json_odds["status"] == "middle":
+            # NOTE: オッズが無い場合
+            return
 
         assert json_odds["status"] == "result"
         assert json_odds["data"]["official_datetime"] is not None
