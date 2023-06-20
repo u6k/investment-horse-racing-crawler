@@ -393,7 +393,7 @@ class NetkeibaSpider(scrapy.Spider):
             elif url.hostname == "db.netkeiba.com" and url.path.startswith("/horse/"):
                 self.logger.debug(f"#parse_race_result: horse page link. a={url.geturl()}")
 
-                horse_id_re = re.match("^/horse/([0-9]+)$", url.path)
+                horse_id_re = re.match("^/horse/(\\w+)/?$", url.path)
                 horse_url = f"https://db.netkeiba.com/v1.1/?pid=api_db_horse_info_simple&input=UTF-8&output=json&id={horse_id_re.group(1)}"
 
                 yield self._follow(horse_url)
@@ -410,7 +410,7 @@ class NetkeibaSpider(scrapy.Spider):
                     self.logger.debug("#parse_race_result: skip")
                     continue
 
-                jockey_id_re = re.match("^/jockey/result/recent/([0-9]+)/?$", url.path)
+                jockey_id_re = re.match("^/jockey/result/recent/(\\w+)/?$", url.path)
                 jockey_url = f"https://db.netkeiba.com/jockey/{jockey_id_re.group(1)}"
 
                 yield self._follow(jockey_url)
