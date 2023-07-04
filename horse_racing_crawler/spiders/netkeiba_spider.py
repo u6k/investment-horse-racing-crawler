@@ -317,11 +317,14 @@ class NetkeibaSpider(scrapy.Spider):
         yield i
 
         tr = response.xpath("//table[@class='Payout_Detail_Table'][2]/tbody/tr[@class='Tan3']")
-        i = load_item_ren(tr)
-        assert i["betting_type"][0] == "3連単", i["betting_type"][0]
+        if tr:
+            i = load_item_ren(tr)
+            assert i["betting_type"][0] == "3連単", i["betting_type"][0]
 
-        self.logger.debug(f"#parse_race_result: race_payoff={i}")
-        yield i
+            self.logger.debug(f"#parse_race_result: race_payoff={i}")
+            yield i
+        else:
+            self.logger.debug("#parse_race_result: race_payoff not found: Tan3")
 
         # Parse corner passing
         tbody = response.xpath("//table[contains(@class, 'Corner_Num')]/tbody")
@@ -760,23 +763,28 @@ class NetkeibaSpider(scrapy.Spider):
         json_horse = json.loads(response.text)
 
         assert json_horse["status"] == "OK"
-        assert json_horse["data"]["Horse"] is not None
+        if "Bamei" in json_horse["data"]["Horse"]:
+            json_horse_data = json_horse["data"]["Horse"]
+        elif "Bamei" in json_horse["data"]["info"]["latest"]:
+            json_horse_data = json_horse["data"]["info"]["latest"]
+        else:
+            raise Exception("Horse data not found")
 
         # Parse horse
         loader = ItemLoader(item=HorseItem(type="HorseItem"))
         loader.add_value("horse_id", horse_qs["id"][0])
-        loader.add_value("horse_name", json_horse["data"]["Horse"]["Bamei"])
-        loader.add_value("gender", json_horse["data"]["Horse"]["SexCD"])
-        loader.add_value("birthday", json_horse["data"]["Horse"]["BirthDate"])
-        loader.add_value("coat_color", json_horse["data"]["Horse"]["KeiroCD"])
-        loader.add_value("kigo", json_horse["data"]["Horse"]["UmaKigoCD"])
-        loader.add_value("tozai", json_horse["data"]["Horse"]["TozaiCD"])
-        loader.add_value("farm", json_horse["data"]["Horse"]["SanchiName"])
-        loader.add_value("seri_name", json_horse["data"]["Horse"]["SeriName"])
-        loader.add_value("seri_price", json_horse["data"]["Horse"]["SeriPrice"])
-        loader.add_value("trainer_id", json_horse["data"]["Horse"]["ChokyosiCode"])
-        loader.add_value("breeder_id", json_horse["data"]["Horse"]["BreederCode"])
-        loader.add_value("owner_id", json_horse["data"]["Horse"]["BanusiCode"])
+        loader.add_value("horse_name", json_horse_data["Bamei"])
+        loader.add_value("gender", json_horse_data["SexCD"])
+        loader.add_value("birthday", json_horse_data["BirthDate"] if "BirthDate" in json_horse_data else "")
+        loader.add_value("coat_color", json_horse_data["KeiroCD"] if "KeiroCD" in json_horse_data else "")
+        loader.add_value("kigo", json_horse_data["UmaKigoCD"] if "UmaKigoCD" in json_horse_data else "")
+        loader.add_value("tozai", json_horse_data["TozaiCD"] if "TozaiCD" in json_horse_data else "")
+        loader.add_value("farm", json_horse_data["SanchiName"] if "SanchiName" in json_horse_data else "")
+        loader.add_value("seri_name", json_horse_data["SeriName"] if "SeriName" in json_horse_data else "")
+        loader.add_value("seri_price", json_horse_data["SeriPrice"] if "SeriPrice" in json_horse_data else "")
+        loader.add_value("trainer_id", json_horse_data["ChokyosiCode"])
+        loader.add_value("breeder_id", json_horse_data["BreederCode"] if "BreederCode" in json_horse_data else "")
+        loader.add_value("owner_id", json_horse_data["BanusiCode"] if "BanusiCode" in json_horse_data else "")
         item = loader.load_item()
 
         self.logger.debug(f"#parse_horse: horse={item}")
