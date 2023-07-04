@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 ### Fixed
 - [#10000: KeyError: 'betting_type'エラーが出る](https://redmine.u6k.me/issues/10000)
+- [#10001: TypeError: string indices must be integers^](https://redmine.u6k.me/issues/10001)
 
 ## [5.0.4] - 2023-06-20
 ### Fixed
