@@ -317,11 +317,14 @@ class NetkeibaSpider(scrapy.Spider):
         yield i
 
         tr = response.xpath("//table[@class='Payout_Detail_Table'][2]/tbody/tr[@class='Tan3']")
-        i = load_item_ren(tr)
-        assert i["betting_type"][0] == "3連単", i["betting_type"][0]
+        if tr:
+            i = load_item_ren(tr)
+            assert i["betting_type"][0] == "3連単", i["betting_type"][0]
 
-        self.logger.debug(f"#parse_race_result: race_payoff={i}")
-        yield i
+            self.logger.debug(f"#parse_race_result: race_payoff={i}")
+            yield i
+        else:
+            self.logger.debug("#parse_race_result: race_payoff not found: Tan3")
 
         # Parse corner passing
         tbody = response.xpath("//table[contains(@class, 'Corner_Num')]/tbody")
