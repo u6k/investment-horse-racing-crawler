@@ -1,9 +1,9 @@
-FROM python:3.9.16-bullseye
+FROM python:3.12-bullseye
 LABEL maintainer="u6k.apps@gmail.com"
 
 RUN apt-get update && \
     # Install tor
-    apt-get install -y tor privoxy && \
+    apt-get install -y tor privoxy libxml2-dev libxslt1-dev && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* && \
     # Install Poetry
