@@ -17,7 +17,7 @@ RUN echo 'forward-socks5 / localhost:9050 .' >/etc/privoxy/config
 # Install poetry packages
 WORKDIR /var/myapp
 
-COPY . /var/myapp
-RUN poetry install --no-root --without dev
+COPY pyproject.toml poetry.lock ./
+RUN poetry install --no-root
 
-CMD ["poetry", "help"]
+CMD ["sleep", "infinity"]
