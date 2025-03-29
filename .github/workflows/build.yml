@@ -15,13 +15,25 @@ jobs:
       - name: Setup buildx
         uses: docker/setup-buildx-action@v3
       - name: Setup dotenv
-        run: cp .env.original .env
+        run: cp .env.original .devcontainer/.env
       - name: Start MiniO
-        run: docker-compose up -d s3
+        run: docker compose up -d s3
+        working-directory: .devcontainer/
       - name: Lint
-        run: docker-compose run app poe lint
+        run: docker compose run app poe lint
+        working-directory: .devcontainer/
       - name: Test
-        run: docker-compose run app poe test
+        run: docker compose run app poe test
+        working-directory: .devcontainer/
+
+  push:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Setup buildx
+        uses: docker/setup-buildx-action@v3
       - name: Login to GitHub Container Repository
         uses: docker/login-action@v2
         with:
@@ -37,34 +49,3 @@ jobs:
           tags: |
             ghcr.io/${{ github.repository_owner }}/${{ env.IMAGE_NAME }}:latest
             ghcr.io/${{ github.repository_owner }}/${{ env.IMAGE_NAME }}:${{ env.IMAGE_VERSION }}
-
-
-
-
-      - name: Build and push to GitHub Container Registry
-        uses: docker/build-push-action@v2
-        with:
-          context: .
-          file: ./Dockerfile.production
-          push: true
-          tags: |
-            ghcr.io/${{ github.repository_owner }}/${{ env.IMAGE_NAME }}:latest
-            ghcr.io/${{ github.repository_owner }}/${{ env.IMAGE_NAME }}:${{ env.IMAGE_VERSION }}
-
-      # Slack notification
-      - name: Slack notification on success
-        if: success()
-        uses: rtCamp/action-slack-notify@v2.0.2
-        env:
-          SLACK_CHANNEL: build
-          SLACK_ICON_EMOJI: ':cat:'
-          SLACK_MESSAGE: ${{ github.repository }} Build and push success
-          SLACK_COLOR: good
-      - name: Slack notification on failure
-        if: failure()
-        uses: rtCamp/action-slack-notify@v2.0.2
-        env:
-          SLACK_CHANNEL: build
-          SLACK_ICON_EMOJI: ':scream_cat:'
-          SLACK_MESSAGE: ${{ github.repository }} Build and push failure
-          SLACK_COLOR: danger
