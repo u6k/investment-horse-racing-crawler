@@ -5,6 +5,8 @@
 	"service": "app",
 	"workspaceFolder": "/var/myapp",
 
+	"forwardPorts": [9001],
+
 	"customizations": {
 		"vscode": {
 			"extensions": [

@@ -11,5 +11,7 @@ services:
 
   s3:
     image: quay.io/minio/minio
+    ports:
+      - 9001:9001
     env_file: .env
-    command: server /data
+    command: server /data --console-address ':9001'
