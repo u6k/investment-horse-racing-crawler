@@ -191,7 +191,7 @@ class NetkeibaSpider(scrapy.Spider):
         loader = ItemLoader(item=RaceInfoItem(type="RaceInfoItem"), response=response)
         loader.add_value("race_id", race_result_url_qs["race_id"])
         loader.add_xpath("race_round", "string(//span[@class='RaceNum'])")
-        loader.add_xpath("race_name", "string(//div[@class='RaceName'])")
+        loader.add_xpath("race_name", "string(//h1[@class='RaceName'])")
         loader.add_xpath("race_data1", "string(//div[@class='RaceData01'])")
         loader.add_xpath("race_data2", "string(//div[@class='RaceData02'])")
         loader.add_xpath("race_data3", "//title/text()")
