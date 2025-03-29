@@ -9,3 +9,7 @@ services:
     image: quay.io/minio/minio
     env_file: .env
     command: server /data
+
+  mq:
+    image: rabbitmq:4.0-management-alpine
+    env_file: .env
