@@ -25,80 +25,74 @@ class NetkeibaSpider(scrapy.Spider):
     def _follow(self, url):
         self.logger.debug(f"#_follow: start: url={url}")
 
-        # Setting http proxy
-        meta = {}
-        if self.settings["CRAWL_HTTP_PROXY"]:
-            meta["proxy"] = self.settings["CRAWL_HTTP_PROXY"]
-        self.logger.debug(f"#_follow: start: meta={meta}")
-
         # Build request
         if url.startswith("https://race.netkeiba.com/top/calendar.html"):
             self.logger.debug("#_follow: follow calendar page")
-            return scrapy.Request(url, callback=self.parse_calendar, meta=meta)
+            return scrapy.Request(url, callback=self.parse_calendar)
 
         elif url.startswith("https://db.netkeiba.com/race/sum/"):
             self.logger.debug("#_follow: follow old_race_list page")
-            return scrapy.Request(url, callback=self.parse_old_race_list, meta=meta)
+            return scrapy.Request(url, callback=self.parse_old_race_list)
 
         elif url.startswith("https://race.netkeiba.com/top/race_list_sub.html?kaisai_date="):
             self.logger.debug("#_follow: follow race_list page")
-            return scrapy.Request(url, callback=self.parse_race_list, meta=meta)
+            return scrapy.Request(url, callback=self.parse_race_list)
 
         elif url.startswith("https://race.netkeiba.com/race/result.html?race_id="):
             self.logger.debug("#_follow: follow race_result page")
-            return scrapy.Request(url, callback=self.parse_race_result, meta=meta)
+            return scrapy.Request(url, callback=self.parse_race_result)
 
         elif url.startswith("https://db.netkeiba.com/race/"):
             self.logger.debug("#_follow: follow old_race_result page")
-            return scrapy.Request(url, callback=self.parse_old_race_result, meta=meta)
+            return scrapy.Request(url, callback=self.parse_old_race_result)
 
         elif url.startswith("https://race.netkeiba.com/api/api_get_jra_odds.html?type=1&race_id="):
             self.logger.debug("#_follow: follow race_odds_win_place page")
-            return scrapy.Request(url, callback=self.parse_race_odds_win_place, meta=meta)
+            return scrapy.Request(url, callback=self.parse_race_odds_win_place)
 
         elif url.startswith("https://race.netkeiba.com/api/api_get_jra_odds.html?type=3&race_id="):
             self.logger.debug("#_follow: follow race_odds_bracket_quinella page")
-            return scrapy.Request(url, callback=self.parse_race_odds_bracket_quinella, meta=meta)
+            return scrapy.Request(url, callback=self.parse_race_odds_bracket_quinella)
 
         elif url.startswith("https://race.netkeiba.com/api/api_get_jra_odds.html?type=4&race_id="):
             self.logger.debug("#_follow: follow race_odds_quinella page")
-            return scrapy.Request(url, callback=self.parse_race_odds_quinella, meta=meta)
+            return scrapy.Request(url, callback=self.parse_race_odds_quinella)
 
         elif url.startswith("https://race.netkeiba.com/api/api_get_jra_odds.html?type=5&race_id="):
             self.logger.debug("#_follow: follow race_odds_win_quinella_place page")
-            return scrapy.Request(url, callback=self.parse_race_odds_quinella_place, meta=meta)
+            return scrapy.Request(url, callback=self.parse_race_odds_quinella_place)
 
         elif url.startswith("https://race.netkeiba.com/api/api_get_jra_odds.html?type=6&race_id="):
             self.logger.debug("#_follow: follow race_odds_exacta page")
-            return scrapy.Request(url, callback=self.parse_race_odds_exacta, meta=meta)
+            return scrapy.Request(url, callback=self.parse_race_odds_exacta)
 
         elif url.startswith("https://race.netkeiba.com/api/api_get_jra_odds.html?type=7&race_id="):
             self.logger.debug("#_follow: follow race_odds_trio page")
-            return scrapy.Request(url, callback=self.parse_race_odds_trio, meta=meta)
+            return scrapy.Request(url, callback=self.parse_race_odds_trio)
 
         elif url.startswith("https://race.netkeiba.com/api/api_get_jra_odds.html?type=8&race_id="):
             self.logger.debug("#_follow: follow race_odds_trifecta page")
-            return scrapy.Request(url, callback=self.parse_race_odds_trifecta, meta=meta)
+            return scrapy.Request(url, callback=self.parse_race_odds_trifecta)
 
         elif url.startswith("https://race.netkeiba.com/race/oikiri.html?race_id="):
             self.logger.debug("#_follow: follow training page")
-            return scrapy.Request(url, callback=self.parse_training, meta=meta)
+            return scrapy.Request(url, callback=self.parse_training)
 
         elif url.startswith("https://db.netkeiba.com/v1.1/?pid=api_db_horse_info_simple"):
             self.logger.debug("#_follow: follow horse data")
-            return scrapy.Request(url, callback=self.parse_horse, meta=meta)
+            return scrapy.Request(url, callback=self.parse_horse)
 
         elif url.startswith("https://db.netkeiba.com/horse/ped/"):
             self.logger.debug("#_follow: follow parent_horse page")
-            return scrapy.Request(url, callback=self.parse_parent_horse, meta=meta)
+            return scrapy.Request(url, callback=self.parse_parent_horse)
 
         elif url.startswith("https://db.netkeiba.com/jockey/"):
             self.logger.debug("#_follow: follow jockey page")
-            return scrapy.Request(url, callback=self.parse_jockey, meta=meta)
+            return scrapy.Request(url, callback=self.parse_jockey)
 
         elif url.startswith("https://db.netkeiba.com/trainer/"):
             self.logger.debug("#_follow: follow trainer page")
-            return scrapy.Request(url, callback=self.parse_trainer, meta=meta)
+            return scrapy.Request(url, callback=self.parse_trainer)
 
         else:
             raise Exception("Unknown url")
