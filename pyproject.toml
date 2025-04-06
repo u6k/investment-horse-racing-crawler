@@ -39,3 +39,4 @@ lint = "pflake8 ./horse_racing_crawler/ ./horse_racing_mq/ ./tests/"
 fix = [{cmd="black ./horse_racing_crawler/ ./horse_racing_mq/ ./tests/"}, {cmd="isort ./horse_racing_crawler/ ./horse_racing_mq/ ./tests/"}]
 test = [{cmd="scrapy check netkeiba_spider -L DEBUG"}]
 crawl = "scrapy crawl netkeiba_spider"
+start_spider = "python ./horse_racing_mq/main.py"
