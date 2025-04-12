@@ -43,7 +43,7 @@ class S3CacheStorage:
         spider.logger.debug(f"#retrieve_response: start: url={request.url}")
 
         # 再キャッシュする
-        if self.recache_race and (request.url.startswith("https://race.netkeiba.com/top/calendar.html") or request.url.startswith("https://db.netkeiba.com/race/") or request.url.startswith("https://race.netkeiba.com/top/race_list_sub.html") or request.url.startswith("https://race.netkeiba.com/race/result.html") or request.url.startswith("https://race.netkeiba.com/api/api_get_jra_odds.html") or request.url.startswith("https://race.netkeiba.com/race/oikiri.html")):
+        if self.recache_race and (request.url.startswith("https://race.netkeiba.com/top/calendar.html") or request.url.startswith("https://db.netkeiba.com/race/") or request.url.startswith("https://race.netkeiba.com/top/race_list_sub.html") or request.url.startswith("https://race.netkeiba.com/race/result.html") or request.url.startswith("https://race.netkeiba.com/api/api_get_jra_odds.html") or request.url.startswith("https://race.netkeiba.com/race/oikiri.html") or request.url.startswith("https://race.netkeiba.com/top/win5.html")):
             spider.logger.debug("#retrieve_response: re-cache race")
             return
 

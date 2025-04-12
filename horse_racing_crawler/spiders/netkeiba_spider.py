@@ -5,7 +5,7 @@ from urllib.parse import parse_qs, urlparse
 import scrapy
 from scrapy.loader import ItemLoader
 
-from horse_racing_crawler.items import HorseItem, JockeyItem, OddsItem, ParentHorseItem, RaceCornerPassingItem, RaceInfoItem, RaceLapTimeItem, RacePayoffItem, RaceResultItem, TrainerItem, TrainingItem
+from horse_racing_crawler.items import HorseItem, JockeyItem, OddsItem, ParentHorseItem, RaceCornerPassingItem, RaceInfoItem, RaceLapTimeItem, RacePayoffItem, RaceResultItem, TrainerItem, TrainingItem, Win5ResultItem
 
 
 class NetkeibaSpider(scrapy.Spider):
@@ -73,6 +73,10 @@ class NetkeibaSpider(scrapy.Spider):
         elif url.startswith("https://race.netkeiba.com/api/api_get_jra_odds.html?type=8&race_id="):
             self.logger.debug("#_follow: follow race_odds_trifecta page")
             return scrapy.Request(url, callback=self.parse_race_odds_trifecta)
+
+        elif url.startswith("https://race.netkeiba.com/top/win5.html?"):
+            self.logger.debug("#_follow: follow win5_result page")
+            return scrapy.Request(url, callback=self.parse_win5_result)
 
         elif url.startswith("https://race.netkeiba.com/race/oikiri.html?race_id="):
             self.logger.debug("#_follow: follow training page")
@@ -705,6 +709,30 @@ class NetkeibaSpider(scrapy.Spider):
 
             self.logger.debug(f"#parse_race_odds_trifecta: odds={item}")
             yield item
+
+    def parse_win5_result(self, response):
+        """Parse WIN5 result page.
+
+        @url https://race.netkeiba.com/top/win5.html?date=20250330
+        @returns items 1 1
+        @returns requests 0 0
+        @win5_result_contract
+        """
+        self.logger.info(f"#parse_win5_result: start: response={response.url}")
+
+        # Parse win5 result
+        loader = ItemLoader(item=Win5ResultItem(type="Win5ResultItem"), response=response)
+        loader.add_value("win5_url", response.url)
+        loader.add_xpath("total_vote_count", "string(//div[@class='WIN5_AllResult']/table[1]/tbody/tr/td[1])")
+        loader.add_xpath("total_vote_money", "string(//div[@class='WIN5_AllResult']/table[1]/tbody/tr/td[2])")
+        loader.add_xpath("payoff", "string(//div[@class='WIN5_AllResult']/table[2]/tbody/tr[2]/td)")
+        loader.add_xpath("hit_vote_count", "string(//div[@class='WIN5_AllResult']/table[2]/tbody/tr[3]/td)")
+        loader.add_xpath("race_id", "//table[@class='win5raceresult2']/tbody/tr[2]/td/a/@href")
+        loader.add_xpath("win_horse_number", "//table[@class='win5raceresult2']/tbody/tr[3]/td/dl/span/text()")
+        i = loader.load_item()
+
+        self.logger.debug(f"#parse_win5_result: win5_result={i}")
+        yield i
 
     def parse_training(self, response):
         """Parse training page.

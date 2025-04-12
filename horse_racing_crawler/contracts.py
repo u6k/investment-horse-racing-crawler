@@ -4,7 +4,7 @@ from scrapy.contracts import Contract
 from scrapy.exceptions import ContractFail
 from scrapy.http import Request
 
-from horse_racing_crawler.items import HorseItem, JockeyItem, OddsItem, ParentHorseItem, RaceCornerPassingItem, RaceInfoItem, RaceLapTimeItem, RacePayoffItem, RaceResultItem, TrainerItem, TrainingItem
+from horse_racing_crawler.items import HorseItem, JockeyItem, OddsItem, ParentHorseItem, RaceCornerPassingItem, RaceInfoItem, RaceLapTimeItem, RacePayoffItem, RaceResultItem, TrainerItem, TrainingItem, Win5ResultItem
 
 
 class CalendarContract(Contract):
@@ -1280,3 +1280,29 @@ class TrainerContract(Contract):
         assert i["trainer_id"] == ["/trainer/01027/"]
         assert i["trainer_name"][0].strip() == "田村康仁\xa0\n                \n                (タムラヤスヒト)"
         assert i["trainer_text"][0].strip() == "1963/03/30\n                \n                美浦"
+
+
+class Win5ResultContract(Contract):
+    name = "win5_result_contract"
+
+    def post_process(self, output):
+        #
+        # Check items
+        #
+
+        items = list(filter(lambda i: isinstance(i, Win5ResultItem), output))
+
+        i = items[0]
+        assert i["win5_url"] == ["https://race.netkeiba.com/top/win5.html?date=20250330"]
+        assert i["total_vote_count"] == ["8,035,807票"]
+        assert i["total_vote_money"] == ["8億358万700円"]
+        assert i["payoff"] == ["803万5800円"]
+        assert i["hit_vote_count"] == ["70票"]
+        assert i["race_id"] == [
+            "../race/result.html?race_id=202506030210",
+            "../race/result.html?race_id=202507020610",
+            "../race/result.html?race_id=202509020211",
+            "../race/result.html?race_id=202506030211",
+            "../race/result.html?race_id=202507020611",
+        ]
+        assert i["win_horse_number"] == ["4", "7", "8", "12", "10"]

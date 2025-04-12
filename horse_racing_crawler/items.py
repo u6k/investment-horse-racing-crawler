@@ -119,3 +119,14 @@ class ParentHorseItem(Item):
     parent3_id = Field()
     parent4_id = Field()
     parent5_id = Field()
+
+
+class Win5ResultItem(Item):
+    type = Field()
+    win5_url = Field()
+    total_vote_count = Field()
+    total_vote_money = Field()
+    payoff = Field()
+    hit_vote_count = Field()
+    race_id = Field()
+    win_horse_number = Field()
