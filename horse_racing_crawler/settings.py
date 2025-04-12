@@ -38,6 +38,7 @@ SPIDER_CONTRACTS = {
     "horse_racing_crawler.contracts.ParentHorseContract": 10,
     "horse_racing_crawler.contracts.JockeyContract": 10,
     "horse_racing_crawler.contracts.TrainerContract": 10,
+    "horse_racing_crawler.contracts.Win5ResultContract": 10,
 }
 
 # Set settings whose default value is deprecated to a future-proof value
