@@ -4,7 +4,7 @@ from scrapy.contracts import Contract
 from scrapy.exceptions import ContractFail
 from scrapy.http import Request
 
-from horse_racing_crawler.items import HorseItem, JockeyItem, OddsItem, ParentHorseItem, RaceCornerPassingItem, RaceInfoItem, RaceLapTimeItem, RacePayoffItem, RaceResultItem, TrainerItem, TrainingItem
+from horse_racing_crawler.items import HorseItem, JockeyItem, OddsItem, ParentHorseItem, RaceCornerPassingItem, RaceInfoItem, RaceLapTimeItem, RacePayoffItem, RaceResultItem, TrainerItem, TrainingItem, Win5ResultItem
 
 
 class CalendarContract(Contract):
@@ -77,7 +77,7 @@ class RaceResultContract(Contract):
         assert i["race_name"][0].strip() == "3歳未勝利"
         assert i["race_data1"][0].strip() == "10:35発走 / ダ1800m (右)\n/ 天候:雨\n\n/ 馬場:重"
         assert i["race_data2"][0].strip() == "2回\n中山\n7日目\nサラ系３歳\n未勝利\n\xa0\xa0\xa0\xa0\xa0\n(混)[指]\n馬齢\n16頭\n\n本賞金:550,220,140,83,55万円"
-        assert i["race_data3"][0].strip() == "３歳未勝利 結果・払戻 | 2023年3月18日 中山2R レース情報(JRA) - netkeiba.com"
+        assert i["race_data3"][0].strip() == "３歳未勝利 結果・払戻 | 2023年3月18日 中山2R レース情報(JRA) - netkeiba"
 
         # race result
         items = list(filter(lambda o: isinstance(o, RaceResultItem), output))
@@ -1149,7 +1149,7 @@ class HorseContract(Contract):
         assert i["breeder_id"] == ["510045"]
         assert i["coat_color"] == ["03"]
         assert i["farm"] == ["浦河町"]
-        assert i["gender"] == ["1"]
+        assert i["gender"] == ["3"]
         assert i["horse_id"] == ["2020100583"]
         assert i["horse_name"] == ["レイズカイザー"]
         assert i["kigo"] == ["00"]
@@ -1258,7 +1258,7 @@ class JockeyContract(Contract):
 
         i = items[0]
         assert i["birth_place"] == ["福島県/A型"]
-        assert i["debut_year"] == ["2002年(22年目)"]
+        assert i["debut_year"] == ["2002年(24年目)"]
         assert i["jockey_id"] == ["/jockey/01075/"]
         assert i["jockey_name"][0].strip() == "田辺裕信\xa0\n          \n          (タナベヒロノブ)"
         assert i["jockey_text"][0].strip() == "1984/02/12\n            \n            \n            [美浦]フリー"
@@ -1276,7 +1276,33 @@ class TrainerContract(Contract):
 
         i = items[0]
         assert i["birth_place"] == ["千葉県"]
-        assert i["debut_year"] == ["1997年(27年目)"]
+        assert i["debut_year"] == ["1997年(29年目)"]
         assert i["trainer_id"] == ["/trainer/01027/"]
         assert i["trainer_name"][0].strip() == "田村康仁\xa0\n                \n                (タムラヤスヒト)"
         assert i["trainer_text"][0].strip() == "1963/03/30\n                \n                美浦"
+
+
+class Win5ResultContract(Contract):
+    name = "win5_result_contract"
+
+    def post_process(self, output):
+        #
+        # Check items
+        #
+
+        items = list(filter(lambda i: isinstance(i, Win5ResultItem), output))
+
+        i = items[0]
+        assert i["win5_url"] == ["https://race.netkeiba.com/top/win5.html?date=20250330"]
+        assert i["total_vote_count"] == ["8,035,807票"]
+        assert i["total_vote_money"] == ["8億358万700円"]
+        assert i["payoff"] == ["803万5800円"]
+        assert i["hit_vote_count"] == ["70票"]
+        assert i["race_id"] == [
+            "../race/result.html?race_id=202506030210",
+            "../race/result.html?race_id=202507020610",
+            "../race/result.html?race_id=202509020211",
+            "../race/result.html?race_id=202506030211",
+            "../race/result.html?race_id=202507020611",
+        ]
+        assert i["win_horse_number"] == ["4", "7", "8", "12", "10"]

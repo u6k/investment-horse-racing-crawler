@@ -4,7 +4,6 @@ from distutils.util import strtobool
 
 BOT_NAME = "horse_racing_crawler"
 USER_AGENT = os.environ.get("USER_AGENT", "horse_racing_crawler/1.0 (+https://github.com/u6k/investment-horse-racing-crawler)")
-CRAWL_HTTP_PROXY = os.environ.get("CRAWL_HTTP_PROXY")
 
 SPIDER_MODULES = ["horse_racing_crawler.spiders"]
 NEWSPIDER_MODULE = "horse_racing_crawler.spiders"
@@ -39,6 +38,7 @@ SPIDER_CONTRACTS = {
     "horse_racing_crawler.contracts.ParentHorseContract": 10,
     "horse_racing_crawler.contracts.JockeyContract": 10,
     "horse_racing_crawler.contracts.TrainerContract": 10,
+    "horse_racing_crawler.contracts.Win5ResultContract": 10,
 }
 
 # Set settings whose default value is deprecated to a future-proof value

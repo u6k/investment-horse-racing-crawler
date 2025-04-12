@@ -5,7 +5,7 @@ from urllib.parse import parse_qs, urlparse
 import scrapy
 from scrapy.loader import ItemLoader
 
-from horse_racing_crawler.items import HorseItem, JockeyItem, OddsItem, ParentHorseItem, RaceCornerPassingItem, RaceInfoItem, RaceLapTimeItem, RacePayoffItem, RaceResultItem, TrainerItem, TrainingItem
+from horse_racing_crawler.items import HorseItem, JockeyItem, OddsItem, ParentHorseItem, RaceCornerPassingItem, RaceInfoItem, RaceLapTimeItem, RacePayoffItem, RaceResultItem, TrainerItem, TrainingItem, Win5ResultItem
 
 
 class NetkeibaSpider(scrapy.Spider):
@@ -25,80 +25,78 @@ class NetkeibaSpider(scrapy.Spider):
     def _follow(self, url):
         self.logger.debug(f"#_follow: start: url={url}")
 
-        # Setting http proxy
-        meta = {}
-        if self.settings["CRAWL_HTTP_PROXY"]:
-            meta["proxy"] = self.settings["CRAWL_HTTP_PROXY"]
-        self.logger.debug(f"#_follow: start: meta={meta}")
-
         # Build request
         if url.startswith("https://race.netkeiba.com/top/calendar.html"):
             self.logger.debug("#_follow: follow calendar page")
-            return scrapy.Request(url, callback=self.parse_calendar, meta=meta)
+            return scrapy.Request(url, callback=self.parse_calendar)
 
         elif url.startswith("https://db.netkeiba.com/race/sum/"):
             self.logger.debug("#_follow: follow old_race_list page")
-            return scrapy.Request(url, callback=self.parse_old_race_list, meta=meta)
+            return scrapy.Request(url, callback=self.parse_old_race_list)
 
         elif url.startswith("https://race.netkeiba.com/top/race_list_sub.html?kaisai_date="):
             self.logger.debug("#_follow: follow race_list page")
-            return scrapy.Request(url, callback=self.parse_race_list, meta=meta)
+            return scrapy.Request(url, callback=self.parse_race_list)
 
         elif url.startswith("https://race.netkeiba.com/race/result.html?race_id="):
             self.logger.debug("#_follow: follow race_result page")
-            return scrapy.Request(url, callback=self.parse_race_result, meta=meta)
+            return scrapy.Request(url, callback=self.parse_race_result)
 
         elif url.startswith("https://db.netkeiba.com/race/"):
             self.logger.debug("#_follow: follow old_race_result page")
-            return scrapy.Request(url, callback=self.parse_old_race_result, meta=meta)
+            return scrapy.Request(url, callback=self.parse_old_race_result)
 
         elif url.startswith("https://race.netkeiba.com/api/api_get_jra_odds.html?type=1&race_id="):
             self.logger.debug("#_follow: follow race_odds_win_place page")
-            return scrapy.Request(url, callback=self.parse_race_odds_win_place, meta=meta)
+            return scrapy.Request(url, callback=self.parse_race_odds_win_place)
 
         elif url.startswith("https://race.netkeiba.com/api/api_get_jra_odds.html?type=3&race_id="):
             self.logger.debug("#_follow: follow race_odds_bracket_quinella page")
-            return scrapy.Request(url, callback=self.parse_race_odds_bracket_quinella, meta=meta)
+            return scrapy.Request(url, callback=self.parse_race_odds_bracket_quinella)
 
         elif url.startswith("https://race.netkeiba.com/api/api_get_jra_odds.html?type=4&race_id="):
             self.logger.debug("#_follow: follow race_odds_quinella page")
-            return scrapy.Request(url, callback=self.parse_race_odds_quinella, meta=meta)
+            return scrapy.Request(url, callback=self.parse_race_odds_quinella)
 
         elif url.startswith("https://race.netkeiba.com/api/api_get_jra_odds.html?type=5&race_id="):
             self.logger.debug("#_follow: follow race_odds_win_quinella_place page")
-            return scrapy.Request(url, callback=self.parse_race_odds_quinella_place, meta=meta)
+            return scrapy.Request(url, callback=self.parse_race_odds_quinella_place)
 
         elif url.startswith("https://race.netkeiba.com/api/api_get_jra_odds.html?type=6&race_id="):
             self.logger.debug("#_follow: follow race_odds_exacta page")
-            return scrapy.Request(url, callback=self.parse_race_odds_exacta, meta=meta)
+            return scrapy.Request(url, callback=self.parse_race_odds_exacta)
 
         elif url.startswith("https://race.netkeiba.com/api/api_get_jra_odds.html?type=7&race_id="):
             self.logger.debug("#_follow: follow race_odds_trio page")
-            return scrapy.Request(url, callback=self.parse_race_odds_trio, meta=meta)
+            return scrapy.Request(url, callback=self.parse_race_odds_trio)
 
         elif url.startswith("https://race.netkeiba.com/api/api_get_jra_odds.html?type=8&race_id="):
             self.logger.debug("#_follow: follow race_odds_trifecta page")
-            return scrapy.Request(url, callback=self.parse_race_odds_trifecta, meta=meta)
+            return scrapy.Request(url, callback=self.parse_race_odds_trifecta)
+
+        elif url.startswith("https://race.netkeiba.com/top/win5.html?"):
+            self.logger.debug("#_follow: follow win5_result page")
+            return scrapy.Request(url, callback=self.parse_win5_result)
 
         elif url.startswith("https://race.netkeiba.com/race/oikiri.html?race_id="):
             self.logger.debug("#_follow: follow training page")
-            return scrapy.Request(url, callback=self.parse_training, meta=meta)
+            return scrapy.Request(url, callback=self.parse_training)
 
         elif url.startswith("https://db.netkeiba.com/v1.1/?pid=api_db_horse_info_simple"):
             self.logger.debug("#_follow: follow horse data")
-            return scrapy.Request(url, callback=self.parse_horse, meta=meta)
+            return scrapy.Request(url, callback=self.parse_horse)
 
         elif url.startswith("https://db.netkeiba.com/horse/ped/"):
             self.logger.debug("#_follow: follow parent_horse page")
-            return scrapy.Request(url, callback=self.parse_parent_horse, meta=meta)
+            return scrapy.Request(url, callback=self.parse_parent_horse)
 
         elif url.startswith("https://db.netkeiba.com/jockey/"):
             self.logger.debug("#_follow: follow jockey page")
-            return scrapy.Request(url, callback=self.parse_jockey, meta=meta)
+            return scrapy.Request(url, callback=self.parse_jockey)
 
         elif url.startswith("https://db.netkeiba.com/trainer/"):
             self.logger.debug("#_follow: follow trainer page")
-            return scrapy.Request(url, callback=self.parse_trainer, meta=meta)
+            return scrapy.Request(url, callback=self.parse_trainer)
 
         else:
             raise Exception("Unknown url")
@@ -191,7 +189,7 @@ class NetkeibaSpider(scrapy.Spider):
         loader = ItemLoader(item=RaceInfoItem(type="RaceInfoItem"), response=response)
         loader.add_value("race_id", race_result_url_qs["race_id"])
         loader.add_xpath("race_round", "string(//span[@class='RaceNum'])")
-        loader.add_xpath("race_name", "string(//div[@class='RaceName'])")
+        loader.add_xpath("race_name", "string(//h1[@class='RaceName'])")
         loader.add_xpath("race_data1", "string(//div[@class='RaceData01'])")
         loader.add_xpath("race_data2", "string(//div[@class='RaceData02'])")
         loader.add_xpath("race_data3", "//title/text()")
@@ -711,6 +709,30 @@ class NetkeibaSpider(scrapy.Spider):
 
             self.logger.debug(f"#parse_race_odds_trifecta: odds={item}")
             yield item
+
+    def parse_win5_result(self, response):
+        """Parse WIN5 result page.
+
+        @url https://race.netkeiba.com/top/win5.html?date=20250330
+        @returns items 1 1
+        @returns requests 0 0
+        @win5_result_contract
+        """
+        self.logger.info(f"#parse_win5_result: start: response={response.url}")
+
+        # Parse win5 result
+        loader = ItemLoader(item=Win5ResultItem(type="Win5ResultItem"), response=response)
+        loader.add_value("win5_url", response.url)
+        loader.add_xpath("total_vote_count", "string(//div[@class='WIN5_AllResult']/table[1]/tbody/tr/td[1])")
+        loader.add_xpath("total_vote_money", "string(//div[@class='WIN5_AllResult']/table[1]/tbody/tr/td[2])")
+        loader.add_xpath("payoff", "string(//div[@class='WIN5_AllResult']/table[2]/tbody/tr[2]/td)")
+        loader.add_xpath("hit_vote_count", "string(//div[@class='WIN5_AllResult']/table[2]/tbody/tr[3]/td)")
+        loader.add_xpath("race_id", "//table[@class='win5raceresult2']/tbody/tr[2]/td/a/@href")
+        loader.add_xpath("win_horse_number", "//table[@class='win5raceresult2']/tbody/tr[3]/td/dl/span/text()")
+        i = loader.load_item()
+
+        self.logger.debug(f"#parse_win5_result: win5_result={i}")
+        yield i
 
     def parse_training(self, response):
         """Parse training page.
