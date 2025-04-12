@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - [#10469: RabbitMQからURLを取得してクロールする](https://redmine.u6k.me/issues/10469)
+- [#10476: WIN5ページをクロールする](https://redmine.u6k.me/issues/10476)
 
 ### Changed
 
