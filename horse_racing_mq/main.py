@@ -32,12 +32,18 @@ def mq_callback(ch, method, properties, body):
 
 if __name__ == "__main__":
     mq_credentials = pika.PlainCredentials(os.environ["RABBITMQ_USER"], os.environ["RABBITMQ_PASS"])
-
     mq_parameters = pika.ConnectionParameters(os.environ["RABBITMQ_HOST"], os.environ["RABBITMQ_PORT"], "/", mq_credentials)
 
     mq_connection = None
     try:
-        mq_connection = pika.BlockingConnection(mq_parameters)
+        while True:
+            try:
+                mq_connection = pika.BlockingConnection(mq_parameters)
+                break
+            except pika.exceptions.AMQPConnectionError:
+                L.debug("connection fail. retry...")
+                time.sleep(1)
+
         mq_channel = mq_connection.channel()
 
         mq_channel.queue_declare(queue=os.environ["RABBITMQ_QUEUE"], durable=True)
@@ -46,7 +52,7 @@ if __name__ == "__main__":
 
         mq_channel.basic_consume(queue=os.environ["RABBITMQ_QUEUE"], on_message_callback=mq_callback)
 
-        L.info("waiing for messages")
+        L.info("waiting for messages")
         mq_channel.start_consuming()
 
     finally:
