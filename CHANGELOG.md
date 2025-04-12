@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- [#10469: RabbitMQからURLを取得してクロールする](https://redmine.u6k.me/issues/10469)
+
 ### Changed
 
 - [#10468: 開発環境をDevContainerに移行する](https://redmine.u6k.me/issues/10468)

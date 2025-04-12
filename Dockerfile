@@ -17,4 +17,4 @@ WORKDIR /var/myapp
 COPY . /var/myapp
 RUN poetry install --no-root --without dev
 
-CMD ["poetry", "help"]
+CMD ["python", "./horse_racing_mq/main.py"]
