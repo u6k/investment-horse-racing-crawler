@@ -43,39 +43,32 @@ docker pull ghcr.io/u6k/horse-racing-crawler
 前提
 
 - S3 (またはS3互換ストレージ)
+- RabbitMQ
 
-コンポーネント構成、環境変数などは[docker-compose.yml](https://github.com/u6k/investment-horse-racing-crawler/blob/main/docker-compose.yml)を参照してください。
+コンポーネント構成、環境変数などは[docker-compose.yml](https://github.com/u6k/investment-horse-racing-crawler/blob/main/compose.yml)を参照してください。
 
 ## Usage
 
-クロールを開始する。
+待ち受けを開始する。環境変数でS3接続やRabbitMQ接続を設定する。
 
 ```
-docker run --rm ghcr.io/u6k/horse-racing-crawler \
-    poe crawl -a start_url=https://race.netkeiba.com/xxx
-
-# または
-
-docker run --rm ghcr.io/u6k/horse-racing-crawler \
-    bin/crawl.sh -a start_url=https://race.netkeiba.com/xxx
+docker run --rm ghcr.io/u6k/horse-racing-crawler
 ```
 
-キャッシュ制御する場合、次の環境変数を設定する。
-- `RECACHE_RACE`…レース関連ページを再キャッシュする(デフォルト=`False`)。
-- `RECACHE_DATA`…データ関連ページを再キャッシュする(デフォルト=`False`)。
+キューに次のようなJSONデータを投入すると、クロールを開始する。`start_url`はクロール開始URL、それ以外はクロールプロセスへの環境変数を指定する。
 
-Linkチェックを実行する。
+開発はDev Containerで行う。
+
+Lintチェックを実行する。
 
 ```
-docker run --rm ghcr.io/u6k/horse-racing-crawler \
-    poe lint
+poe lint
 ```
 
 フォーマッターを実行する。
 
 ```
-docker run --rm ghcr.io/u6k/horse-racing-crawler \
-    poe fix
+poe fix
 ```
 
 ## Other
