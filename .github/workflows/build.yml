@@ -3,8 +3,8 @@ on:
 
 env:
   SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
-  IMAGE_NAME: investment-horse-racing-crawler
-  IMAGE_VERSION: 5.1.0-dev
+  IMAGE_NAME: horse-racing-crawler
+  IMAGE_VERSION: 5.1.0
 
 jobs:
   build:
