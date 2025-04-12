@@ -3,6 +3,7 @@ import logging
 import logging.config
 import os
 import subprocess
+import time
 
 import pika
 
@@ -24,8 +25,13 @@ def mq_callback(ch, method, properties, body):
             new_env[k] = v
 
         L.debug(f"クロール開始: {start_url=}")
-        result = subprocess.run(["scrapy", "crawl", "netkeiba_spider", "-a", f"start_url={start_url}"], env=new_env)
-        L.debug(f"クロール結果コード: {result.returncode=}")
+        with subprocess.Popen(["scrapy", "crawl", "netkeiba_spider", "-a", f"start_url={start_url}"], env=new_env) as proc:
+            while True:
+                return_code = proc.poll()
+                if return_code is not None:
+                    break
+                time.sleep(1)
+        L.debug(f"クロール結果コード: {return_code=}")
     finally:
         ch.basic_ack(delivery_tag=method.delivery_tag)
 
