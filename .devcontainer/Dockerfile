@@ -2,8 +2,10 @@ FROM python:3.12-bullseye
 LABEL maintainer="u6k.apps@gmail.com"
 
 RUN apt-get update && \
-    # Install tor
-    apt-get install -y libxml2-dev libxslt1-dev && \
+    # Install softwares
+    apt-get install -y \
+        git-flow \
+        libxml2-dev libxslt1-dev && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* && \
     # Install Poetry
