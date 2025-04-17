@@ -10,8 +10,7 @@
 	"customizations": {
 		"vscode": {
 			"extensions": [
-				"rooveterinaryinc.roo-cline",
-				"psykosoldi3r.vscode-git-flow"
+				"rooveterinaryinc.roo-cline"
 			]
 		}
 	}
