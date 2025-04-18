@@ -4,6 +4,7 @@ import logging.config
 import os
 import subprocess
 import threading
+import time
 
 import pika
 
@@ -20,6 +21,9 @@ class MQTriggeredCrawler:
         self._mq_queue = mq_queue
 
         self._connection = None
+        self._channel = None
+
+        self._lock_channel = threading.Lock()
 
     def start(self):
         mq_credentials = pika.PlainCredentials(self._mq_user, self._mq_pass)
@@ -36,21 +40,35 @@ class MQTriggeredCrawler:
     def on_disconnected(self, conn, reason):
         L.info(f"on_disconnected: {reason=}")
 
+        self._connection.ioloop.stop()
+        self.start()
+
     def on_channel_opened(self, ch):
         L.info("on_channel_opened")
 
-        self._channel = ch
-        self._channel.queue_declare(queue=self._mq_queue, durable=True, callback=self.on_queue_declared)
+        with self._lock_channel:
+            self._channel = ch
+            self._channel.add_on_close_callback(callback=self.on_channel_closed)
+            self._channel.queue_declare(queue=self._mq_queue, durable=True, callback=self.on_queue_declared)
+
+    def on_channel_closed(self, ch, reason):
+        L.warning(f"on_channel_closed: {reason=}")
+
+        self._connection.ioloop.stop()
+        self.start()
 
     def on_queue_declared(self, frame):
         L.info("on_queue_declared")
 
-        self._channel.basic_qos(prefetch_count=1, callback=self.on_qos_set)
+        with self._lock_channel:
+            self._channel.basic_qos(prefetch_count=1, callback=self.on_qos_set)
 
     def on_qos_set(self, frame):
         L.info("on_qos_set")
 
-        self._channel.basic_consume(queue=self._mq_queue, on_message_callback=self.process)
+        with self._lock_channel:
+            self._channel.basic_consume(queue=self._mq_queue, on_message_callback=self.process)
+
         L.debug("waiting message")
 
     def process(self, ch, method, properties, body):
@@ -66,10 +84,10 @@ class MQTriggeredCrawler:
             crawl_env[k] = v
 
         # クロール用のスレッドを開始する
-        th = threading.Thread(target=self.crawl, args=(start_url, crawl_env, ch, method))
+        th = threading.Thread(target=self.crawl, args=(start_url, crawl_env, method))
         th.start()
 
-    def crawl(self, start_url, crawl_env, mq_channel, mq_method):
+    def crawl(self, start_url, crawl_env, mq_method):
         L.debug(f"crawl start: {start_url=}")
         try:
             # クロール用プロセスを開始する
@@ -77,7 +95,15 @@ class MQTriggeredCrawler:
             L.debug(f"crawl finish: {result.returncode=}")
         finally:
             # MQにACKを返す
-            mq_channel.basic_ack(delivery_tag=mq_method.delivery_tag)
+            while True:
+                with self._lock_channel:
+                    if self._channel.is_open:
+                        self._channel.basic_ack(delivery_tag=mq_method.delivery_tag)
+                        L.debug("basic_ack")
+                        break
+
+                L.debug("channel not opening. sleep...")
+                time.sleep(1)
 
 
 if __name__ == "__main__":
