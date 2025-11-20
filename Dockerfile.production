@@ -14,9 +14,8 @@ RUN apt-get update && \
 
 # Install poetry packages
 WORKDIR /var/myapp
-VOLUME /var/myapp
 
-COPY pyproject.toml poetry.lock ./
-RUN poetry install --no-root
+COPY . /var/myapp
+RUN poetry install --no-root --without dev
 
 CMD ["poetry", "run", "python", "-m", "horse_racing_crawler"]

@@ -1,7 +1,12 @@
 services:
   app:
-    build: .
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    volumes:
+      - ".:/var/myapp"
     env_file: .env
+    restart: always
 
   s3:
     image: quay.io/minio/minio
@@ -9,9 +14,11 @@ services:
       - 9001:9001
     env_file: .env
     command: server /data --console-address ':9001'
+    restart: always
 
   mq:
     image: rabbitmq:4.0-management-alpine
     ports:
       - 15672:15672
     env_file: .env
+    restart: always
