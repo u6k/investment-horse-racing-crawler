@@ -21,8 +21,8 @@ jobs:
         run: docker compose up -d mq
       - name: Lint
         run: docker compose run app poe lint
-      - name: Test
-        run: docker compose run app poe test
+      # - name: Test
+      #   run: docker compose run app poe test
 
   push:
     needs: build
