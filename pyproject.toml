@@ -1,31 +1,37 @@
-[tool.poetry]
+[project]
 name = "horse-racing-crawler"
 version = "5.2.0-dev"
-description = "中央競馬データを収集する"
-authors = ["u6k <u6k.apps@gmail.com>"]
+description = "中央競馬データをクロールする"
+authors = [
+    {name = "u6k",email = "u6k.apps@gmail.com"}
+]
+license = {text = "MIT License"}
 readme = "README.md"
-packages = [{include = "horse_racing_crawler"}]
+requires-python = ">=3.12"
+dependencies = [
+    "scrapy (>=2.13.4,<3.0.0)",
+    "boto3 (>=1.40.76,<2.0.0)",
+    "joblib (>=1.5.2,<2.0.0)",
+    "pika (>=1.3.2,<2.0.0)"
+]
 
-[tool.poetry.dependencies]
-python = "^3.12"
-scrapy = "^2.12.0"
-boto3 = "^1.37.23"
-joblib = "^1.4.2"
-pika = "^1.3.2"
+[dependency-groups]
+dev = [
+    "pytest (>=9.0.1,<10.0.0)",
+    "isort (>=7.0.0,<8.0.0)",
+    "flake8 (>=7.3.0,<8.0.0)",
+    "flake8-pyproject (>=1.2.3,<2.0.0)",
+    "autopep8 (>=2.3.2,<3.0.0)",
+    "poethepoet (>=0.37.0,<0.38.0)"
+]
 
-[tool.poetry.group.dev.dependencies]
-black = "^25.1.0"
-isort = "^6.0.1"
-flake8 = "^7.0.0"
-pyproject-flake8 = "^7.0.0"
-poethepoet = "^0.33.1"
 
 [build-system]
-requires = ["poetry-core"]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
 build-backend = "poetry.core.masonry.api"
 
-[tool.black]
-line-length = 1000
+[tool.autopep8]
+max_line_length = 1000
 
 [tool.flake8]
 max-line-length = 1000
@@ -35,8 +41,8 @@ profile = "black"
 line_length = 1000
 
 [tool.poe.tasks]
-lint = "pflake8 ./horse_racing_crawler/ ./horse_racing_mq/ ./tests/"
-fix = [{cmd="black ./horse_racing_crawler/ ./horse_racing_mq/ ./tests/"}, {cmd="isort ./horse_racing_crawler/ ./horse_racing_mq/ ./tests/"}]
-test = [{cmd="scrapy check netkeiba_spider -L DEBUG"}]
+lint = "flake8 ./horse_racing_crawler/ ./tests/"
+fix = [{cmd="autopep8 -ivr ./horse_racing_crawler/ ./tests/"}, {cmd="isort ./horse_racing_crawler/ ./tests/"}]
+check = "scrapy check netkeiba_spider -L DEBUG"
+test = "pytest"
 crawl = "scrapy crawl netkeiba_spider"
-start_spider = "python ./horse_racing_mq/main.py"

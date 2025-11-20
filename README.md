@@ -40,35 +40,23 @@ Server: Docker Engine - Community
 docker pull ghcr.io/u6k/horse-racing-crawler
 ```
 
-前提
-
-- S3 (またはS3互換ストレージ)
-- RabbitMQ
-
-コンポーネント構成、環境変数などは[docker-compose.yml](https://github.com/u6k/investment-horse-racing-crawler/blob/main/compose.yml)を参照してください。
-
 ## Usage
 
-待ち受けを開始する。環境変数でS3接続やRabbitMQ接続を設定する。
+クローラーを起動する。
 
-```
-docker run --rm ghcr.io/u6k/horse-racing-crawler
-```
-
-キューに次のようなJSONデータを投入すると、クロールを開始する。`start_url`はクロール開始URL、それ以外はクロールプロセスへの環境変数を指定する。
-
-開発はDev Containerで行う。
-
-Lintチェックを実行する。
-
-```
-poe lint
+```bash
+docker compose up
 ```
 
-フォーマッターを実行する。
+RabbitMQからメッセージを受信してクロールを開始する。MQに投入するメッセージは以下の形式。
 
 ```
-poe fix
+{
+"start_url": "https://race.netkeiba.com/top/race_list_sub.html?kaisai_date=20230318",
+"AWS_S3_FEED_URL": "s3://horse-racing/feed/calendar/calendar_20230318.json",
+"RECACHE_RACE": "True",
+"RECACHE_DATA": "False"
+}
 ```
 
 ## Other

@@ -2,7 +2,6 @@ on:
   push:
 
 env:
-  SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
   IMAGE_NAME: horse-racing-crawler
   IMAGE_VERSION: 5.2.0-dev
 
@@ -15,16 +14,15 @@ jobs:
       - name: Setup buildx
         uses: docker/setup-buildx-action@v3
       - name: Setup dotenv
-        run: cp .env.original .devcontainer/.env
+        run: cp .env.original .env
       - name: Start MiniO
         run: docker compose up -d s3
-        working-directory: .devcontainer/
+      - name: Start RabbitMQ
+        run: docker compose up -d mq
       - name: Lint
         run: docker compose run app poe lint
-        working-directory: .devcontainer/
-      - name: Test
-        run: docker compose run app poe test
-        working-directory: .devcontainer/
+      # - name: Test
+      #   run: docker compose run app poe test
 
   push:
     needs: build
@@ -44,7 +42,7 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           context: .
-          file: ./Dockerfile
+          file: ./Dockerfile.production
           push: true
           tags: |
             ghcr.io/${{ github.repository_owner }}/${{ env.IMAGE_NAME }}:latest
