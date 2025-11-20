@@ -660,7 +660,7 @@ class OddsWinPlaceContract(Contract):
         assert i["favorite_order"] == ["9"]
         assert i["horse_number"] == ["08"]
         assert i["odds1"] == ["5.5"]
-        assert i["odds2"] == ["45.0"]
+        assert i["odds2"] == ["45"]
         assert i["odds_type"] == [2]
         assert i["race_id"] == ["202306020702"]
 
@@ -770,7 +770,7 @@ class OddsBracketQuinellaContract(Contract):
         i = items[35]
         assert i["favorite_order"] == ["35"]
         assert i["horse_number"] == ["0808"]
-        assert i["odds1"] == ["1717.1"]
+        assert i["odds1"] == ["1,717.1"]
         assert i["odds2"] == [""]
         assert i["odds_type"] == [3]
         assert i["race_id"] == ["202306020702"]
@@ -801,7 +801,7 @@ class OddsQuinellaContract(Contract):
         i = items[1]
         assert i["favorite_order"] == ["69"]
         assert i["horse_number"] == ["0103"]
-        assert i["odds1"] == ["1767.9"]
+        assert i["odds1"] == ["1,767.9"]
         assert i["odds2"] == [""]
         assert i["odds_type"] == [4]
         assert i["race_id"] == ["202306020702"]
@@ -817,7 +817,7 @@ class OddsQuinellaContract(Contract):
         i = items[119]
         assert i["favorite_order"] == ["96"]
         assert i["horse_number"] == ["1516"]
-        assert i["odds1"] == ["4362.2"]
+        assert i["odds1"] == ["4,362.2"]
         assert i["odds2"] == [""]
         assert i["odds_type"] == [4]
         assert i["race_id"] == ["202306020702"]
@@ -849,7 +849,7 @@ class OddsQuinellaPlaceContract(Contract):
         assert i["favorite_order"] == ["79"]
         assert i["horse_number"] == ["0103"]
         assert i["odds1"] == ["331.2"]
-        assert i["odds2"] == ["349.0"]
+        assert i["odds2"] == ["349"]
         assert i["odds_type"] == [5]
         assert i["race_id"] == ["202306020702"]
 
@@ -895,7 +895,7 @@ class OddsExactaContract(Contract):
         i = items[1]
         assert i["favorite_order"] == ["139"]
         assert i["horse_number"] == ["0103"]
-        assert i["odds1"] == ["4791.5"]
+        assert i["odds1"] == ["4,791.5"]
         assert i["odds2"] == [""]
         assert i["odds_type"] == [6]
         assert i["race_id"] == ["202306020702"]
@@ -903,7 +903,7 @@ class OddsExactaContract(Contract):
         i = items[238]
         assert i["favorite_order"] == ["76"]
         assert i["horse_number"] == ["1614"]
-        assert i["odds1"] == ["1121.4"]
+        assert i["odds1"] == ["1,121.4"]
         assert i["odds2"] == [""]
         assert i["odds_type"] == [6]
         assert i["race_id"] == ["202306020702"]
@@ -911,7 +911,7 @@ class OddsExactaContract(Contract):
         i = items[239]
         assert i["favorite_order"] == ["195"]
         assert i["horse_number"] == ["1615"]
-        assert i["odds1"] == ["13870.3"]
+        assert i["odds1"] == ["13,870.3"]
         assert i["odds2"] == [""]
         assert i["odds_type"] == [6]
         assert i["race_id"] == ["202306020702"]
@@ -934,7 +934,7 @@ class OddsTrioContract(Contract):
         i = items[0]
         assert i["favorite_order"] == ["154"]
         assert i["horse_number"] == ["010203"]
-        assert i["odds1"] == ["2028.6"]
+        assert i["odds1"] == ["2,028.6"]
         assert i["odds2"] == [""]
         assert i["odds_type"] == [7]
         assert i["race_id"] == ["202306020702"]
@@ -942,7 +942,7 @@ class OddsTrioContract(Contract):
         i = items[1]
         assert i["favorite_order"] == ["167"]
         assert i["horse_number"] == ["010204"]
-        assert i["odds1"] == ["2302.1"]
+        assert i["odds1"] == ["2,302.1"]
         assert i["odds2"] == [""]
         assert i["odds_type"] == [7]
         assert i["race_id"] == ["202306020702"]
@@ -950,7 +950,7 @@ class OddsTrioContract(Contract):
         i = items[558]
         assert i["favorite_order"] == ["364"]
         assert i["horse_number"] == ["131516"]
-        assert i["odds1"] == ["17074.3"]
+        assert i["odds1"] == ["17,074.3"]
         assert i["odds2"] == [""]
         assert i["odds_type"] == [7]
         assert i["race_id"] == ["202306020702"]
@@ -958,7 +958,7 @@ class OddsTrioContract(Contract):
         i = items[559]
         assert i["favorite_order"] == ["245"]
         assert i["horse_number"] == ["141516"]
-        assert i["odds1"] == ["5744.6"]
+        assert i["odds1"] == ["5,744.6"]
         assert i["odds2"] == [""]
         assert i["odds_type"] == [7]
         assert i["race_id"] == ["202306020702"]
@@ -981,7 +981,7 @@ class OddsTrifectaContract(Contract):
         i = items[0]
         assert i["favorite_order"] == ["805"]
         assert i["horse_number"] == ["010203"]
-        assert i["odds1"] == ["14182.1"]
+        assert i["odds1"] == ["14,182.1"]
         assert i["odds2"] == [""]
         assert i["odds_type"] == [8]
         assert i["race_id"] == ["202306020702"]
@@ -989,7 +989,7 @@ class OddsTrifectaContract(Contract):
         i = items[1]
         assert i["favorite_order"] == ["998"]
         assert i["horse_number"] == ["010204"]
-        assert i["odds1"] == ["23273.2"]
+        assert i["odds1"] == ["23,273.2"]
         assert i["odds2"] == [""]
         assert i["odds_type"] == [8]
         assert i["race_id"] == ["202306020702"]
@@ -997,7 +997,7 @@ class OddsTrifectaContract(Contract):
         i = items[3358]
         assert i["favorite_order"] == ["2632"]
         assert i["horse_number"] == ["161513"]
-        assert i["odds1"] == ["302552.1"]
+        assert i["odds1"] == ["302,552.1"]
         assert i["odds2"] == [""]
         assert i["odds_type"] == [8]
         assert i["race_id"] == ["202306020702"]
@@ -1005,7 +1005,7 @@ class OddsTrifectaContract(Contract):
         i = items[3359]
         assert i["favorite_order"] == ["2139"]
         assert i["horse_number"] == ["161514"]
-        assert i["odds1"] == ["151276.0"]
+        assert i["odds1"] == ["151,276.0"]
         assert i["odds2"] == [""]
         assert i["odds_type"] == [8]
         assert i["race_id"] == ["202306020702"]
@@ -1173,76 +1173,76 @@ class ParentHorseContract(Contract):
         i = items[0]
         assert i["parent_horse_id"] == ["/horse/ped/2020100583/"]
         assert i["parent1_id"] == [
-            "/horse/000a011155/",
-            "/horse/2013102789/",
+            'https://db.netkeiba.com/horse/000a011155/',
+            'https://db.netkeiba.com/horse/2013102789/'
         ]
         assert i["parent2_id"] == [
-            "/horse/000a000178/",
-            "/horse/000a01117d/",
-            "/horse/000a010542/",
-            "/horse/2005101307/",
+            'https://db.netkeiba.com/horse/000a000178/',
+            'https://db.netkeiba.com/horse/000a01117d/',
+            'https://db.netkeiba.com/horse/000a010542/',
+            'https://db.netkeiba.com/horse/2005101307/'
         ]
         assert i["parent3_id"] == [
-            "/horse/000a001a98/",
-            "/horse/000a00a104/",
-            "/horse/000a001c0e/",
-            "/horse/000a009e3b/",
-            "/horse/000a001cd0/",
-            "/horse/000a01008f/",
-            "/horse/1995108676/",
-            "/horse/1992100605/",
+            'https://db.netkeiba.com/horse/000a001a98/',
+            'https://db.netkeiba.com/horse/000a00a104/',
+            'https://db.netkeiba.com/horse/000a001c0e/',
+            'https://db.netkeiba.com/horse/000a009e3b/',
+            'https://db.netkeiba.com/horse/000a001cd0/',
+            'https://db.netkeiba.com/horse/000a01008f/',
+            'https://db.netkeiba.com/horse/1995108676/',
+            'https://db.netkeiba.com/horse/1992100605/'
         ]
         assert i["parent4_id"] == [
-            "/horse/000a0016d4/",
-            "/horse/000a008e05/",
-            "/horse/000a0010d6/",
-            "/horse/000a009f23/",
-            "/horse/000a00184d/",
-            "/horse/000a0092dd/",
-            "/horse/000a001db6/",
-            "/horse/000a009e3a/",
-            "/horse/000a001702/",
-            "/horse/000a00902d/",
-            "/horse/000a0019da/",
-            "/horse/000a008a92/",
-            "/horse/000a0019b4/",
-            "/horse/000a00a4b9/",
-            "/horse/000a0003bd/",
-            "/horse/1980101974/",
+            'https://db.netkeiba.com/horse/000a0016d4/',
+            'https://db.netkeiba.com/horse/000a008e05/',
+            'https://db.netkeiba.com/horse/000a0010d6/',
+            'https://db.netkeiba.com/horse/000a009f23/',
+            'https://db.netkeiba.com/horse/000a00184d/',
+            'https://db.netkeiba.com/horse/000a0092dd/',
+            'https://db.netkeiba.com/horse/000a001db6/',
+            'https://db.netkeiba.com/horse/000a009e3a/',
+            'https://db.netkeiba.com/horse/000a001702/',
+            'https://db.netkeiba.com/horse/000a00902d/',
+            'https://db.netkeiba.com/horse/000a0019da/',
+            'https://db.netkeiba.com/horse/000a008a92/',
+            'https://db.netkeiba.com/horse/000a0019b4/',
+            'https://db.netkeiba.com/horse/000a00a4b9/',
+            'https://db.netkeiba.com/horse/000a0003bd/',
+            'https://db.netkeiba.com/horse/1980101974/'
         ]
         assert i["parent5_id"] == [
-            "/horse/000a000e04/",
-            "/horse/000a00834c/",
-            "/horse/000a000ded/",
-            "/horse/000a008e04/",
-            "/horse/000a001236/",
-            "/horse/000a007525/",
-            "/horse/000a001ee1/",
-            "/horse/000a009f22/",
-            "/horse/000a00180b/",
-            "/horse/000a0086de/",
-            "/horse/000a000e46/",
-            "/horse/000a0092dc/",
-            "/horse/000a000dbc/",
-            "/horse/000a009a0c/",
-            "/horse/000a001eaf/",
-            "/horse/000a009e39/",
-            "/horse/000a001607/",
-            "/horse/000a0083e3/",
-            "/horse/000a000e44/",
-            "/horse/000a00902c/",
-            "/horse/000a000e04/",
-            "/horse/000a008298/",
-            "/horse/000a0010e2/",
-            "/horse/000a008a91/",
-            "/horse/000a0012cb/",
-            "/horse/000a008c0e/",
-            "/horse/000a0000d3/",
-            "/horse/000a00a4b8/",
-            "/horse/000a000dfe/",
-            "/horse/000a0002fd/",
-            "/horse/000a000444/",
-            "/horse/1966100143/",
+            'https://db.netkeiba.com/horse/000a000e04/',
+            'https://db.netkeiba.com/horse/000a00834c/',
+            'https://db.netkeiba.com/horse/000a000ded/',
+            'https://db.netkeiba.com/horse/000a008e04/',
+            'https://db.netkeiba.com/horse/000a001236/',
+            'https://db.netkeiba.com/horse/000a007525/',
+            'https://db.netkeiba.com/horse/000a001ee1/',
+            'https://db.netkeiba.com/horse/000a009f22/',
+            'https://db.netkeiba.com/horse/000a00180b/',
+            'https://db.netkeiba.com/horse/000a0086de/',
+            'https://db.netkeiba.com/horse/000a000e46/',
+            'https://db.netkeiba.com/horse/000a0092dc/',
+            'https://db.netkeiba.com/horse/000a000dbc/',
+            'https://db.netkeiba.com/horse/000a009a0c/',
+            'https://db.netkeiba.com/horse/000a001eaf/',
+            'https://db.netkeiba.com/horse/000a009e39/',
+            'https://db.netkeiba.com/horse/000a001607/',
+            'https://db.netkeiba.com/horse/000a0083e3/',
+            'https://db.netkeiba.com/horse/000a000e44/',
+            'https://db.netkeiba.com/horse/000a00902c/',
+            'https://db.netkeiba.com/horse/000a000e04/',
+            'https://db.netkeiba.com/horse/000a008298/',
+            'https://db.netkeiba.com/horse/000a0010e2/',
+            'https://db.netkeiba.com/horse/000a008a91/',
+            'https://db.netkeiba.com/horse/000a0012cb/',
+            'https://db.netkeiba.com/horse/000a008c0e/',
+            'https://db.netkeiba.com/horse/000a0000d3/',
+            'https://db.netkeiba.com/horse/000a00a4b8/',
+            'https://db.netkeiba.com/horse/000a000dfe/',
+            'https://db.netkeiba.com/horse/000a0002fd/',
+            'https://db.netkeiba.com/horse/000a000444/',
+            'https://db.netkeiba.com/horse/1966100143/'
         ]
 
 
@@ -1260,8 +1260,8 @@ class JockeyContract(Contract):
         assert i["birth_place"] == ["福島県/A型"]
         assert i["debut_year"] == ["2002年(24年目)"]
         assert i["jockey_id"] == ["/jockey/01075/"]
-        assert i["jockey_name"][0].strip() == "田辺裕信\xa0\n          \n          (タナベヒロノブ)"
-        assert i["jockey_text"][0].strip() == "1984/02/12\n            \n            \n            [美浦]フリー"
+        assert i["jockey_name"][0].strip() == "田辺裕信\xa0\n\t\t    \n\t\t    (タナベヒロノブ)"
+        assert i["jockey_text"][0].strip() == "1984/02/12\n\t\t    \n\t\t    \n\t\t    [美浦]フリー"
 
 
 class TrainerContract(Contract):
@@ -1278,8 +1278,8 @@ class TrainerContract(Contract):
         assert i["birth_place"] == ["千葉県"]
         assert i["debut_year"] == ["1997年(29年目)"]
         assert i["trainer_id"] == ["/trainer/01027/"]
-        assert i["trainer_name"][0].strip() == "田村康仁\xa0\n                \n                (タムラヤスヒト)"
-        assert i["trainer_text"][0].strip() == "1963/03/30\n                \n                美浦"
+        assert i["trainer_name"][0].strip() == "田村康仁\xa0\n                    \n                    （タムラヤスヒト）"
+        assert i["trainer_text"][0].strip() == "1963/03/30\n                    \n                    美浦"
 
 
 class Win5ResultContract(Contract):

@@ -43,6 +43,6 @@ line_length = 1000
 [tool.poe.tasks]
 lint = "flake8 ./horse_racing_crawler/ ./tests/"
 fix = [{cmd="autopep8 -ivr ./horse_racing_crawler/ ./tests/"}, {cmd="isort ./horse_racing_crawler/ ./tests/"}]
-check = "scrapy check netkeiba_spider"
+check = "scrapy check netkeiba_spider -L DEBUG"
 test = "pytest"
 crawl = "scrapy crawl netkeiba_spider"
