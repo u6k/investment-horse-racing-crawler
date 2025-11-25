@@ -1,6 +1,6 @@
 [project]
 name = "horse-racing-crawler"
-version = "5.2.0-dev"
+version = "6.0.0"
 description = "中央競馬データをクロールする"
 authors = [
     {name = "u6k",email = "u6k.apps@gmail.com"}

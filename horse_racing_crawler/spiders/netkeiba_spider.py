@@ -765,7 +765,7 @@ class NetkeibaSpider(scrapy.Spider):
         training_url_qs = parse_qs(training_url.query)
 
         # Parse training
-        for i, tr in enumerate(response.xpath("//table[@id='All_Oikiri_Table']/tr")):
+        for i, tr in enumerate(response.xpath("//table[contains(@class, 'OikiriTable')]/tr")):
             if i == 0:
                 assert tr.xpath("string(th[1])").extract_first() == "枠", tr.xpath("string(th[1])").extract_first()
                 assert tr.xpath("string(th[2])").extract_first() == "馬番", tr.xpath("string(th[2])").extract_first()
