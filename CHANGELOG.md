@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- [#10610: スクレイピング時にtimestampを付与する](https://redmine.u6k.me/issues/10610)
+
 ### Changed
 
 - [#10609: ビルド周りを最新化する](https://redmine.u6k.me/issues/10609)
